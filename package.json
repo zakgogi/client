@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\" \"python -m http.server\""
+    "test": "jest --verbose --watchAll",
+    "dev": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\" \"python -m http.server\"",
+    "coverage": "jest --verbose --coverage --watchAll"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,8 @@
     "concurrently": "^6.2.0",
     "eslint": "^7.31.0",
     "watchify": "^4.0.0"
+  },
+  "dependencies": {
+    "jest": "^27.0.6"
   }
 }
