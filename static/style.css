@@ -54,6 +54,8 @@ header img {
 
   background: var(--white);
   text-align: center;
+
+  box-shadow: 0 10px var(--box-shadow);
 }
 
 #login-signin label {
