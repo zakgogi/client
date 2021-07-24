@@ -14,8 +14,20 @@ function setActiveButton(e) {
         // this one is already live so no need to do anything.
         return;
     }
+    
     loginButton.classList.toggle("active");
     signInButton.classList.toggle("active");
+
+    const formHeading = document.getElementById("form-heading");
+    const submitButton = document.getElementById("submit-button");
+
+    if (formHeading.textContent === "log in.") {
+        formHeading.textContent = "sign up.";
+        submitButton.value = "sign up";
+    } else {
+        formHeading.textContent = "log in.";
+        submitButton.value = "log in";
+    };  
 }
 
 loginButton.addEventListener("click", setActiveButton);
