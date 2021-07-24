@@ -34,14 +34,18 @@ function setActiveButton(e) {
     const submitButton = document.getElementById("submit-button");
 
     if (formHeading.textContent === "log in.") {
+        location.hash = "signup";
         formHeading.textContent = "sign up.";
         submitButton.value = "sign up";
     } else {
+        location.hash = "login";
         formHeading.textContent = "log in.";
         submitButton.value = "log in";
+        
     };  
 }
 
 
+location.hash = "login";
 
 module.exports = {setActiveButton, clearAllInputFields};
