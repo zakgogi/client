@@ -1,0 +1,3 @@
+/__tests__/api.spec.js
+/__tests__/dom.spec.js
+/__tests__/helpers.spec.js
