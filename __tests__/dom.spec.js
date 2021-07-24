@@ -4,6 +4,8 @@ const helpers = require("../static/js/helpers");
 
 const fs = require('fs');
 const path = require('path');
+// const { describe } = require("yargs");
+// const { expect } = require("@jest/globals");
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 
 describe('head testing', () => {
@@ -69,7 +71,51 @@ describe('head testing', () => {
 })
 
 
+describe("clear input fields tests", () => {
 
+    beforeEach(() => {
+        document.documentElement.innerHTML = `<main><input type="text">test</input><input type="text">test</input></main>`;
+    });
+
+
+    test('all input fields should be emptied', () => {
+        helpers.clearAllInputFields()
+        expect(document.querySelector("input").value).toBe("");
+    });
+
+    test("an input with a type of submit shouldn't be affected.", () => {
+        document.documentElement.innerHTML = `<main><input type="submit" value="hello"></input></main>`;
+        helpers.clearAllInputFields()
+        expect(document.querySelector("input").value).toBe("hello");
+    });
+
+    test("clears multiple input fields", () => {
+        document.documentElement.innerHTML = `<main><input type="text" value="hello"></input><input type="text" value="hello"></input><input type="text" value="hello"></input><input type="text" value="hello"></input></main>`;
+        helpers.clearAllInputFields()
+        const inputs = document.querySelectorAll("input");
+        const inputsArr = Array.from(inputs);
+        const values = []
+        inputsArr.forEach(element => {
+            values.push(element.value);
+        });
+        const result = values.every(e => e === values[0])
+        expect(result).toBeTruthy();
+    });
+
+    test("clears multiple input fields but not a submit", () => {
+        document.documentElement.innerHTML = `<main><input type="text" value="hello"></input><input type="submit" value="hello"></input><input type="text" value="hello"></input><input type="text" value="hello"></input><input type="text" value="hello"></input></main>`;
+        helpers.clearAllInputFields()
+        const inputs = document.querySelectorAll("input");
+        const inputsArr = Array.from(inputs);
+        const values = []
+        inputsArr.forEach(element => {
+            values.push(element.value);
+        });
+        const result = values.every(e => e === values[0])
+        expect(result).toBeFalsy();
+    });
+    
+})
 
 
 
