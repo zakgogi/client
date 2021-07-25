@@ -1,5 +1,7 @@
 :root {
   --green: #58c770;
+  --green-highlight: #5ed678;
+  --green-lowlight: #489b5a;
   --bg-grey: #f4f4f4;
   --white: #fff;
   --box-shadow: #e0e0e0;
@@ -96,6 +98,7 @@ header img {
 }
 #login-signin button.active {
   background-color: var(--green);
+  border-bottom: 4px solid var(--green-lowlight);
   color: var(--white);
 }
 form {
@@ -139,9 +142,11 @@ form input[type="submit"] {
 
   cursor: pointer;
 }
+form input[type="submit"]:hover {
+  background-color: var(--green-highlight);
+}
 form input[type="text"],
 input[type="password"] {
-  border-bottom: 2px solid black;
   width: 200px;
   height: 30px;
   color: var(--green);
