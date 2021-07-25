@@ -13,6 +13,8 @@ When designing please insert the below variables into your root.
 ```
 :root {
   --green: #58c770;
+  --green-highlight: #5ed678;
+  --green-lowlight: #489b5a;
   --bg-grey: #f4f4f4;
   --white: #fff;
   --box-shadow: #e0e0e0;
