@@ -2,54 +2,56 @@
 const loginButton = document.querySelector("#login-button");
 const signInButton = document.querySelector("#sign-up-button");
 
-
-
 function clearAllInputFields() {
-    const inputs = document.querySelectorAll("input");
-    
-    for (let i = 0; i < inputs.length; i++) {
-        if(inputs[i].type === "submit") {
-            continue;
-        } else {
-            inputs[i].value = "";
-        }
-    }
-}
+  const inputs = document.querySelectorAll("input");
 
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].type === "submit") {
+      continue;
+    } else {
+      inputs[i].value = "";
+    }
+  }
+}
 
 function setActiveButton(e) {
-    // See is the button which called the event already active.
-    // if it is do nothing.
-        
-    if (e.target.classList.contains("active")) {
-        // this one is already live so no need to do anything.
-        return;
-    }
-    
-    clearAllInputFields();
+  // See is the button which called the event already active.
+  // if it is do nothing.
 
-    loginButton.classList.toggle("active");
-    signInButton.classList.toggle("active");
+  if (e.target.classList.contains("active")) {
+    // this one is already live so no need to do anything.
+    return;
+  }
 
-    const formHeading = document.getElementById("form-heading");
-    const submitButton = document.getElementById("submit-button");
+  clearAllInputFields();
 
-    if (formHeading.textContent === "log in.") {
-        location.hash = "signup";
-        formHeading.textContent = "sign up.";
-        submitButton.value = "sign up";
-    } else {
-        location.hash = "login";
-        formHeading.textContent = "log in.";
-        submitButton.value = "log in";
-        
-    };  
+  loginButton.classList.toggle("active");
+  signInButton.classList.toggle("active");
+
+  const formHeading = document.getElementById("form-heading");
+  const submitButton = document.getElementById("submit-button");
+  const email = document.getElementById("emailEntry");
+  const card = document.getElementById("login-signin");
+
+  if (formHeading.textContent === "log in.") {
+    location.hash = "signup";
+    formHeading.textContent = "sign up.";
+    submitButton.value = "sign up";
+    email.style.display = "block";
+    card.style.height = "auto";
+  } else {
+    location.hash = "login";
+    formHeading.textContent = "log in.";
+    submitButton.value = "log in";
+    email.style.display = "none";
+    card.style.height = "350px";
+  }
 }
-
 
 location.hash = "login";
 
-module.exports = {setActiveButton, clearAllInputFields};
+module.exports = { setActiveButton, clearAllInputFields };
+
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
 
@@ -62,32 +64,70 @@ signInButton.addEventListener("click", helpers.setActiveButton);
 
 const form = document.querySelector("form");
 
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    const data = {
-        username: e.target.username.value,
-        password: e.target.password.value
-    };
+  const data = {
+    username: e.target.username.value,
+    password: e.target.password.value,
+    email: e.target.email.value,
+  };
 
-    // if any of the values are falsy, i.e empty, don't process.
-    for (const key in data) {
-        if(!data[key]) {
-        // this one is already live so no need to do anything.
-            errorMessages.textContent = "username or password missing.";
-            return;
-        }
-    };
+  // if any of the values are falsy, i.e empty, don't process.
+  //   for (const key in data) {
+  //     if (!data[key]) {
+  //       // this one is already live so no need to do anything.
+  //       errorMessages.textContent = "username or password missing.";
+  //       return;
+  //     }
+  //   }
 
-    helpers.clearAllInputFields();
-    
-    // TODO send the requests to the server.
+  helpers.clearAllInputFields();
+
+  // TODO send the requests to the server.
+  const requestType = location.hash;
+
+  // const options = {
+  //     method: “POST”,
+  //     headers: {
+  //       “Content-Type”: “application/json”
+  //     },
+  //     body: JSON.stringify(data)
+  //   };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  let endpoint = "";
+
+  if (requestType == "#signup") {
+    endpoint = "/auth/register";
+  } else {
+    endpoint = "/auth/login";
+  }
+
+  const response = await fetch(`http://localhost:3000${endpoint}`, options);
 
 
+  const userData = await response.json();
 
 
-    //* Get the hash from the page to pick which fetch we do.
+  console.log(userData);
 
+  localStorage.setItem("userId", userData.id);
+  localStorage.setItem("username", userData.username);
+
+  let currentURL = window.location.href;
+
+  console.log(currentURL);
+  currentURL = currentURL.split("#")[0];
+  window.location.assign(`${currentURL}/profile`);
+
+  //* Get the hash from the page to pick which fetch we do.
 });
+
 },{"./helpers":1}]},{},[2]);
