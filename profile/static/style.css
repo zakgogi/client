@@ -171,3 +171,17 @@ h3 {
   bottom: 0;
   border-radius: 0;
 }
+
+#add-new-habit {
+  /* display: block; */
+  height: 600px;
+  width: 400px;
+
+  position: absolute;
+  top: 0;
+
+  background-color: var(--green);
+}
+.closed {
+  display: none;
+}

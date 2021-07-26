@@ -75,11 +75,15 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
-    return;
-}
-
-function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     
 }
 
-module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted};
+function updateBackgroundOpacity(timesComplete, targetTimes, id) {
+    const targetArticle = document.getElementById(`${id}`);
+    
+    const backgroundImage = targetArticle.querySelector("img");
+    
+    backgroundImage.style.opacity = (parseInt(timesComplete) / parseInt(targetTimes));
+}
+
+module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted, updateBackgroundOpacity};

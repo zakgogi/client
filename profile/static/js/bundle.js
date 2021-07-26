@@ -76,44 +76,21 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
-    return;
+    
 }
 
 function updateBackgroundOpacity(timesComplete, targetTimes, id) {
+    const targetArticle = document.getElementById(`${id}`);
     
+    const backgroundImage = targetArticle.querySelector("img");
+    
+    backgroundImage.style.opacity = (parseInt(timesComplete) / parseInt(targetTimes));
 }
 
-module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted};
+module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted, updateBackgroundOpacity};
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
 const serverUrl = "http://localhost:3000";
-// TODO get user id from local storage.
-
-
-
-async function getUserData() {
-    const userId = localStorage.getItem("userId");
-
-    if (!userId) {
-        return;
-    }
-
-    const response = await fetch(`${serverUrl}/habits/${userId}`);
-    const userData = await response.json();
-
-    if (userData.length === 0) {
-        console.log("no data found");
-        return;
-    }
-    
-    // add a 
-    userData.forEach(habit => {
-        const newHabit = helpers.renderHabitContainer(habit);
-        console.log(newHabit);
-        document.querySelector("#habits").append(newHabit);
-    });
-    bindEventListeners();
-}
 
 async function buttonEvents(e) {
     const targetArticle = e.target.closest("article");
@@ -131,11 +108,13 @@ async function buttonEvents(e) {
 
     currentCount++;
 
+
     // Update the dom
 
     helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
 
-    
+
+    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
    
 
    
@@ -154,7 +133,7 @@ async function buttonEvents(e) {
         body: JSON.stringify(eventData)
       };
 
-    const response = await fetch(`${serverUrl}/habits`, options);
+    await fetch(`${serverUrl}/habits`, options);
 
       
 
@@ -174,10 +153,11 @@ async function removeHabit(e) {
         body: JSON.stringify({id: habitId})
       };
 
-    const response = await fetch(`${serverUrl}/habits`, options);
+    await fetch(`${serverUrl}/habits`, options);
 
     e.target.closest("article").remove();
 }
+
 
 function bindEventListeners() {
 
@@ -196,12 +176,83 @@ function bindEventListeners() {
     });
 }
 
+async function getUserData() {
+    const userId = localStorage.getItem("userId");
 
+    //* Create custom title
+    const username = localStorage.getItem("username");
+    document.title = `${username}'s Habits`;
+
+    if (!userId) {
+        return;
+    }
+
+    const response = await fetch(`${serverUrl}/habits/${userId}`);
+    const userData = await response.json();
+
+    if (userData.length === 0) {
+        console.log("no data found");
+        return;
+    }     
+    // add a 
+    userData.forEach(habit => {
+        const newHabit = helpers.renderHabitContainer(habit);
+        document.querySelector("#habits").append(newHabit);
+    });
+
+    
+
+    bindEventListeners();
+}
+
+const newHabitForm = document.getElementById("new-habit-form");
+newHabitForm.addEventListener("submit", addHabit);
+
+async function addHabit(e) {
+    e.preventDefault();
+    console.log(e.target);
+
+    // TODO Collect the users data.
+
+    const data = {
+        habitname: e.target.habitname.value, // ! get from modal form
+        times_completed: 0,
+        frequency_day: parseInt(e.target.frequency.value), // ! get from modal form
+        streak: 0,
+        username_id: localStorage.getItem("userId")
+    };
+
+    const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    };
+
+    // TODO Add it to the database
+
+    await fetch(`${serverUrl}/habits`, options);
+
+    // TODO add the new element to the dom.
+
+
+}
+
+
+const newHabitButton = document.getElementById("new-habit");
+
+newHabitButton.addEventListener("click", toggleModal);
+
+function toggleModal() {
+    const modal = document.getElementById("add-new-habit");
+    modal.classList.toggle("closed");
+}
 
 // Sign out button
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem("userId");
     window.location.assign("http://[::]:8000/#login"); // TODO update this to our live version.
 });
 

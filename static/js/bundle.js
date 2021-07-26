@@ -67,6 +67,7 @@ const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+
   const data = {
     username: e.target.username.value,
     password: e.target.password.value,
@@ -112,9 +113,7 @@ form.addEventListener("submit", async (e) => {
 
   const response = await fetch(`http://localhost:3000${endpoint}`, options);
 
-
   const userData = await response.json();
-
 
   console.log(userData);
 
@@ -129,5 +128,6 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
+
 
 },{"./helpers":1}]},{},[2]);
