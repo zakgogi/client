@@ -119,6 +119,7 @@ form.addEventListener("submit", async (e) => {
 
   localStorage.setItem("userId", userData.id);
   localStorage.setItem("username", userData.username);
+  localStorage.setItem("userdata", userData);
 
   // let currentURL = window.location.href;
 
