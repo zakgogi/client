@@ -1,5 +1,6 @@
 // const { describe } = require("yargs");
 const helpers = require("../static/js/helpers");
+const profileHelpers = require("../profile/static/js/helpers")
 
 
 const fs = require('fs');
@@ -118,5 +119,92 @@ describe("clear input fields tests", () => {
 })
 
 
-
-
+describe('profile page', () => {
+    describe('create new element', () => {
+        beforeEach(() => {
+            document.documentElement.innerHTML = `<section id="habits"></section>`
+        })
+        test('new habit is made', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            expect(document.querySelector("article")).toBeTruthy();
+        })
+        test('article has the right class', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            expect(document.querySelector("article").id).toBe("1");
+        })
+        test('text section has the right class', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            
+            expect(document.querySelector(".habit-details")).toBeTruthy()
+        })
+        test('text section has the right number of paragraphs', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            
+            expect(document.querySelectorAll("p").length).toBe(2)
+        })
+        test('text section has the right number of h2s', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            
+            expect(document.querySelectorAll("h3").length).toBe(2)
+        })
+        test('text section has the right number of h3s', () => {
+            const data = {
+                habitId: 1,
+                habitTitle: "test",
+                todayTotal: 3,
+                todayGoal: 10,
+                streak: 7
+            
+            };
+            const target = document.querySelector("#habits");
+            target.append(profileHelpers.renderHabitContainer(data))
+            
+            expect(document.querySelectorAll("h2").length).toBe(1)
+        })
+    })
+})

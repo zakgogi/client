@@ -112,7 +112,9 @@ form.addEventListener("submit", async (e) => {
 
   const response = await fetch(`http://localhost:3000${endpoint}`, options);
 
+
   const userData = await response.json();
+
 
   console.log(userData);
 

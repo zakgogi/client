@@ -12,6 +12,7 @@ const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+
   const data = {
     username: e.target.username.value,
     password: e.target.password.value,
@@ -72,3 +73,4 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
+

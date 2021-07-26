@@ -65,7 +65,9 @@ header img {
 }
 #login-signin button {
   width: 50%;
+  height: 40px;
 
+  position: absolute;
   top: 0;
 
   border-radius: 35px;
@@ -83,16 +85,10 @@ header img {
   cursor: pointer;
 }
 #login-signin button.left {
-  position: absolute;
-  height: 40px;
-
   left: 0;
   border-radius: 25px 0 0 0;
 }
 #login-signin button.right {
-  position: absolute;
-  height: 40px;
-
   right: 0;
   border-radius: 0 25px 0 0;
 }

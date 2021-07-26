@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --watchAll",
+
     "dev": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\"",
     "coverage": "jest --verbose --coverage --watchAll"
   },
