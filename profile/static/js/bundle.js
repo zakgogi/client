@@ -253,7 +253,7 @@ function toggleModal() {
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
     localStorage.removeItem("userId");
-    window.location.assign("http://[::]:8000/#login"); // TODO update this to our live version.
+    window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
 getUserData();
