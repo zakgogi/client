@@ -102,7 +102,7 @@ header img {
   color: var(--white);
 }
 form {
-  margin: 30px;
+  margin: 30px 0px;
 }
 form * {
   margin: 7.5px 0;
@@ -154,4 +154,19 @@ input[type="password"] {
   font-size: 20px;
 
   padding-left: 15px;
+}
+
+#emailEntry {
+  display: none;
+}
+
+.leftForm {
+  float:left;
+  /* position: relative;
+  left: 0px; */
+}
+.rightForm {
+  float: right;
+  /* position: relative;
+  right: -20px; */
 }

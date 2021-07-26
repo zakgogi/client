@@ -18,7 +18,7 @@
 
     <script defer src="/static/js/bundle.js"></script>
 
-    <title>Strike.</title>
+    <title>Stride.</title>
   </head>
   <body>
     <header>
@@ -30,11 +30,15 @@
         <button id="sign-up-button" class="right">sign up</button>
         <form>
           <h1 id="form-heading">log in.</h1>
-          <label for="username">username</label>
-          <input id="username" type="text" />
+          <div id="emailEntry">
+            <label class="leftForm" for="email">email address</label>
+            <input class="rightForm" id="email" type="text" />
+          </div>
+          <label class="leftForm" for="username">username</label>
+          <input class="rightForm" id="username" type="text" />
           <br />
-          <label for="password">password</label>
-          <input id="password" type="password" />
+          <label class="leftForm" for="password">password</label>
+          <input class="rightForm" id="password" type="password" />
           <br />
           <input id="submit-button" type="submit" value="log in" />
         </form>
