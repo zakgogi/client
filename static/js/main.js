@@ -65,11 +65,11 @@ form.addEventListener("submit", async (e) => {
   localStorage.setItem("userId", userData.id);
   localStorage.setItem("username", userData.username);
 
-  let currentURL = window.location.href;
+  // let currentURL = window.location.href;
 
-  console.log(currentURL);
-  currentURL = currentURL.split("#")[0];
-  window.location.assign(`${currentURL}/profile`);
+  // console.log(currentURL);
+  // currentURL = currentURL.split("#")[0];
+  window.location.assign(`https://the-stride.netlify.app/profile`);
 
   //* Get the hash from the page to pick which fetch we do.
 });
