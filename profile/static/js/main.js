@@ -1,7 +1,5 @@
 const helpers = require("./helpers");
 const serverUrl = "http://localhost:3000";
-// TODO get user id from local storage.
-
 
 
 async function getUserData() {
@@ -17,14 +15,13 @@ async function getUserData() {
     if (userData.length === 0) {
         console.log("no data found");
         return;
-    }
-    
+    }     
     // add a 
     userData.forEach(habit => {
         const newHabit = helpers.renderHabitContainer(habit);
-        console.log(newHabit);
         document.querySelector("#habits").append(newHabit);
     });
+
     bindEventListeners();
 }
 
@@ -44,11 +41,13 @@ async function buttonEvents(e) {
 
     currentCount++;
 
+
     // Update the dom
 
     helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
 
     
+    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
    
 
    

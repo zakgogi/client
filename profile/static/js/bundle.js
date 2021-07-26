@@ -76,19 +76,21 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
-    return;
-}
-
-function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     
 }
 
-module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted};
+function updateBackgroundOpacity(timesComplete, targetTimes, id) {
+    const targetArticle = document.getElementById(`${id}`);
+    
+    const backgroundImage = targetArticle.querySelector("img");
+    
+    backgroundImage.style.opacity = (parseInt(timesComplete) / parseInt(targetTimes));
+}
+
+module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted, updateBackgroundOpacity};
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
 const serverUrl = "http://localhost:3000";
-// TODO get user id from local storage.
-
 
 
 async function getUserData() {
@@ -104,14 +106,13 @@ async function getUserData() {
     if (userData.length === 0) {
         console.log("no data found");
         return;
-    }
-    
+    }     
     // add a 
     userData.forEach(habit => {
         const newHabit = helpers.renderHabitContainer(habit);
-        console.log(newHabit);
         document.querySelector("#habits").append(newHabit);
     });
+
     bindEventListeners();
 }
 
@@ -131,11 +132,13 @@ async function buttonEvents(e) {
 
     currentCount++;
 
+
     // Update the dom
 
     helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
 
     
+    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
    
 
    

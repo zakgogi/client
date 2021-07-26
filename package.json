@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest --verbose --watchAll",
 
-    "dev": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\"",
+   
+    "dev": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\" \"python -m http.server\"",
+    "dev-dan": "concurrently \"watchify ./static/js/main.js -o ./static/js/bundle.js\" \"watchify ./profile/static/js/main.js -o ./profile/static/js/bundle.js\" \"python -m http.server\"",
     "coverage": "jest --verbose --coverage --watchAll"
   },
   "jest": {
