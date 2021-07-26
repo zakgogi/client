@@ -31,6 +31,9 @@ form.addEventListener("submit", (e) => {
     
     // TODO send the requests to the server.
 
+
+
+
     //* Get the hash from the page to pick which fetch we do.
 
 });

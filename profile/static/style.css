@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-grey);
+}
+
+/* ======= Variables ======= */
+
+:root {
+  --green: #58c770;
+  --green-highlight: #5ed678;
+  --green-lowlight: #489b5a;
+  --bg-grey: #f4f4f4;
+  --white: #fff;
+  --box-shadow: #e0e0e0;
+  --black: #232121;
+
+  /* buttons */
+  --button-disabled-bg: #c4c4c4;
+  --button-disabled-text: #808080;
+
+  --border-radius: 25px;
+}
+
+/* ======= Default Styles ======= */
+
+button {
+  width: 150px;
+
+  border-radius: 35px;
+
+  background-color: var(--green);
+  color: var(--white);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--green-highlight);
+}
+
+/* ======= Specific Styles Styles ======= */
+
+/* ==== Header ==== */
+header {
+  width: 100%;
+
+  background: var(--bg-grey);
+
+  padding: 30px;
+}
+
+header img {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+header button {
+  position: absolute;
+  top: 30px;
+  right: 15px;
+}
+
+/* ==== User info ==== */
+#user-info {
+  width: 700px;
+  height: 150px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--white);
+  border-radius: var(--border-radius);
+
+  margin: 15px auto;
+}
+
+/* ==== Habit containers ==== */
+
+#habits {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.habit-container {
+  width: 260px;
+  height: 340px;
+  overflow: hidden;
+
+  position: relative;
+
+  margin: 15px;
+
+  background: var(--white);
+
+  border-radius: var(--border-radius);
+
+  box-shadow: 0 5px var(--box-shadow);
+}
+.habit-gradient {
+  /* opacity: 0.1; */
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+.habit-container button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0;
+}
+
+.habit-container button:hover {
+  background: var(--green-highlight);
+}
+
+.habit-details {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+
+  padding: 15px;
+
+  color: var(--white);
+}
+.habit-details h2,
+h3 {
+  font-weight: 600;
+  margin: 10px 0 0 0;
+  font-size: 30px;
+}
+.habit-details h2 {
+  font-size: 25px;
+  margin: 10px 0;
+}
+.habit-details p {
+  font-weight: 400;
+  margin: 0 0 5px 0;
+  font-size: 20px;
+}
+#add-to-total {
+  width: 40px;
+  height: 40px;
+
+  right: 15px;
+  bottom: 50px;
+
+  padding: 0;
+  border-radius: 30px;
+}
+/* ==== New habit ==== */
+
+#new-habit {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0;
+}
