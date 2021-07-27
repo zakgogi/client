@@ -116,7 +116,7 @@ module.exports = {
 
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
-const serverUrl = "http://localhost:3000";
+const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
 
 let myChart;
 

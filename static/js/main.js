@@ -47,7 +47,10 @@ form.addEventListener("submit", async (e) => {
     endpoint = "/auth/login";
   }
 
-  const response = await fetch(`http://localhost:3000${endpoint}`, options);
+  const response = await fetch(
+    `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
+    options
+  );
 
   const userData = await response.json();
 
@@ -62,4 +65,3 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
-
