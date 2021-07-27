@@ -102,6 +102,11 @@ async function getUserData() {
 
 }
 
+function toggleModal() {
+    const modal = document.getElementById("add-new-habit");
+    modal.classList.toggle("closed");
+}
+
 async function addHabit(e) {
     e.preventDefault();
     console.log(e.target);
@@ -113,6 +118,10 @@ async function addHabit(e) {
         frequency_day: parseInt(e.target.frequency.value),
         streak: 0,
         username_id: localStorage.getItem("userId")
+    };
+
+    if (!data.frequency_day || !data.habitname) {
+        return;
     };
 
     const options = {
@@ -135,10 +144,7 @@ newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
-function toggleModal() {
-    const modal = document.getElementById("add-new-habit");
-    modal.classList.toggle("closed");
-}
+
 closeHabitButton.addEventListener("click", toggleModal);
 newHabitButton.addEventListener("click", toggleModal);
 

@@ -1,4 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+// TESTED
 function renderHabitData(data) {
     const newSection = document.createElement("section");
     newSection.classList.add("habit-details");
@@ -26,7 +27,7 @@ function renderHabitData(data) {
 
     return newSection;
 }
-
+// TESTED
 function renderHabitContainer(data) {
     const newArticle = document.createElement("article");
     newArticle.id = data.id;
@@ -59,6 +60,7 @@ function renderHabitContainer(data) {
 
 }
 
+// TESTED
 function removeAllHabitContainers() {
     const articles = document.querySelectorAll("article");
     const articlesArr = Array.from(articles);
@@ -70,6 +72,7 @@ function removeAllHabitContainers() {
 
 }
 
+// TESTED
 function updateTimesCompleted(timesComplete, targetTimes, id) {
 
     const targetArticle = document.getElementById(`${id}`);
@@ -79,6 +82,7 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
 }
 
+// TESTED
 function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     const targetArticle = document.getElementById(`${id}`);
     
@@ -193,6 +197,11 @@ async function getUserData() {
 
 }
 
+function toggleModal() {
+    const modal = document.getElementById("add-new-habit");
+    modal.classList.toggle("closed");
+}
+
 async function addHabit(e) {
     e.preventDefault();
     console.log(e.target);
@@ -204,6 +213,10 @@ async function addHabit(e) {
         frequency_day: parseInt(e.target.frequency.value),
         streak: 0,
         username_id: localStorage.getItem("userId")
+    };
+
+    if (!data.frequency_day || !data.habitname) {
+        return;
     };
 
     const options = {
@@ -226,10 +239,7 @@ newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
-function toggleModal() {
-    const modal = document.getElementById("add-new-habit");
-    modal.classList.toggle("closed");
-}
+
 closeHabitButton.addEventListener("click", toggleModal);
 newHabitButton.addEventListener("click", toggleModal);
 

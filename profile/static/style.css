@@ -104,7 +104,7 @@ header button {
 
   margin: 15px;
 
-  background: var(--white);
+  background: var(--button-disabled-text);
 
   border-radius: var(--border-radius);
 
@@ -235,6 +235,7 @@ input {
   position: absolute;
   bottom: 27px;
 }
+
 #close-button {
   background-color: var(--button-disabled-bg);
   color: var(--button-disabled-text);
