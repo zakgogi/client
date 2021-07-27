@@ -1,6 +1,8 @@
 const helpers = require("./helpers");
 const serverUrl = "http://localhost:3000";
 
+let myChart;
+
 async function buttonEvents(e) {
   const targetArticle = e.target.closest("article");
 
@@ -17,10 +19,9 @@ async function buttonEvents(e) {
 
   currentCount++;
 
-
-
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
+  getGraphData();
 
   // Update the server
   const eventData = {
@@ -51,6 +52,7 @@ async function removeHabit(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+  getGraphData();
 
   e.target.closest("article").remove();
 }
@@ -70,7 +72,6 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 }
-
 async function getUserData() {
   const userId = localStorage.getItem("userId");
 
@@ -92,59 +93,77 @@ async function getUserData() {
     return;
   }
 
+  let totalDone = 0;
+  let totalToDo = 0;
   userData.forEach((habit) => {
     const newHabit = helpers.renderHabitContainer(habit);
     document.querySelector("#habits").append(newHabit);
+    totalDone += habit.times_completed;
+    totalToDo += habit.frequency_day;
   });
-
+  let stillToDo = totalToDo - totalDone;
+  renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }
 
 function toggleModal() {
-    const modal = document.getElementById("add-new-habit");
-    
-    modal.classList.toggle("closed");
+  const modal = document.getElementById("add-new-habit");
+
+  modal.classList.toggle("closed");
 }
 
 async function addHabit(e) {
+  e.preventDefault();
+  console.log(e.target);
+  toggleModal();
 
-    e.preventDefault();
-    console.log(e.target);
-    toggleModal();
+  const data = {
+    habitname: e.target.habitname.value,
+    times_completed: 0,
+    frequency_day: parseInt(e.target.frequency.value),
+    streak: 0,
+    username_id: localStorage.getItem("userId"),
+  };
 
-    const data = {
-        habitname: e.target.habitname.value,
-        times_completed: 0,
-        frequency_day: parseInt(e.target.frequency.value),
-        streak: 0,
-        username_id: localStorage.getItem("userId")
-    };
+  if (!data.frequency_day || !data.habitname) {
+    return;
+  }
 
-    if (!data.frequency_day || !data.habitname) {
-        return;
-    };
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
 
-    const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    };
+  await fetch(`${serverUrl}/habits`, options);
 
-    await fetch(`${serverUrl}/habits`, options);
+  // Reload the page to add the new item
+  location.reload();
+}
 
-    // Reload the page to add the new item
-    location.reload();
+async function getGraphData() {
+  const userId = localStorage.getItem("userId");
 
+  const response = await fetch(`${serverUrl}/habits/${userId}`);
+  const userData = await response.json();
 
+  let totalDone = 0;
+  let totalToDo = 0;
+  userData.forEach((habit) => {
+    totalDone += habit.times_completed;
+    totalToDo += habit.frequency_day;
+  });
+  let stillToDo = totalToDo - totalDone;
+  renderGraph([totalDone, stillToDo]);
+  bindEventListeners();
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
 newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
-
 
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
@@ -161,30 +180,32 @@ signOutButton.addEventListener("click", () => {
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
-
-
-function renderGraph() {
-    
-    var xValues = ["Goals Smashed", "Still to Smash"];
-var yValues = [70, 100];
-var barColors = [
-  "#b91d47",
-  "#00aba9"
-];
-    var myChart = new Chart("myChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
+function renderGraph(dataInput) {
+  var xValues = ["Goals Completed", "Still to do"];
+  var barColors = ["#58c770", "#c4c4c4"];
+  let chart = document.getElementById("myChart");
+  if (myChart) {
+    myChart.destroy();
   }
-});
+  // myChart.destroy();
+  myChart = new Chart("myChart", {
+    type: "doughnut",
+    options: {
+      legend: {
+        display: false,
+      },
+      animation: false,
+    },
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColors,
+          data: dataInput,
+        },
+      ],
+    },
+  });
 }
 
-
-
 getUserData();
-renderGraph();
-

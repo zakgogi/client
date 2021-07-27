@@ -261,6 +261,11 @@ input {
   margin: 20px 20px;
 }
 
+#myChart {
+  position: absolute;
+  right: 10px;
+}
+
 @media only screen and (max-width: 600px) {
   #user-info {
     width: 80%;
