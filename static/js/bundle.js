@@ -120,8 +120,9 @@ form.addEventListener("submit", async (e) => {
     options
   );
 
-  const userData = await response.json();
-
+  const tokenData = await response.json();
+  console.log(tokenData);
+  const userData = jwt_decode(tokenData.token);
   localStorage.setItem("userId", userData.id);
   localStorage.setItem("username", userData.user);
 
