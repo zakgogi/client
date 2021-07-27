@@ -21,7 +21,7 @@ async function buttonEvents(e) {
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-  getGraphData();
+  
 
   // Update the server
   const eventData = {
@@ -39,6 +39,7 @@ async function buttonEvents(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+  getGraphData();
 }
 
 async function removeHabit(e) {
