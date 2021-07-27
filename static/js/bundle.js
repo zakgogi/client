@@ -113,7 +113,7 @@ form.addEventListener("submit", async (e) => {
 
   // console.log(currentURL);
   // currentURL = currentURL.split("#")[0];
-  window.location.assign(`http://[::]:8000/profile/`);
+  window.location.assign(`https://the-stride.netlify.app/profile/`);
 
   //* Get the hash from the page to pick which fetch we do.
 });
