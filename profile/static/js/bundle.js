@@ -1,35 +1,38 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // TESTED
 function renderHabitData(data) {
-    const newSection = document.createElement("section");
-    newSection.classList.add("habit-details");
+  const newSection = document.createElement("section");
+  newSection.classList.add("habit-details");
 
-    const habitTitle = document.createElement("h2");
-    habitTitle.textContent = data.habitname;
+  const habitTitle = document.createElement("h2");
+  habitTitle.textContent = data.habitname;
 
-    const habitBoilerToday = document.createElement("h3");
-    habitBoilerToday.textContent = "Today";
+  const habitBoilerToday = document.createElement("h3");
+  habitBoilerToday.textContent = "Today";
 
-    const submittedToday = document.createElement("p");
-    submittedToday.textContent = `${data.times_completed} of ${data.frequency_day}`;
+  const submittedToday = document.createElement("p");
+  submittedToday.textContent = `${data.times_completed} of ${data.frequency_day}`;
 
-    const habitBoilerStreak = document.createElement("h3");
-    habitBoilerStreak.textContent = "Streak";
+  const habitBoilerStreak = document.createElement("h3");
+  habitBoilerStreak.textContent = "Streak";
+
 
     const streak = document.createElement("p");
     streak.id = "streak-output";
     streak.textContent = data.streak;
 
-    newSection.append(habitTitle);
-    newSection.append(habitBoilerToday);
-    newSection.append(submittedToday);
-    newSection.append(habitBoilerStreak);
-    newSection.append(streak);
 
-    return newSection;
+  newSection.append(habitTitle);
+  newSection.append(habitBoilerToday);
+  newSection.append(submittedToday);
+  newSection.append(habitBoilerStreak);
+  newSection.append(streak);
+
+  return newSection;
 }
 // TESTED
 function renderHabitContainer(data) {
+
     const newArticle = document.createElement("article");
     newArticle.id = data.id;
     newArticle.classList.add("habit-container");
@@ -59,22 +62,23 @@ function renderHabitContainer(data) {
     
     return newArticle;
 
+
 }
 
 // TESTED
 function removeAllHabitContainers() {
-    const articles = document.querySelectorAll("article");
-    const articlesArr = Array.from(articles);
+  const articles = document.querySelectorAll("article");
+  const articlesArr = Array.from(articles);
 
-
-    articlesArr.forEach(article => {
-        article.remove();
-    });
-
+  articlesArr.forEach((article) => {
+    article.remove();
+  });
 }
 
 // TESTED
 function updateTimesCompleted(timesComplete, targetTimes, id) {
+  const targetArticle = document.getElementById(`${id}`);
+
 
     const targetArticle = document.getElementById(`${id}`);
     
@@ -92,39 +96,46 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
     }
     
+
 }
 
 // TESTED
 function updateBackgroundOpacity(timesComplete, targetTimes, id) {
-    const targetArticle = document.getElementById(`${id}`);
-    
-    const backgroundImage = targetArticle.querySelector("img");
-    
-    backgroundImage.style.opacity = (parseInt(timesComplete) / parseInt(targetTimes));
+  const targetArticle = document.getElementById(`${id}`);
+
+  const backgroundImage = targetArticle.querySelector("img");
+
+  backgroundImage.style.opacity =
+    parseInt(timesComplete) / parseInt(targetTimes);
 }
 
-module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted, updateBackgroundOpacity};
+module.exports = {
+  renderHabitContainer,
+  removeAllHabitContainers,
+  updateTimesCompleted,
+  updateBackgroundOpacity,
+};
+
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
 const serverUrl = "http://localhost:3000";
 
 async function buttonEvents(e) {
-    const targetArticle = e.target.closest("article");
+  const targetArticle = e.target.closest("article");
 
-    let dailyTarget = targetArticle.querySelector("p").textContent.split(" ")[2];
-    dailyTarget = parseInt(dailyTarget);
-    
-    let currentCount = targetArticle.querySelector("p").textContent.split(" ")[0];
-    currentCount = parseInt(currentCount);
+  let dailyTarget = targetArticle.querySelector("p").textContent.split(" ")[2];
+  dailyTarget = parseInt(dailyTarget);
 
-    if ((currentCount + 1) > dailyTarget) {
-        // Already maxed out.
-        return;
-    };
+  let currentCount = targetArticle.querySelector("p").textContent.split(" ")[0];
+  currentCount = parseInt(currentCount);
 
-    currentCount++;
+  if (currentCount + 1 > dailyTarget) {
+    // Already maxed out.
+    return;
+  }
 
-    // Update the dom
+  currentCount++;
+
 
     helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
     helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
@@ -136,78 +147,86 @@ async function buttonEvents(e) {
         frequency_day: dailyTarget
     };
 
-    const options = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(eventData)
-      };
 
-    await fetch(`${serverUrl}/habits`, options);
+  helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
+  helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
 
+  // Update the server
+  const eventData = {
+    id: targetArticle.id,
+    times_completed: currentCount,
+  };
+
+  const options = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(eventData),
+  };
+
+  await fetch(`${serverUrl}/habits`, options);
 }
 
 async function removeHabit(e) {
-    const habitId = e.target.closest("article").id;
-    
-    const options = {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({id: habitId})
-      };
+  const habitId = e.target.closest("article").id;
 
-    await fetch(`${serverUrl}/habits`, options);
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: habitId }),
+  };
 
-    e.target.closest("article").remove();
+  await fetch(`${serverUrl}/habits`, options);
+
+  e.target.closest("article").remove();
 }
 
-
 function bindEventListeners() {
+  //===== Add to count =====//
+  const addButtons = document.querySelectorAll("#add-to-total");
+  const addButtonsArr = Array.from(addButtons);
+  addButtonsArr.forEach((button) => {
+    button.addEventListener("click", buttonEvents);
+  });
 
-    //===== Add to count =====//
-    const addButtons = document.querySelectorAll("#add-to-total");
-    const addButtonsArr = Array.from(addButtons);
-    addButtonsArr.forEach(button => {
-        button.addEventListener("click", buttonEvents);
-    });
-
-    //===== Remove habit =====//
-    const removeButtons = document.querySelectorAll(".remove");
-    const removeButtonsArr = Array.from(removeButtons);
-    removeButtonsArr.forEach(button => {
-        button.addEventListener("click", removeHabit);
-    });
+  //===== Remove habit =====//
+  const removeButtons = document.querySelectorAll(".remove");
+  const removeButtonsArr = Array.from(removeButtons);
+  removeButtonsArr.forEach((button) => {
+    button.addEventListener("click", removeHabit);
+  });
 }
 
 async function getUserData() {
-    const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
-    //* Create custom title
-    const username = localStorage.getItem("username");
-    document.title = `${username}'s Habits`;
+  //* Create custom title
+  const username = localStorage.getItem("username");
+  document.title = `${username}'s Habits`;
+  console.log(document.getElementById("profileName"));
+  document.getElementById("profileName").textContent = username;
 
-    if (!userId) {
-        return;
-    };
+  if (!userId) {
+    return;
+  }
 
-    const response = await fetch(`${serverUrl}/habits/${userId}`);
-    const userData = await response.json();
+  const response = await fetch(`${serverUrl}/habits/${userId}`);
+  const userData = await response.json();
 
-    if (userData.length === 0) {
-        console.log("no data found");
-        return;
-    };  
-    
-    userData.forEach(habit => {
-        const newHabit = helpers.renderHabitContainer(habit);
-        document.querySelector("#habits").append(newHabit);
-    });
+  if (userData.length === 0) {
+    console.log("no data found");
+    return;
+  }
 
-    bindEventListeners();
+  userData.forEach((habit) => {
+    const newHabit = helpers.renderHabitContainer(habit);
+    document.querySelector("#habits").append(newHabit);
+  });
 
+  bindEventListeners();
 }
 
 function toggleModal() {
@@ -217,6 +236,7 @@ function toggleModal() {
 }
 
 async function addHabit(e) {
+
     e.preventDefault();
     console.log(e.target);
     toggleModal();
@@ -246,6 +266,7 @@ async function addHabit(e) {
     // Reload the page to add the new item
     location.reload();
 
+
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
@@ -254,16 +275,19 @@ const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
 
+function toggleModal() {
+  const modal = document.getElementById("add-new-habit");
+  modal.classList.toggle("closed");
+}
+
 closeHabitButton.addEventListener("click", toggleModal);
 newHabitButton.addEventListener("click", toggleModal);
-
-
 
 // Sign out button
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
-    localStorage.removeItem("userId");
-    window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
+  localStorage.removeItem("userId");
+  window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
 
@@ -290,5 +314,7 @@ var barColors = [
 
 
 getUserData();
+
 renderGraph();
+
 },{"./helpers":1}]},{},[2]);

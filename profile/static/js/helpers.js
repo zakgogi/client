@@ -1,34 +1,37 @@
 // TESTED
 function renderHabitData(data) {
-    const newSection = document.createElement("section");
-    newSection.classList.add("habit-details");
+  const newSection = document.createElement("section");
+  newSection.classList.add("habit-details");
 
-    const habitTitle = document.createElement("h2");
-    habitTitle.textContent = data.habitname;
+  const habitTitle = document.createElement("h2");
+  habitTitle.textContent = data.habitname;
 
-    const habitBoilerToday = document.createElement("h3");
-    habitBoilerToday.textContent = "Today";
+  const habitBoilerToday = document.createElement("h3");
+  habitBoilerToday.textContent = "Today";
 
-    const submittedToday = document.createElement("p");
-    submittedToday.textContent = `${data.times_completed} of ${data.frequency_day}`;
+  const submittedToday = document.createElement("p");
+  submittedToday.textContent = `${data.times_completed} of ${data.frequency_day}`;
 
-    const habitBoilerStreak = document.createElement("h3");
-    habitBoilerStreak.textContent = "Streak";
+  const habitBoilerStreak = document.createElement("h3");
+  habitBoilerStreak.textContent = "Streak";
+
 
     const streak = document.createElement("p");
     streak.id = "streak-output";
     streak.textContent = data.streak;
 
-    newSection.append(habitTitle);
-    newSection.append(habitBoilerToday);
-    newSection.append(submittedToday);
-    newSection.append(habitBoilerStreak);
-    newSection.append(streak);
 
-    return newSection;
+  newSection.append(habitTitle);
+  newSection.append(habitBoilerToday);
+  newSection.append(submittedToday);
+  newSection.append(habitBoilerStreak);
+  newSection.append(streak);
+
+  return newSection;
 }
 // TESTED
 function renderHabitContainer(data) {
+
     const newArticle = document.createElement("article");
     newArticle.id = data.id;
     newArticle.classList.add("habit-container");
@@ -58,22 +61,23 @@ function renderHabitContainer(data) {
     
     return newArticle;
 
+
 }
 
 // TESTED
 function removeAllHabitContainers() {
-    const articles = document.querySelectorAll("article");
-    const articlesArr = Array.from(articles);
+  const articles = document.querySelectorAll("article");
+  const articlesArr = Array.from(articles);
 
-
-    articlesArr.forEach(article => {
-        article.remove();
-    });
-
+  articlesArr.forEach((article) => {
+    article.remove();
+  });
 }
 
 // TESTED
 function updateTimesCompleted(timesComplete, targetTimes, id) {
+  const targetArticle = document.getElementById(`${id}`);
+
 
     const targetArticle = document.getElementById(`${id}`);
     
@@ -90,16 +94,22 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
         // update the dom streak total.
 
     }
-    
+
 }
 
 // TESTED
 function updateBackgroundOpacity(timesComplete, targetTimes, id) {
-    const targetArticle = document.getElementById(`${id}`);
-    
-    const backgroundImage = targetArticle.querySelector("img");
-    
-    backgroundImage.style.opacity = (parseInt(timesComplete) / parseInt(targetTimes));
+  const targetArticle = document.getElementById(`${id}`);
+
+  const backgroundImage = targetArticle.querySelector("img");
+
+  backgroundImage.style.opacity =
+    parseInt(timesComplete) / parseInt(targetTimes);
 }
 
-module.exports = {renderHabitContainer, removeAllHabitContainers, updateTimesCompleted, updateBackgroundOpacity};
+module.exports = {
+  renderHabitContainer,
+  removeAllHabitContainers,
+  updateTimesCompleted,
+  updateBackgroundOpacity,
+};

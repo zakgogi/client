@@ -249,6 +249,7 @@ input {
   display: none;
 }
 
+
 @media only screen and (max-width: 600px) {
   #user-info {
     width: 80%;
@@ -329,4 +330,16 @@ input {
     font-weight: 400;
     font-size: 20px;
   }
+
+#profile {
+  display: flex;
+  flex-direction: row;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+}
+.fa-user-circle {
+  margin: 20px 20px;
+
 }
