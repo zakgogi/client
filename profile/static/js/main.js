@@ -1,5 +1,5 @@
 const helpers = require("./helpers");
-const serverUrl = "http://localhost:3000";
+const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
 
 let myChart;
 
