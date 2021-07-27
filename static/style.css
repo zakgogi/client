@@ -36,7 +36,7 @@ header img {
 }
 
 #main-container {
-  height: calc(100vh - 109px);
+  height: calc(90vh - 109px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -156,13 +156,55 @@ input[type="password"] {
   display: none;
 }
 
-.leftForm {
-  float:left;
-  /* position: relative;
-  left: 0px; */
-}
 .rightForm {
-  float: right;
-  /* position: relative;
-  right: -20px; */
+  position: absolute;
+  right: 40px;
+}
+
+#row2,
+#row3,
+#emailEntry {
+  text-align: left;
+}
+
+#gdpr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+  background-color: #58c770;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+#gdpr p {
+  margin: auto;
+}
+#gdpr button {
+  width: 100px;
+  height: 40px;
+  margin: auto;
+
+  border-radius: 35px;
+
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+
+#gdpr .fas {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }

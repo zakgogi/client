@@ -47,6 +47,19 @@ function setActiveButton(e) {
   }
 }
 
+const accept = document.getElementById("accept");
+const reject = document.querySelector("#reject");
+const cancel = document.querySelector(".fa-times");
+const gdpr = document.querySelector("#gdpr");
+
+cancel.addEventListener("click", closeGDPR);
+reject.addEventListener("click", closeGDPR);
+accept.addEventListener("click", closeGDPR);
+
+function closeGDPR() {
+  gdpr.style.display = "none";
+}
+
 location.hash = "login";
 
-module.exports = { setActiveButton, clearAllInputFields };
+module.exports = { setActiveButton, clearAllInputFields, closeGDPR };
