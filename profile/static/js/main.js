@@ -17,7 +17,17 @@ async function buttonEvents(e) {
 
   currentCount++;
 
-  // Update the dom
+
+    helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
+    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
+   
+    // Update the server
+    const eventData = {
+        id: targetArticle.id,
+        times_completed: currentCount,
+        frequency_day: dailyTarget
+    };
+
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
@@ -102,6 +112,7 @@ async function getUserData() {
 
 function toggleModal() {
     const modal = document.getElementById("add-new-habit");
+    
     modal.classList.toggle("closed");
 }
 
@@ -160,4 +171,30 @@ signOutButton.addEventListener("click", () => {
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
+
+
+function renderGraph() {
+    
+    var xValues = ["Goals Smashed", "Still to Smash"];
+var yValues = [70, 100];
+var barColors = [
+  "#b91d47",
+  "#00aba9"
+];
+    var myChart = new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  }
+});
+}
+
+
+
 getUserData();
+renderGraph();
+

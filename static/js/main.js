@@ -62,3 +62,4 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
+
