@@ -79,7 +79,6 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
 
-    const targetArticle = document.getElementById(`${id}`);
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;

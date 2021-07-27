@@ -18,16 +18,6 @@ async function buttonEvents(e) {
   currentCount++;
 
 
-    helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
-    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-   
-    // Update the server
-    const eventData = {
-        id: targetArticle.id,
-        times_completed: currentCount,
-        frequency_day: dailyTarget
-    };
-
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);

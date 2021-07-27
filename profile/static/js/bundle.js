@@ -80,7 +80,6 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
 
-    const targetArticle = document.getElementById(`${id}`);
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
@@ -95,7 +94,6 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
         // update the dom streak total.
 
     }
-    
 
 }
 
@@ -136,16 +134,6 @@ async function buttonEvents(e) {
 
   currentCount++;
 
-
-    helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
-    helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-   
-    // Update the server
-    const eventData = {
-        id: targetArticle.id,
-        times_completed: currentCount,
-        frequency_day: dailyTarget
-    };
 
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
@@ -291,6 +279,7 @@ signOutButton.addEventListener("click", () => {
 });
 
 
+
 function renderGraph() {
     
     var xValues = ["Goals Smashed", "Still to Smash"];
@@ -314,7 +303,7 @@ var barColors = [
 
 
 getUserData();
-
 renderGraph();
+
 
 },{"./helpers":1}]},{},[2]);
