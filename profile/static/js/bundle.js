@@ -104,21 +104,15 @@ async function buttonEvents(e) {
     if ((currentCount + 1) > dailyTarget) {
         // Already maxed out.
         return;
-    }
+    };
 
     currentCount++;
-
 
     // Update the dom
 
     helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
-
-
     helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
    
-
-   
-
     // Update the server
     const eventData = {
         id: targetArticle.id,
@@ -134,11 +128,6 @@ async function buttonEvents(e) {
       };
 
     await fetch(`${serverUrl}/habits`, options);
-
-      
-
-    // helpers.removeAllHabitContainers();
-    // getUserData();
 
 }
 
@@ -185,7 +174,7 @@ async function getUserData() {
 
     if (!userId) {
         return;
-    }
+    };
 
     const response = await fetch(`${serverUrl}/habits/${userId}`);
     const userData = await response.json();
@@ -193,31 +182,26 @@ async function getUserData() {
     if (userData.length === 0) {
         console.log("no data found");
         return;
-    }     
-    // add a 
+    };  
+    
     userData.forEach(habit => {
         const newHabit = helpers.renderHabitContainer(habit);
         document.querySelector("#habits").append(newHabit);
     });
 
-    
-
     bindEventListeners();
-}
 
-const newHabitForm = document.getElementById("new-habit-form");
-newHabitForm.addEventListener("submit", addHabit);
+}
 
 async function addHabit(e) {
     e.preventDefault();
     console.log(e.target);
-
-    // TODO Collect the users data.
+    toggleModal();
 
     const data = {
-        habitname: e.target.habitname.value, // ! get from modal form
+        habitname: e.target.habitname.value,
         times_completed: 0,
-        frequency_day: parseInt(e.target.frequency.value), // ! get from modal form
+        frequency_day: parseInt(e.target.frequency.value),
         streak: 0,
         username_id: localStorage.getItem("userId")
     };
@@ -230,24 +214,26 @@ async function addHabit(e) {
         body: JSON.stringify(data)
     };
 
-    // TODO Add it to the database
-
     await fetch(`${serverUrl}/habits`, options);
 
-    // TODO add the new element to the dom.
-
+    // Reload the page to add the new item
+    location.reload();
 
 }
 
-
+const newHabitForm = document.getElementById("new-habit-form");
+newHabitForm.addEventListener("submit", addHabit);
+const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
-
-newHabitButton.addEventListener("click", toggleModal);
 
 function toggleModal() {
     const modal = document.getElementById("add-new-habit");
     modal.classList.toggle("closed");
 }
+closeHabitButton.addEventListener("click", toggleModal);
+newHabitButton.addEventListener("click", toggleModal);
+
+
 
 // Sign out button
 const signOutButton = document.querySelector("header button");
