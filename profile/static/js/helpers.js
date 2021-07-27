@@ -16,6 +16,7 @@ function renderHabitData(data) {
     habitBoilerStreak.textContent = "Streak";
 
     const streak = document.createElement("p");
+    streak.id = "streak-output";
     streak.textContent = data.streak;
 
     newSection.append(habitTitle);
@@ -81,6 +82,12 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
     if (timesComplete == targetTimes) {
         console.log("we might need to do something else here too.");
+
+        let target = document.getElementById("streak-output");
+        target.textContent = parseInt(target.textContent) + 1;
+        
+        // update the dom streak total.
+
     }
     
 }

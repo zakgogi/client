@@ -25,7 +25,8 @@ async function buttonEvents(e) {
     // Update the server
     const eventData = {
         id: targetArticle.id,
-        times_completed: currentCount
+        times_completed: currentCount,
+        frequency_day: dailyTarget
     };
 
     const options = {
@@ -159,27 +160,27 @@ signOutButton.addEventListener("click", () => {
 });
 
 
-function renderGraph() {
+// function renderGraph() {
     
-    var xValues = ["Goals Smashed", "Still to Smash"];
-var yValues = [70, 100];
-var barColors = [
-  "#b91d47",
-  "#00aba9"
-];
-    var myChart = new Chart("myChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  }
-});
-}
+//     var xValues = ["Goals Smashed", "Still to Smash"];
+// var yValues = [70, 100];
+// var barColors = [
+//   "#b91d47",
+//   "#00aba9"
+// ];
+//     var myChart = new Chart("myChart", {
+//   type: "pie",
+//   data: {
+//     labels: xValues,
+//     datasets: [{
+//       backgroundColor: barColors,
+//       data: yValues
+//     }]
+//   }
+// });
+// }
 
 
 
 getUserData();
-renderGraph();
+// renderGraph();

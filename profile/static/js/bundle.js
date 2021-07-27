@@ -17,6 +17,7 @@ function renderHabitData(data) {
     habitBoilerStreak.textContent = "Streak";
 
     const streak = document.createElement("p");
+    streak.id = "streak-output";
     streak.textContent = data.streak;
 
     newSection.append(habitTitle);
@@ -82,6 +83,12 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
     if (timesComplete == targetTimes) {
         console.log("we might need to do something else here too.");
+
+        let target = document.getElementById("streak-output");
+        target.textContent = parseInt(target.textContent) + 1;
+        
+        // update the dom streak total.
+
     }
     
 }
@@ -124,7 +131,8 @@ async function buttonEvents(e) {
     // Update the server
     const eventData = {
         id: targetArticle.id,
-        times_completed: currentCount
+        times_completed: currentCount,
+        frequency_day: dailyTarget
     };
 
     const options = {
@@ -258,28 +266,28 @@ signOutButton.addEventListener("click", () => {
 });
 
 
-function renderGraph() {
+// function renderGraph() {
     
-    var xValues = ["Goals Smashed", "Still to Smash"];
-var yValues = [70, 100];
-var barColors = [
-  "#b91d47",
-  "#00aba9"
-];
-    var myChart = new Chart("myChart", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  }
-});
-}
+//     var xValues = ["Goals Smashed", "Still to Smash"];
+// var yValues = [70, 100];
+// var barColors = [
+//   "#b91d47",
+//   "#00aba9"
+// ];
+//     var myChart = new Chart("myChart", {
+//   type: "pie",
+//   data: {
+//     labels: xValues,
+//     datasets: [{
+//       backgroundColor: barColors,
+//       data: yValues
+//     }]
+//   }
+// });
+// }
 
 
 
 getUserData();
-renderGraph();
+// renderGraph();
 },{"./helpers":1}]},{},[2]);
