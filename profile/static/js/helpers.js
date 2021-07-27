@@ -1,3 +1,4 @@
+// TESTED
 function renderHabitData(data) {
   const newSection = document.createElement("section");
   newSection.classList.add("habit-details");
@@ -25,7 +26,7 @@ function renderHabitData(data) {
 
   return newSection;
 }
-
+// TESTED
 function renderHabitContainer(data) {
   const newArticle = document.createElement("article");
   newArticle.id = data.id;
@@ -58,6 +59,7 @@ function renderHabitContainer(data) {
   return newArticle;
 }
 
+// TESTED
 function removeAllHabitContainers() {
   const articles = document.querySelectorAll("article");
   const articlesArr = Array.from(articles);
@@ -67,6 +69,7 @@ function removeAllHabitContainers() {
   });
 }
 
+// TESTED
 function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
@@ -74,6 +77,7 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
   paragraph.textContent = `${timesComplete} of ${targetTimes}`;
 }
 
+// TESTED
 function updateBackgroundOpacity(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 

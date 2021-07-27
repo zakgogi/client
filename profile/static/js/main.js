@@ -100,31 +100,43 @@ async function getUserData() {
   bindEventListeners();
 }
 
+function toggleModal() {
+    const modal = document.getElementById("add-new-habit");
+    modal.classList.toggle("closed");
+}
+
 async function addHabit(e) {
-  e.preventDefault();
-  console.log(e.target);
-  toggleModal();
 
-  const data = {
-    habitname: e.target.habitname.value,
-    times_completed: 0,
-    frequency_day: parseInt(e.target.frequency.value),
-    streak: 0,
-    username_id: localStorage.getItem("userId"),
-  };
+    e.preventDefault();
+    console.log(e.target);
+    toggleModal();
 
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
+    const data = {
+        habitname: e.target.habitname.value,
+        times_completed: 0,
+        frequency_day: parseInt(e.target.frequency.value),
+        streak: 0,
+        username_id: localStorage.getItem("userId")
+    };
 
-  await fetch(`${serverUrl}/habits`, options);
+    if (!data.frequency_day || !data.habitname) {
+        return;
+    };
 
-  // Reload the page to add the new item
-  location.reload();
+    const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    };
+
+    await fetch(`${serverUrl}/habits`, options);
+
+    // Reload the page to add the new item
+    location.reload();
+
+
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
@@ -132,10 +144,12 @@ newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
+
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
   modal.classList.toggle("closed");
 }
+
 closeHabitButton.addEventListener("click", toggleModal);
 newHabitButton.addEventListener("click", toggleModal);
 
