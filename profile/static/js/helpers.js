@@ -86,8 +86,9 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     if (timesComplete == targetTimes) {
         console.log("we might need to do something else here too.");
 
-        let target = document.getElementById("streak-output");
-        console.log(target);
+        const target = targetArticle.querySelectorAll("p")[1];
+
+        
         target.textContent = parseInt(target.textContent) + 1;
         
         // update the dom streak total.

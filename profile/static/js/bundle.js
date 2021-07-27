@@ -87,8 +87,9 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     if (timesComplete == targetTimes) {
         console.log("we might need to do something else here too.");
 
-        let target = document.getElementById("streak-output");
-        console.log(target);
+        const target = targetArticle.querySelectorAll("p")[1];
+
+        
         target.textContent = parseInt(target.textContent) + 1;
         
         // update the dom streak total.
@@ -144,6 +145,7 @@ async function buttonEvents(e) {
   const eventData = {
     id: targetArticle.id,
     times_completed: currentCount,
+    frequency_day: dailyTarget
   };
 
   const options = {
@@ -301,7 +303,7 @@ function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
   var barColors = ["#58c770", "#c4c4c4"];
   let chart = document.getElementById("myChart");
-  if (myChart) {
+  if (!!myChart) {
     myChart.destroy();
   }
   // myChart.destroy();
