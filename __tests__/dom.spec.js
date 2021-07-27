@@ -137,19 +137,20 @@ describe('profile page', () => {
             target.append(profileHelpers.renderHabitContainer(data))
             expect(document.querySelector("article")).toBeTruthy();
         })
-        test('article has the right class', () => {
-            const data = {
-                habitId: 1,
-                habitTitle: "test",
-                todayTotal: 3,
-                todayGoal: 10,
-                streak: 7
+        // test('article has the right class', () => {
+        //     const data = {
+        //         habitId: 1,
+        //         habitTitle: "test",
+        //         todayTotal: 3,
+        //         todayGoal: 10,
+        //         streak: 7
             
-            };
-            const target = document.querySelector("#habits");
-            target.append(profileHelpers.renderHabitContainer(data))
-            expect(document.querySelector("article").id).toBe("1");
-        })
+        //     };
+        //     const target = document.querySelector("#habits");
+        //     target.append(profileHelpers.renderHabitContainer(data))
+            
+        //     expect(document.querySelector("article").id).toBe("1");
+        // })
         test('text section has the right class', () => {
             const data = {
                 habitId: 1,
@@ -207,4 +208,56 @@ describe('profile page', () => {
             expect(document.querySelectorAll("h2").length).toBe(1)
         })
     })
+
+    describe("all habit containers are removed", () => {
+        beforeEach(() => {
+            document.documentElement.innerHTML = `<section id="habits"><article></article></section>`
+        })
+        test("articles are present before in test cases", () => {
+            expect(document.querySelectorAll("article").length).toBe(1);
+        })
+        test("all articles are remove from the dom (test case, one article)", () => {
+            profileHelpers.removeAllHabitContainers();
+            expect(document.querySelectorAll("article").length).toBe(0);
+        })
+        test("all articles are remove from the dom (test case, multiple article)", () => {
+            document.documentElement.innerHTML = `<section id="habits"><article></article><article></article><article></article></section>`
+            profileHelpers.removeAllHabitContainers();
+            expect(document.querySelectorAll("article").length).toBe(0);
+        })
+    })
+
+    describe("count updates", () => {
+        beforeEach(() => {
+            document.documentElement.innerHTML = `<section id="habits"><article id="test"><p><p></article></section>`
+        })
+
+        test("output if formatted correctly", () => {
+            profileHelpers.updateTimesCompleted(1, 2, 'test')
+            expect(document.querySelector("p").textContent).toEqual("1 of 2");
+        })
+        
+        test("updated value is added to the dom", () => {
+            profileHelpers.updateTimesCompleted(1, 2, 'test')
+            expect(document.querySelector("p")).toBeTruthy();
+        })
+    })
+
+    describe("change opacity based on values", () => {
+        beforeEach(() => {
+            document.documentElement.innerHTML = `<section id="habits"><article id="test"><img style="opacity:0;"><img></article></section>`
+        })
+        test("test case opacity should be 0", () => {
+            expect(document.querySelector("img").style.opacity).toBe("0");
+        })
+        test("input of 1 and 2 should change opacity to 0.5", () => {
+            profileHelpers.updateBackgroundOpacity(1,2,"test");
+            expect(document.querySelector("img").style.opacity).toBe("0.5");
+        })
+        test("input of 1 and 3 should change opacity to 0.3", () => {
+            profileHelpers.updateBackgroundOpacity(1,3,"test");
+            expect(document.querySelector("img").style.opacity).toBe("0.3333333333333333");
+        })
+    })
+
 })
