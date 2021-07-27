@@ -130,7 +130,7 @@ header button {
 .habit-details {
   position: absolute;
   width: 100%;
-  z-index: 10;
+  z-index: 1;
   text-align: center;
   font-family: "Poppins", sans-serif;
 
@@ -160,6 +160,8 @@ h3 {
   right: 15px;
   bottom: 50px;
 
+  z-index: 3;
+
   padding: 0;
   border-radius: 30px;
 }
@@ -173,15 +175,75 @@ h3 {
 }
 
 #add-new-habit {
-  /* display: block; */
-  height: 600px;
-  width: 400px;
+  z-index: 3;
+  height: 300px;
+  width: 380px;
 
   position: absolute;
-  top: 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  background-color: var(--button-disabled-text);
+
+  overflow: hidden;
+
+  border-radius: var(--border-radius);
+}
+#add-new-habit label,
+input {
+  color: var(--white);
+  display: block;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+
+  margin: 15px auto 10px auto;
+  text-align: center;
+}
+#add-new-habit input {
+  color: var(--green);
+  display: block;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+
+  margin: 15px auto 10px auto;
+  text-align: center;
+}
+#add-new-habit input[type="submit"] {
+  width: 100%;
+
+  border-radius: 35px;
 
   background-color: var(--green);
+  color: var(--white);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+  border-radius: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 27px;
 }
+#close-button {
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: unset;
+}
+
 .closed {
   display: none;
 }
