@@ -312,6 +312,12 @@ describe('profile page', () => {
             profileHelpers.updateTimesCompleted(1, 2, 'test')
             expect(document.querySelector("p")).toBeTruthy();
         })
+
+        test("updated value is added to the dom", () => {
+            profileHelpers.updateTimesCompleted(10, 10, 'test')
+            // TODO We will make a different assertion here based on a function getting called. Like maybe we add an emoji. and test it's there.
+            expect(document.querySelector("p")).toBeTruthy();
+        })
     })
 
     describe("change opacity based on values", () => {
@@ -329,6 +335,11 @@ describe('profile page', () => {
             profileHelpers.updateBackgroundOpacity(1,3,"test");
             expect(document.querySelector("img").style.opacity).toBe("0.3333333333333333");
         })
+        test("equal entries make it solid", () => {
+            profileHelpers.updateBackgroundOpacity(3,3,"test");
+            expect(document.querySelector("img").style.opacity).toBe("1");
+        })
+        
     })
 
 })

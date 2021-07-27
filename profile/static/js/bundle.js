@@ -45,7 +45,7 @@ function renderHabitContainer(data) {
     newArticle.append(bgImage);
 
     const removeButton = document.createElement("button");
-    removeButton.textContent = "remove";
+    removeButton.textContent = "delete";
     removeButton.classList.add("remove");
     newArticle.append(removeButton);   
     
@@ -79,6 +79,10 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
+
+    if (timesComplete == targetTimes) {
+        console.log("we might need to do something else here too.");
+    }
     
 }
 
@@ -199,6 +203,7 @@ async function getUserData() {
 
 function toggleModal() {
     const modal = document.getElementById("add-new-habit");
+    
     modal.classList.toggle("closed");
 }
 
@@ -252,5 +257,29 @@ signOutButton.addEventListener("click", () => {
     window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
+
+function renderGraph() {
+    
+    var xValues = ["Goals Smashed", "Still to Smash"];
+var yValues = [70, 100];
+var barColors = [
+  "#b91d47",
+  "#00aba9"
+];
+    var myChart = new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  }
+});
+}
+
+
+
 getUserData();
+renderGraph();
 },{"./helpers":1}]},{},[2]);

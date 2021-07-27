@@ -44,7 +44,7 @@ function renderHabitContainer(data) {
     newArticle.append(bgImage);
 
     const removeButton = document.createElement("button");
-    removeButton.textContent = "remove";
+    removeButton.textContent = "delete";
     removeButton.classList.add("remove");
     newArticle.append(removeButton);   
     
@@ -78,6 +78,10 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
     
     const paragraph = targetArticle.querySelector("p");
     paragraph.textContent = `${timesComplete} of ${targetTimes}`;
+
+    if (timesComplete == targetTimes) {
+        console.log("we might need to do something else here too.");
+    }
     
 }
 
