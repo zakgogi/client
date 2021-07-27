@@ -13,6 +13,11 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <script
+      defer
+      src="https://kit.fontawesome.com/41cdfc15ac.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="icon" href="./static/assets/favicon.ico" type="image/x-icon" />
 
@@ -30,20 +35,42 @@
         <button id="sign-up-button" class="right">sign up</button>
         <form>
           <h1 id="form-heading">log in.</h1>
-          <div id="emailEntry">
-            <label class="leftForm" for="email">email address</label>
-            <input class="rightForm" id="email" type="text" />
+          <div id="login-entry">
+            <div id="emailEntry">
+              <label class="leftForm" for="email">email address</label>
+              <input class="rightForm" id="email" type="text" />
+            </div>
+
+            <div id="row2">
+              <label class="leftForm" for="username">username</label>
+              <input class="rightForm" id="username" type="text" />
+              <br />
+            </div>
+
+            <div id="row3">
+              <label class="leftForm" for="password">password</label>
+              <input class="rightForm" id="password" type="password" />
+              <br />
+            </div>
           </div>
-          <label class="leftForm" for="username">username</label>
-          <input class="rightForm" id="username" type="text" />
-          <br />
-          <label class="leftForm" for="password">password</label>
-          <input class="rightForm" id="password" type="password" />
-          <br />
           <input id="submit-button" type="submit" value="log in" />
         </form>
         <p id="error-messages"></p>
       </section>
     </main>
+    <section id="gdpr">
+      <p>
+        By Clicking accept you consent to "Stride." using your data. Click
+        <a
+          href="https://www.privacypolicies.com/blog/gdpr-consent-examples/"
+          target="_blank"
+          >here</a
+        >
+        to read more.
+      </p>
+      <button id="accept">Accept</button>
+      <button id="reject">Reject</button>
+      <i class="fas fa-times"></i>
+    </section>
   </body>
 </html>
