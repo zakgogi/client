@@ -22,6 +22,7 @@ form.addEventListener("submit", async (e) => {
     }
   }
 
+
   // if (password !== confirmPassword) {
   //   alert("The passswords did not match");
   
@@ -84,6 +85,7 @@ form.addEventListener("submit", async (e) => {
     window.location.assign(`https://the-stride.netlify.app/profile/`);  
     //* Get the hash from the page to pick which fetch we do.
   // }
+
   
 
   
