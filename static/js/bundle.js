@@ -57,6 +57,13 @@ function updateFormData() {
 }
 
 
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+const gdpr = document.querySelector("#gdpr");
+
+dismiss.addEventListener("click", closeGDPR);
+cancel.addEventListener("click", closeGDPR);
+
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
@@ -82,14 +89,16 @@ const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+
   if (location.hash ==  "#signup") {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
     if (password !== confirmPassword) {
-      alert("The passswords did not match");
+      alert("The passwords did not match");
       return
     }
   }
+
 
   // if (password !== confirmPassword) {
   //   alert("The passswords did not match");
@@ -150,17 +159,17 @@ form.addEventListener("submit", async (e) => {
   
     // console.log(currentURL);
     // currentURL = currentURL.split("#")[0];
-    window.location.assign(`https://the-stride.netlify.app/profile/`);
+    window.location.assign(`https://the-stride.netlify.app/profile/`);  
+    //* Get the hash from the page to pick which fetch we do.
+  // }
+
   
+
   //* Get the hash from the page to pick which fetch we do.
+
 });
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
 
 
-cancel.addEventListener("click", helpers.closeGDPR);
-reject.addEventListener("click", helpers.closeGDPR);
-accept.addEventListener("click", helpers.closeGDPR);
+location.hash = "login";
 },{"./helpers":1}]},{},[2]);

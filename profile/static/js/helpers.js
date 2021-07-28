@@ -46,7 +46,7 @@ function renderHabitContainer(data) {
   newArticle.append(bgImage);
 
   const removeButton = document.createElement("button");
-  removeButton.textContent = "delete";
+  // removeButton.textContent = "delete";
   removeButton.classList.add("remove");
   newArticle.append(removeButton);
 
@@ -79,9 +79,7 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
   if (timesComplete == targetTimes) {
     console.log("we might need to do something else here too.");
-
     const target = targetArticle.querySelectorAll("p")[1];
-
     target.textContent = parseInt(target.textContent) + 1;
 
     // update the dom streak total.

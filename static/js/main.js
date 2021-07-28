@@ -17,7 +17,7 @@ form.addEventListener("submit", async (e) => {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
     if (password !== confirmPassword) {
-      alert("The passswords did not match");
+      alert("The passwords did not match");
       return
     }
   }
@@ -88,17 +88,10 @@ form.addEventListener("submit", async (e) => {
 
   
 
-  
 
   //* Get the hash from the page to pick which fetch we do.
 
 });
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
 
-
-cancel.addEventListener("click", helpers.closeGDPR);
-reject.addEventListener("click", helpers.closeGDPR);
-accept.addEventListener("click", helpers.closeGDPR);
+location.hash = "login";
