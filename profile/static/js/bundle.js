@@ -1,4 +1,35 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const avatarOptions = { 
+    "a"  : "fas fa-dragon red",
+    "b"  : "fas fa-dragon blue",
+    "c"  : "fas fa-dragon purple",
+    "d"  : "fas fa-dragon red",
+    "e"  : "fas fa-dragon blue",
+    "f"  : "fas fa-dragon purple",
+    "g"  : "fas fa-cat green",
+    "h"  : "fas fa-cat green",
+    "i"  : "fas fa-cat red",
+    "j"  : "fas fa-cat blue",
+    "k"  : "fas fa-cat purple",
+    "l"  : "fas fa-cat green",
+    "m"  : "fas fa-spider gold",
+    "n"  : "fas fa-spider red",
+    "o"  : "fas fa-spider blue",
+    "p"  : "fas fa-spider purple",
+    "q"  : "fas fa-spider gold",
+    "r"  : "fas fa-spider gold",
+    "s"  : "fas fa-horse-head red",
+    "t"  : "fas fa-horse-head blue",
+    "u"  : "fas fa-horse-head purple",
+    "v"  : "fas fa-horse-head gold",
+    "w"  : "fas fa-horse-head gold",
+    "x"  : "fas fa-dove red",
+    "y"  : "fas fa-dove blue",
+    "z"  : "fas fa-dove purple",
+}
+
+module.exports = avatarOptions;
+},{}],2:[function(require,module,exports){
 // TESTED
 function renderHabitData(data) {
   const newSection = document.createElement("section");
@@ -16,11 +47,9 @@ function renderHabitData(data) {
   const habitBoilerStreak = document.createElement("h3");
   habitBoilerStreak.textContent = "Streak";
 
-
-    const streak = document.createElement("p");
-    streak.id = "streak-output";
-    streak.textContent = data.streak;
-
+  const streak = document.createElement("p");
+  streak.id = "streak-output";
+  streak.textContent = data.streak;
 
   newSection.append(habitTitle);
   newSection.append(habitBoilerToday);
@@ -32,37 +61,35 @@ function renderHabitData(data) {
 }
 // TESTED
 function renderHabitContainer(data) {
+  const newArticle = document.createElement("article");
+  newArticle.id = data.id;
+  newArticle.classList.add("habit-container");
 
-    const newArticle = document.createElement("article");
-    newArticle.id = data.id;
-    newArticle.classList.add("habit-container");
+  const habitData = renderHabitData(data);
+  newArticle.append(habitData);
 
-    const habitData = renderHabitData(data);
-    newArticle.append(habitData);
+  const bgImage = document.createElement("img");
+  bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
+  bgImage.classList.add("habit-gradient");
+  bgImage.alt = "background gradient";
+  //* the opacity is based on the percentage of the goal complete.
+  bgImage.style.opacity =
+    parseInt(data.times_completed) / parseInt(data.frequency_day);
+  newArticle.append(bgImage);
 
-    const bgImage = document.createElement("img");
-    bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
-    bgImage.classList.add("habit-gradient");
-    bgImage.alt = "background gradient";
-    //* the opacity is based on the percentage of the goal complete.
-    bgImage.style.opacity = (parseInt(data.times_completed) / parseInt(data.frequency_day));
-    newArticle.append(bgImage);
+  const removeButton = document.createElement("button");
+  // removeButton.textContent = "delete";
+  removeButton.classList.add("remove");
+  newArticle.append(removeButton);
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "delete";
-    removeButton.classList.add("remove");
-    newArticle.append(removeButton);   
-    
-    const addToCountButton = document.createElement("button");
-    addToCountButton.id = "add-to-total";
-    addToCountButton.type = "button";
-    addToCountButton.textContent = "+";
+  const addToCountButton = document.createElement("button");
+  addToCountButton.id = "add-to-total";
+  addToCountButton.type = "button";
+  addToCountButton.textContent = "+";
 
-    newArticle.append(addToCountButton);
-    
-    return newArticle;
+  newArticle.append(addToCountButton);
 
-
+  return newArticle;
 }
 
 // TESTED
@@ -79,23 +106,16 @@ function removeAllHabitContainers() {
 function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
+  const paragraph = targetArticle.querySelector("p");
+  paragraph.textContent = `${timesComplete} of ${targetTimes}`;
 
-    
-    const paragraph = targetArticle.querySelector("p");
-    paragraph.textContent = `${timesComplete} of ${targetTimes}`;
+  if (timesComplete == targetTimes) {
+    console.log("we might need to do something else here too.");
+    const target = targetArticle.querySelectorAll("p")[1];
+    target.textContent = parseInt(target.textContent) + 1;
 
-    if (timesComplete == targetTimes) {
-        console.log("we might need to do something else here too.");
-
-        const target = targetArticle.querySelectorAll("p")[1];
-
-        
-        target.textContent = parseInt(target.textContent) + 1;
-        
-        // update the dom streak total.
-
-    }
-
+    // update the dom streak total.
+  }
 }
 
 // TESTED
@@ -108,18 +128,50 @@ function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     parseInt(timesComplete) / parseInt(targetTimes);
 }
 
+// TODO TEST ME
+function uniqueBadges(data) {
+  const output = [];
+  for (let i = 0; i < data.length; i++) {
+    if (!output.includes(data[i].badge_name)) {
+      output.push(data[i].badge_name);
+    }
+  }
+  return output;
+}
+
+// TODO TEST ME
+function createBadgeSection(badges) {
+  const badgesContainer = document.createElement("section");
+  badgesContainer.id = "badge-display";
+
+  badges.forEach((badge) => {
+    let imgSrc = `../../../static/assets/badges/${badge}.svg`;
+    const newImg = document.createElement("img");
+    newImg.src = imgSrc;
+    newImg.alt = `${badge} badge`;
+    newImg.classList.add("badge");
+    badgesContainer.append(newImg);
+  });
+
+  return badgesContainer;
+}
+
 module.exports = {
   renderHabitContainer,
   removeAllHabitContainers,
   updateTimesCompleted,
   updateBackgroundOpacity,
+  uniqueBadges,
+  createBadgeSection
 };
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 const helpers = require("./helpers");
 const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
+const avatarOptions = require("./avatars");
 
 let myChart;
+let executed;
 
 async function buttonEvents(e) {
   const targetArticle = e.target.closest("article");
@@ -131,21 +183,34 @@ async function buttonEvents(e) {
   currentCount = parseInt(currentCount);
 
   if (currentCount + 1 > dailyTarget) {
+    M.toast({html: 'You\'ve already hit your daily target!'})
     // Already maxed out.
     return;
+  }
+
+  let halfdailyTarget = dailyTarget/2;
+  if (!executed) {
+  if(currentCount + 1 > halfdailyTarget){
+        M.toast({html: 'Keep going, you\'re over half way there!'});
+        executed = true;
+      }
+  };
+
+  if(currentCount + 1 === dailyTarget){
+    M.toast({html: 'Well done! You\'ve hit your daily target!'}) 
   }
 
   currentCount++;
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-  
+
 
   // Update the server
   const eventData = {
     id: targetArticle.id,
     times_completed: currentCount,
-    frequency_day: dailyTarget
+    frequency_day: dailyTarget,
   };
 
   const options = {
@@ -157,7 +222,10 @@ async function buttonEvents(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+
+  
   getGraphData();
+  updateBadgesToProfile();
 }
 
 async function removeHabit(e) {
@@ -173,8 +241,10 @@ async function removeHabit(e) {
 
   await fetch(`${serverUrl}/habits`, options);
   getGraphData();
-
   e.target.closest("article").remove();
+  M.toast({html: 'Habit Deleted!'}) // added in alert
+  hideChart();
+
 }
 
 function bindEventListeners() {
@@ -192,14 +262,27 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 }
+
 async function getUserData() {
   const userId = localStorage.getItem("userId");
+
+  const knownUser = (localStorage.getItem("userId")) ? true : false;
+  localStorage.setItem("knownUser", knownUser);
+
+  if (!knownUser) {
+    localStorage.setItem("username", "Stranger");
+  }
 
   //* Create custom title
   const username = localStorage.getItem("username");
   document.title = `${username}'s Habits`;
   console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
+  let avatarLetter = username[0];
+  let avatartag = avatarOptions[avatarLetter]
+  let avatar = document.querySelector("i");
+  avatar.className = `${avatartag} fa-5x`
+
 
   if (!userId) {
     return;
@@ -208,7 +291,12 @@ async function getUserData() {
   const response = await fetch(`${serverUrl}/habits/${userId}`);
   const userData = await response.json();
 
+ 
+
+  console.log(userData);
+
   if (userData.length === 0) {
+    hideChart();
     console.log("no data found");
     return;
   }
@@ -222,6 +310,7 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
+  updateBadgesToProfile()
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }
@@ -271,13 +360,47 @@ async function getGraphData() {
 
   let totalDone = 0;
   let totalToDo = 0;
+
   userData.forEach((habit) => {
     totalDone += habit.times_completed;
     totalToDo += habit.frequency_day;
   });
+  
   let stillToDo = totalToDo - totalDone;
+
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
+}
+
+async function updateBadgesToProfile() {
+  const data = await getBadgeData();
+
+  // get all unique badges.
+  const badgeNames = helpers.uniqueBadges(data);
+
+  
+  const badgeSection = helpers.createBadgeSection(badgeNames);
+
+  if (document.querySelector("#profileInfo section")) {
+    document.querySelector("#profileInfo section").remove();
+  }
+
+  document.querySelector("#profileInfo").append(badgeSection);
+  
+  // TODO create a div full of images.
+
+
+
+}
+
+async function getBadgeData() {
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/badges/${userId}`);
+  const data = await response.json();
+
+  console.log(data);
+  return data;
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
@@ -296,6 +419,15 @@ newHabitButton.addEventListener("click", toggleModal);
 // Sign out button
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
+  localStorage.removeItem("userId");
+  localStorage.removeItem("username");
+  localStorage.removeItem("knownUser");
+  // TODO remove everything.
+  window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
+});
+
+const signOutButton2 = document.querySelector("#hidden button");
+signOutButton2.addEventListener("click", () => {
   localStorage.removeItem("userId");
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
@@ -328,6 +460,18 @@ function renderGraph(dataInput) {
   });
 }
 
+
+// This function hides chart when there is no habits available.
+function hideChart() {
+  let chart = document.getElementById("myChart");
+  let profile = document.getElementById("user-info");
+  if (!document.querySelector("article")) {
+    chart.style.display = "none";
+    profile.style.height = "150px";
+  }
+  console.log("trig");
+}
 getUserData();
 
-},{"./helpers":1}]},{},[2]);
+
+},{"./avatars":1,"./helpers":2}]},{},[3]);

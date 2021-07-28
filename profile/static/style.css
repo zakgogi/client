@@ -25,6 +25,30 @@ body {
   --border-radius: 25px;
 }
 
+.red {
+  color: rgb(150, 33, 33);
+}
+
+.blue {
+  color: rgb(15, 38, 126);
+}
+
+.purple {
+  color: rgb(129, 54, 172);
+}
+
+.green {
+  color: rgb(20, 131, 33);
+}
+
+.gold {
+  color: rgb(255, 223, 0);
+}
+
+i {
+  margin: 20px 20px 20px 20px;
+}
+
 /* ======= Default Styles ======= */
 
 button {
@@ -43,6 +67,8 @@ button {
   border-style: none;
 
   cursor: pointer;
+  /* added in */
+  line-height: 1.55;
 }
 
 button:hover {
@@ -85,6 +111,25 @@ header button {
   border-radius: var(--border-radius);
 
   margin: 15px auto;
+}
+
+#badge-collection {
+  width: 200px;
+  height: 30px;
+  background: var(--green-highlight);
+}
+
+/* ==== badges ==== */
+
+#badge-display {
+  width: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.badge {
+  height: 30px;
+  margin: 7px;
 }
 
 /* ==== Habit containers ==== */
@@ -143,10 +188,14 @@ h3 {
   font-weight: 600;
   margin: 10px 0 0 0;
   font-size: 30px;
+  /* added in */
+  line-height: 44.8px;
 }
 .habit-details h2 {
   font-size: 25px;
   margin: 10px 0;
+  /* added in */
+  line-height: 37.6px;
 }
 .habit-details p {
   font-weight: 400;
@@ -172,6 +221,7 @@ h3 {
   position: absolute;
   bottom: 0;
   border-radius: 0;
+  line-height: 1.55;
 }
 
 #add-new-habit {
@@ -213,7 +263,15 @@ input {
 
   margin: 15px auto 10px auto;
   text-align: center;
+  /* added in  */
+  width:fit-content;
+  height: 30px;
+  padding: 1px 2px;
+  background-color: white;
+  border-radius: 2px;
+  border: none;
 }
+
 #add-new-habit input[type="submit"] {
   width: 100%;
 
@@ -234,6 +292,9 @@ input {
 
   position: absolute;
   bottom: 27px;
+  /* added in */
+  line-height: 1.55; 
+  height: 38px;
 }
 
 #close-button {
@@ -257,6 +318,15 @@ input {
   padding: 7.5px;
   font-size: 15px;
 }
+
+/* added in */
+#profileName {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 100%;
+  margin: 18.675px 0;
+}
+
 .fa-user-circle {
   margin: 20px 20px;
 }
@@ -266,15 +336,21 @@ input {
   right: 10px;
 }
 
+#hidden button {
+  display: none;
+  margin: Auto;
+}
+
+button.remove::after {
+  content: "delete";
+}
 @media only screen and (max-width: 600px) {
   #user-info {
     width: 80%;
     height: 150px;
   }
   header button {
-    position: absolute;
-    top: 30px;
-    right: 15px;
+    display: none;
   }
   .habit-container {
     width: 80vw;
@@ -302,6 +378,7 @@ input {
     transition: 2s;
     z-index: 3;
   }
+
   .habit-container button.remove:hover {
     position: absolute;
     bottom: 0;
@@ -345,5 +422,117 @@ input {
   .habit-details p {
     font-weight: 400;
     font-size: 20px;
+  }
+  #hidden button {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #user-info {
+    width: 80%;
+    height: 300px;
+  }
+  #profile {
+    flex-wrap: wrap;
+  }
+  .fa-user-circle {
+    width: auto;
+    margin: auto;
+  }
+  #profileInfo {
+    width: 50%;
+  }
+
+  #myChart {
+    width: 40%;
+    position: relative;
+    right: auto;
+    margin: 20px auto auto auto;
+  }
+
+  header button {
+    display: none;
+  }
+  .habit-container {
+    width: 80vw;
+    height: auto;
+    flex-direction: row;
+  }
+  .habit-container img {
+    width: 80vw;
+  }
+  #add-to-total {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    border-radius: 0;
+    font-size: 30px;
+  }
+
+  .habit-container button {
+    position: absolute;
+    bottom: 0;
+    width: 15%;
+    height: 100%;
+    transition: 2s;
+    z-index: 3;
+  }
+
+  button.remove::after {
+    content: "X";
+    font-size: larger;
+    font-weight: bolder;
+  }
+  .habit-container button.remove:hover {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    font-size: 30px;
+    background-color: red;
+  }
+
+  .habit-details {
+    padding: 0;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .habit-details h3,
+  p {
+    text-align: center;
+    height: auto;
+    display: inline;
+    padding: 0;
+
+    color: var(--white);
+
+    margin: 0;
+  }
+  .habit-details h2 {
+    text-align: center;
+    height: auto;
+    color: var(--white);
+    font-size: 25px;
+    width: 60%;
+
+    margin: auto;
+  }
+
+  .habit-details h3 {
+    font-size: 20px;
+  }
+  .habit-details p {
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  #hidden button {
+    display: block;
   }
 }

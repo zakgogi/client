@@ -58,6 +58,8 @@ header img {
   text-align: center;
 
   box-shadow: 0 10px var(--box-shadow);
+
+  transition: 2s;
 }
 
 #login-signin label {
@@ -150,8 +152,25 @@ input[type="password"] {
   font-size: 20px;
 
   padding-left: 15px;
+  margin: 0 auto;
 }
+form a {
+  text-decoration: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+}
+#emailEntry,
+#row4 {
+  color: var(--black);
+  display: none;
+}
 #emailEntry {
   display: none;
 }
@@ -163,7 +182,8 @@ input[type="password"] {
 
 #row2,
 #row3,
-#emailEntry {
+#emailEntry,
+#row4 {
   text-align: left;
 }
 

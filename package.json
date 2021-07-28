@@ -29,6 +29,7 @@
     "watchify": "^4.0.0"
   },
   "dependencies": {
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "materialize-css": "^1.0.0"
   }
 }
