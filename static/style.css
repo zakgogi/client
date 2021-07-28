@@ -1,0 +1,225 @@
+:root {
+  --green: #58c770;
+  --green-highlight: #5ed678;
+  --green-lowlight: #489b5a;
+  --bg-grey: #f4f4f4;
+  --white: #fff;
+  --box-shadow: #e0e0e0;
+  --black: #232121;
+
+  /* buttons */
+  --button-disabled-bg: #c4c4c4;
+  --button-disabled-text: #808080;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-grey);
+}
+
+header {
+  width: 100vw;
+
+  background: var(--bg-grey);
+
+  padding: 30px;
+}
+
+header img {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+#main-container {
+  height: calc(90vh - 109px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-signin {
+  width: 450px;
+  height: 350px;
+
+  padding: 30px;
+
+  border-radius: 25px;
+
+  margin: 0 auto;
+
+  position: relative;
+
+  background: var(--white);
+  text-align: center;
+
+  box-shadow: 0 10px var(--box-shadow);
+}
+
+#login-signin label {
+  margin: 0 15px;
+}
+#login-signin button {
+  width: 50%;
+  height: 40px;
+
+  position: absolute;
+  top: 0;
+
+  border-radius: 35px;
+
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+#login-signin button.left {
+  left: 0;
+  border-radius: 25px 0 0 0;
+}
+#login-signin button.right {
+  right: 0;
+  border-radius: 0 25px 0 0;
+}
+#login-signin button.active {
+  background-color: var(--green);
+  border-bottom: 4px solid var(--green-lowlight);
+  color: var(--white);
+}
+form {
+  margin: 30px 0px;
+}
+form * {
+  margin: 7.5px 0;
+}
+
+form h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 45px;
+  margin-bottom: 30px;
+}
+
+form label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+form input[type="submit"] {
+  width: 150px;
+
+  position: relative;
+
+  top: 30px;
+
+  border-radius: 35px;
+
+  background-color: var(--green);
+  color: var(--white);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+form input[type="submit"]:hover {
+  background-color: var(--green-highlight);
+}
+form input[type="text"],
+input[type="password"] {
+  width: 200px;
+  height: 30px;
+  color: var(--green);
+  font-weight: 600;
+  font-size: 20px;
+
+  padding-left: 15px;
+  margin: 0 auto;
+}
+form a {
+  text-decoration: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+
+  color: var(--button-disabled-text);
+}
+#emailEntry {
+  display: none;
+}
+
+.rightForm {
+  position: absolute;
+  right: 40px;
+}
+
+#row2,
+#row3,
+#emailEntry {
+  text-align: left;
+}
+
+#gdpr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+  background-color: #58c770;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
+#gdpr p {
+  margin: auto;
+}
+#gdpr button {
+  width: 100px;
+  height: 40px;
+  margin: auto;
+
+  border-radius: 35px;
+
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+
+#gdpr .fas {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script defer src="./static/js/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <link rel="icon" href="../static/assets/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="./static/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://kit.fontawesome.com/41cdfc15ac.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/jwt-decode@1.5.1/build/jwt-decode.min.js"
+    ></script>
+
+    <title>Dynamic Title</title>
+  </head>
+  <body>
+    <header>
+      <img
+        src="../static/assets/stride-logo.svg"
+        alt="logo"
+        draggable="false"
+      />
+      <button>sign out</button>
+    </header>
+    <section id="user-info">
+      <div id="profile">
+        <i class="far fa-user-circle fa-5x"></i>
+        <div id="profileInfo">
+          <h1 id="profileName"></h1>
+          <p>Subheading</p>
+        </div>
+        <canvas id="myChart" style="width: 200px; max-width: 200px"></canvas>
+      </div>
+      <button id="new-habit">add new habit</button>
+    </section>
+
+    <section id="habits">
+      <!-- The structure for the containers is laid out below. but they are all generated with javascript. -->
+      <!-- <article id="the-habbit-id-from-the-server" class="habit-container">
+        <section class="habit-details">
+          <h2>Went to the gym</h2>
+          <h3>Today</h3>
+          <p>_of_</p>
+          <h3>Streak</h3>
+          <p>_ Days!</p>
+        </section>
+        <img
+          class="habit-gradient"
+          src="../static/assets/ER0AQagU8AAUjHM.jpg"
+          alt=""
+        />
+        <button>remove</button>
+        <button id="add-to-total" type="button">+</button>
+      </article> -->
+    </section>
+    <div id="add-new-habit" class="closed">
+      <form id="new-habit-form">
+        <label for="habitname">habit name</label>
+        <input id="habitname" type="text" />
+        <label for="frequency">how often a day</label>
+        <input id="frequency" type="text" />
+        <input type="submit" />
+      </form>
+      <button id="close-button" type="button">cancel</button>
+    </div>
+  </body>
+</html>

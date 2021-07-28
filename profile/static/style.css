@@ -1,0 +1,349 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-grey);
+}
+
+/* ======= Variables ======= */
+
+:root {
+  --green: #58c770;
+  --green-highlight: #5ed678;
+  --green-lowlight: #489b5a;
+  --bg-grey: #f4f4f4;
+  --white: #fff;
+  --box-shadow: #e0e0e0;
+  --black: #232121;
+
+  /* buttons */
+  --button-disabled-bg: #c4c4c4;
+  --button-disabled-text: #808080;
+
+  --border-radius: 25px;
+}
+
+/* ======= Default Styles ======= */
+
+button {
+  width: 150px;
+
+  border-radius: 35px;
+
+  background-color: var(--green);
+  color: var(--white);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--green-highlight);
+}
+
+/* ======= Specific Styles Styles ======= */
+
+/* ==== Header ==== */
+header {
+  width: 100%;
+  position: relative;
+  background: var(--bg-grey);
+
+  padding: 30px;
+}
+
+header img {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+header button {
+  position: absolute;
+  top: 30px;
+  right: 15px;
+}
+
+/* ==== User info ==== */
+#user-info {
+  width: 700px;
+  height: 150px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--white);
+  border-radius: var(--border-radius);
+
+  margin: 15px auto;
+}
+
+/* ==== Habit containers ==== */
+
+#habits {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.habit-container {
+  width: 260px;
+  height: 340px;
+  overflow: hidden;
+
+  position: relative;
+
+  margin: 15px;
+
+  background: var(--button-disabled-text);
+
+  border-radius: var(--border-radius);
+
+  box-shadow: 0 5px var(--box-shadow);
+}
+.habit-gradient {
+  /* opacity: 0.1; */
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+.habit-container button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0;
+}
+
+.habit-container button:hover {
+  background: var(--green-highlight);
+}
+
+.habit-details {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+
+  padding: 15px;
+
+  color: var(--white);
+}
+.habit-details h2,
+h3 {
+  font-weight: 600;
+  margin: 10px 0 0 0;
+  font-size: 30px;
+}
+.habit-details h2 {
+  font-size: 25px;
+  margin: 10px 0;
+}
+.habit-details p {
+  font-weight: 400;
+  margin: 0 0 5px 0;
+  font-size: 20px;
+}
+#add-to-total {
+  width: 40px;
+  height: 40px;
+
+  right: 15px;
+  bottom: 50px;
+
+  z-index: 3;
+
+  padding: 0;
+  border-radius: 30px;
+}
+/* ==== New habit ==== */
+
+#new-habit {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0;
+}
+
+#add-new-habit {
+  z-index: 3;
+  height: 300px;
+  width: 380px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  background-color: var(--button-disabled-text);
+
+  overflow: hidden;
+
+  border-radius: var(--border-radius);
+}
+#add-new-habit label,
+input {
+  color: var(--white);
+  display: block;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+
+  margin: 15px auto 10px auto;
+  text-align: center;
+}
+#add-new-habit input {
+  color: var(--green);
+  display: block;
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+
+  margin: 15px auto 10px auto;
+  text-align: center;
+}
+#add-new-habit input[type="submit"] {
+  width: 100%;
+
+  border-radius: 35px;
+
+  background-color: var(--green);
+  color: var(--white);
+
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+
+  border-style: none;
+  border-radius: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 27px;
+}
+
+#close-button {
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: unset;
+}
+
+.closed {
+  display: none;
+}
+
+#profile {
+  display: flex;
+  flex-direction: row;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 7.5px;
+  font-size: 15px;
+}
+.fa-user-circle {
+  margin: 20px 20px;
+}
+
+#myChart {
+  position: absolute;
+  right: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  #user-info {
+    width: 80%;
+    height: 150px;
+  }
+  header button {
+    position: absolute;
+    top: 30px;
+    right: 15px;
+  }
+  .habit-container {
+    width: 80vw;
+    height: 100px;
+    flex-direction: row;
+  }
+  .habit-container img {
+    width: 80vw;
+  }
+  #add-to-total {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    border-radius: 0;
+    font-size: 30px;
+  }
+
+  .habit-container button {
+    position: absolute;
+    bottom: 0;
+    width: 15%;
+    height: 100%;
+    transition: 2s;
+    z-index: 3;
+  }
+  .habit-container button.remove:hover {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    font-size: 30px;
+    background-color: red;
+  }
+  .habit-details {
+    padding: 0;
+    height: 100%;
+    position: relative;
+  }
+  .habit-details h3,
+  p {
+    text-align: center;
+    height: auto;
+    padding-right: 15px;
+    display: inline;
+
+    color: var(--white);
+
+    margin: 0;
+  }
+  .habit-details h2 {
+    text-align: center;
+    height: auto;
+    color: var(--white);
+
+    margin: 0;
+  }
+
+  .habit-details h2 {
+    font-size: 30px;
+    margin: 10px 0;
+  }
+  .habit-details h3 {
+    font-size: 20px;
+  }
+  .habit-details p {
+    font-weight: 400;
+    font-size: 20px;
+  }
+}

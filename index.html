@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./static/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://kit.fontawesome.com/41cdfc15ac.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="icon" href="./static/assets/favicon.ico" type="image/x-icon" />
+
+    <script defer src="/static/js/bundle.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/jwt-decode@1.5.1/build/jwt-decode.min.js"
+    ></script>
+
+    <title>Stride.</title>
+  </head>
+  <body>
+    <header>
+      <img src="./static/assets/stride-logo.svg" alt="logo" draggable="false" />
+    </header>
+    <main id="main-container">
+      <section id="login-signin">
+        <button id="login-button" class="left active">log in</button>
+        <button id="sign-up-button" class="right">sign up</button>
+        <form>
+          <h1 id="form-heading">log in.</h1>
+          <div id="login-entry">
+            <div id="emailEntry">
+              <label class="leftForm" for="email">email address</label>
+              <input class="rightForm" id="email" type="text" />
+            </div>
+
+            <div id="row2">
+              <label class="leftForm" for="username">username</label>
+              <input class="rightForm" id="username" type="text" />
+              <br />
+            </div>
+
+            <div id="row3">
+              <label class="leftForm" for="password">password</label>
+              <input class="rightForm" id="password" type="password" />
+              <br />
+            </div>
+          </div>
+          <input id="submit-button" type="submit" value="log in" />
+          <a href="https://the-stride.netlify.app/profile/"
+            >use without a profile.</a
+          >
+        </form>
+        <p id="error-messages"></p>
+      </section>
+    </main>
+    <section id="gdpr">
+      <p>
+        By Clicking accept you consent to "Stride." using your data. Click
+        <a
+          href="https://www.privacypolicies.com/blog/gdpr-consent-examples/"
+          target="_blank"
+          >here</a
+        >
+        to read more.
+      </p>
+      <button id="accept">Accept</button>
+      <button id="reject">Reject</button>
+      <i class="fas fa-times"></i>
+    </section>
+  </body>
+</html>
