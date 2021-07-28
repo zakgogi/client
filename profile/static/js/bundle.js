@@ -16,11 +16,9 @@ function renderHabitData(data) {
   const habitBoilerStreak = document.createElement("h3");
   habitBoilerStreak.textContent = "Streak";
 
-
-    const streak = document.createElement("p");
-    streak.id = "streak-output";
-    streak.textContent = data.streak;
-
+  const streak = document.createElement("p");
+  streak.id = "streak-output";
+  streak.textContent = data.streak;
 
   newSection.append(habitTitle);
   newSection.append(habitBoilerToday);
@@ -32,37 +30,35 @@ function renderHabitData(data) {
 }
 // TESTED
 function renderHabitContainer(data) {
+  const newArticle = document.createElement("article");
+  newArticle.id = data.id;
+  newArticle.classList.add("habit-container");
 
-    const newArticle = document.createElement("article");
-    newArticle.id = data.id;
-    newArticle.classList.add("habit-container");
+  const habitData = renderHabitData(data);
+  newArticle.append(habitData);
 
-    const habitData = renderHabitData(data);
-    newArticle.append(habitData);
+  const bgImage = document.createElement("img");
+  bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
+  bgImage.classList.add("habit-gradient");
+  bgImage.alt = "background gradient";
+  //* the opacity is based on the percentage of the goal complete.
+  bgImage.style.opacity =
+    parseInt(data.times_completed) / parseInt(data.frequency_day);
+  newArticle.append(bgImage);
 
-    const bgImage = document.createElement("img");
-    bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
-    bgImage.classList.add("habit-gradient");
-    bgImage.alt = "background gradient";
-    //* the opacity is based on the percentage of the goal complete.
-    bgImage.style.opacity = (parseInt(data.times_completed) / parseInt(data.frequency_day));
-    newArticle.append(bgImage);
+  const removeButton = document.createElement("button");
+  removeButton.textContent = "delete";
+  removeButton.classList.add("remove");
+  newArticle.append(removeButton);
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "delete";
-    removeButton.classList.add("remove");
-    newArticle.append(removeButton);   
-    
-    const addToCountButton = document.createElement("button");
-    addToCountButton.id = "add-to-total";
-    addToCountButton.type = "button";
-    addToCountButton.textContent = "+";
+  const addToCountButton = document.createElement("button");
+  addToCountButton.id = "add-to-total";
+  addToCountButton.type = "button";
+  addToCountButton.textContent = "+";
 
-    newArticle.append(addToCountButton);
-    
-    return newArticle;
+  newArticle.append(addToCountButton);
 
-
+  return newArticle;
 }
 
 // TESTED
@@ -79,23 +75,18 @@ function removeAllHabitContainers() {
 function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
+  const paragraph = targetArticle.querySelector("p");
+  paragraph.textContent = `${timesComplete} of ${targetTimes}`;
 
-    
-    const paragraph = targetArticle.querySelector("p");
-    paragraph.textContent = `${timesComplete} of ${targetTimes}`;
+  if (timesComplete == targetTimes) {
+    console.log("we might need to do something else here too.");
 
-    if (timesComplete == targetTimes) {
-        console.log("we might need to do something else here too.");
+    const target = targetArticle.querySelectorAll("p")[1];
 
-        const target = targetArticle.querySelectorAll("p")[1];
+    target.textContent = parseInt(target.textContent) + 1;
 
-        
-        target.textContent = parseInt(target.textContent) + 1;
-        
-        // update the dom streak total.
-
-    }
-
+    // update the dom streak total.
+  }
 }
 
 // TESTED
@@ -108,11 +99,41 @@ function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     parseInt(timesComplete) / parseInt(targetTimes);
 }
 
+// TODO TEST ME
+function uniqueBadges(data) {
+  const output = [];
+  for (let i = 0; i < data.length; i++) {
+    if (!output.includes(data[i].badge_name)) {
+      output.push(data[i].badge_name);
+    }
+  }
+  return output;
+}
+
+// TODO TEST ME
+function createBadgeSection(badges) {
+  const badgesContainer = document.createElement("section");
+  badgesContainer.id = "badge-display";
+
+  badges.forEach((badge) => {
+    let imgSrc = `../../../static/assets/badges/${badge}.svg`;
+    const newImg = document.createElement("img");
+    newImg.src = imgSrc;
+    newImg.alt = `${badge} badge`;
+    newImg.classList.add("badge");
+    badgesContainer.append(newImg);
+  });
+
+  return badgesContainer;
+}
+
 module.exports = {
   renderHabitContainer,
   removeAllHabitContainers,
   updateTimesCompleted,
   updateBackgroundOpacity,
+  uniqueBadges,
+  createBadgeSection
 };
 
 },{}],2:[function(require,module,exports){
@@ -140,6 +161,7 @@ async function buttonEvents(e) {
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
   
+  
 
   // Update the server
   const eventData = {
@@ -157,7 +179,10 @@ async function buttonEvents(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+
+  
   getGraphData();
+  updateBadgesToProfile();
 }
 
 async function removeHabit(e) {
@@ -192,6 +217,7 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 }
+
 async function getUserData() {
   const userId = localStorage.getItem("userId");
 
@@ -215,6 +241,10 @@ async function getUserData() {
   const response = await fetch(`${serverUrl}/habits/${userId}`);
   const userData = await response.json();
 
+ 
+
+  console.log(userData);
+
   if (userData.length === 0) {
     console.log("no data found");
     return;
@@ -229,6 +259,7 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
+  updateBadgesToProfile()
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }
@@ -290,6 +321,37 @@ async function getGraphData() {
   bindEventListeners();
 }
 
+async function updateBadgesToProfile() {
+  const data = await getBadgeData();
+
+  // get all unique badges.
+  const badgeNames = helpers.uniqueBadges(data);
+
+  
+  const badgeSection = helpers.createBadgeSection(badgeNames);
+
+  if (document.querySelector("#profileInfo section")) {
+    document.querySelector("#profileInfo section").remove();
+  }
+
+  document.querySelector("#profileInfo").append(badgeSection);
+  
+  // TODO create a div full of images.
+
+
+
+}
+
+async function getBadgeData() {
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/badges/${userId}`);
+  const data = await response.json();
+
+  console.log(data);
+  return data;
+}
+
 const newHabitForm = document.getElementById("new-habit-form");
 newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
@@ -342,5 +404,4 @@ function renderGraph(dataInput) {
 }
 
 getUserData();
-
 },{"./helpers":1}]},{},[2]);

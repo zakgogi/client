@@ -22,6 +22,7 @@ async function buttonEvents(e) {
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
   
+  
 
   // Update the server
   const eventData = {
@@ -39,7 +40,10 @@ async function buttonEvents(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+
+  
   getGraphData();
+  updateBadgesToProfile();
 }
 
 async function removeHabit(e) {
@@ -74,6 +78,7 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 }
+
 async function getUserData() {
   const userId = localStorage.getItem("userId");
 
@@ -97,6 +102,10 @@ async function getUserData() {
   const response = await fetch(`${serverUrl}/habits/${userId}`);
   const userData = await response.json();
 
+ 
+
+  console.log(userData);
+
   if (userData.length === 0) {
     console.log("no data found");
     return;
@@ -111,6 +120,7 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
+  updateBadgesToProfile()
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }
@@ -170,6 +180,37 @@ async function getGraphData() {
 
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
+}
+
+async function updateBadgesToProfile() {
+  const data = await getBadgeData();
+
+  // get all unique badges.
+  const badgeNames = helpers.uniqueBadges(data);
+
+  
+  const badgeSection = helpers.createBadgeSection(badgeNames);
+
+  if (document.querySelector("#profileInfo section")) {
+    document.querySelector("#profileInfo section").remove();
+  }
+
+  document.querySelector("#profileInfo").append(badgeSection);
+  
+  // TODO create a div full of images.
+
+
+
+}
+
+async function getBadgeData() {
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/badges/${userId}`);
+  const data = await response.json();
+
+  console.log(data);
+  return data;
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
