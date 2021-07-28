@@ -56,6 +56,12 @@ function updateFormData() {
 }
 
 
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+const gdpr = document.querySelector("#gdpr");
+
+dismiss.addEventListener("click", closeGDPR);
+cancel.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");

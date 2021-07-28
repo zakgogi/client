@@ -57,6 +57,13 @@ function updateFormData() {
 }
 
 
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+const gdpr = document.querySelector("#gdpr");
+
+dismiss.addEventListener("click", closeGDPR);
+cancel.addEventListener("click", closeGDPR);
+
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
@@ -158,20 +165,11 @@ form.addEventListener("submit", async (e) => {
 
   
 
-  
-
   //* Get the hash from the page to pick which fetch we do.
 
 });
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
 
-
-cancel.addEventListener("click", helpers.closeGDPR);
-reject.addEventListener("click", helpers.closeGDPR);
-accept.addEventListener("click", helpers.closeGDPR);
 
 location.hash = "login";
 },{"./helpers":1}]},{},[2]);
