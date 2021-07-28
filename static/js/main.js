@@ -52,11 +52,15 @@ form.addEventListener("submit", async (e) => {
     options
   );
 
+  console.log("here");
+
   const tokenData = await response.json();
   console.log(tokenData);
   const userData = jwt_decode(tokenData.token);
   localStorage.setItem("userId", userData.id);
   localStorage.setItem("username", userData.user);
+
+  
 
   // let currentURL = window.location.href;
 
@@ -66,3 +70,12 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
+
+const accept = document.getElementById("accept");
+const reject = document.querySelector("#reject");
+const cancel = document.querySelector(".fa-times");
+
+
+cancel.addEventListener("click", helpers.closeGDPR);
+reject.addEventListener("click", helpers.closeGDPR);
+accept.addEventListener("click", helpers.closeGDPR);

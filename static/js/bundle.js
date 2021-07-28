@@ -28,6 +28,11 @@ function setActiveButton(e) {
   loginButton.classList.toggle("active");
   signInButton.classList.toggle("active");
 
+  updateFormData();
+  
+}
+
+function updateFormData() {
   const formHeading = document.getElementById("form-heading");
   const submitButton = document.getElementById("submit-button");
   const email = document.getElementById("emailEntry");
@@ -48,22 +53,16 @@ function setActiveButton(e) {
   }
 }
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
-const gdpr = document.querySelector("#gdpr");
 
-cancel.addEventListener("click", closeGDPR);
-reject.addEventListener("click", closeGDPR);
-accept.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
+  const gdpr = document.querySelector("#gdpr");
   gdpr.style.display = "none";
 }
 
-location.hash = "login";
+// location.hash = "login";
 
-module.exports = { setActiveButton, clearAllInputFields, closeGDPR };
+module.exports = { setActiveButton, clearAllInputFields, closeGDPR, updateFormData };
 
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
@@ -120,11 +119,15 @@ form.addEventListener("submit", async (e) => {
     options
   );
 
+  console.log("here");
+
   const tokenData = await response.json();
   console.log(tokenData);
   const userData = jwt_decode(tokenData.token);
   localStorage.setItem("userId", userData.id);
   localStorage.setItem("username", userData.user);
+
+  
 
   // let currentURL = window.location.href;
 
@@ -135,4 +138,12 @@ form.addEventListener("submit", async (e) => {
   //* Get the hash from the page to pick which fetch we do.
 });
 
+const accept = document.getElementById("accept");
+const reject = document.querySelector("#reject");
+const cancel = document.querySelector(".fa-times");
+
+
+cancel.addEventListener("click", helpers.closeGDPR);
+reject.addEventListener("click", helpers.closeGDPR);
+accept.addEventListener("click", helpers.closeGDPR);
 },{"./helpers":1}]},{},[2]);

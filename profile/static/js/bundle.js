@@ -195,6 +195,13 @@ function bindEventListeners() {
 async function getUserData() {
   const userId = localStorage.getItem("userId");
 
+  const knownUser = (localStorage.getItem("userId")) ? true : false;
+  localStorage.setItem("knownUser", knownUser);
+
+  if (!knownUser) {
+    localStorage.setItem("username", "Stranger");
+  }
+
   //* Create custom title
   const username = localStorage.getItem("username");
   document.title = `${username}'s Habits`;
@@ -297,6 +304,9 @@ newHabitButton.addEventListener("click", toggleModal);
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
   localStorage.removeItem("userId");
+  localStorage.removeItem("username");
+  localStorage.removeItem("knownUser");
+  // TODO remove everything.
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
