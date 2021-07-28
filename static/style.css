@@ -58,6 +58,8 @@ header img {
   text-align: center;
 
   box-shadow: 0 10px var(--box-shadow);
+
+  transition: 2s;
 }
 
 #login-signin label {
@@ -163,10 +165,11 @@ form a {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 12px;
-
-
-#emailEntry, #row4 {
-  color: var(--button-disabled-text);
+}
+#emailEntry,
+#row4 {
+  color: var(--black);
+  display: none;
 }
 #emailEntry {
   display: none;
