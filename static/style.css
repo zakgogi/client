@@ -152,7 +152,7 @@ input[type="password"] {
   padding-left: 15px;
 }
 
-#emailEntry {
+#emailEntry, #row4 {
   display: none;
 }
 
@@ -163,7 +163,8 @@ input[type="password"] {
 
 #row2,
 #row3,
-#emailEntry {
+#emailEntry,
+#row4 {
   text-align: left;
 }
 
