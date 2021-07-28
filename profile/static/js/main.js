@@ -2,6 +2,7 @@ const helpers = require("./helpers");
 const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
 
 let myChart;
+let executed;
 
 async function buttonEvents(e) {
   const targetArticle = e.target.closest("article");
@@ -13,8 +14,21 @@ async function buttonEvents(e) {
   currentCount = parseInt(currentCount);
 
   if (currentCount + 1 > dailyTarget) {
+    M.toast({html: 'You\'ve already hit your daily target!'})
     // Already maxed out.
     return;
+  }
+
+  let halfdailyTarget = dailyTarget/2;
+  if (!executed) {
+  if(currentCount + 1 > halfdailyTarget){
+        M.toast({html: 'Keep going, you\'re over half way there!'});
+        executed = true;
+      }
+  };
+
+  if(currentCount + 1 === dailyTarget){
+    M.toast({html: 'Well done! You\'ve hit your daily target!'}) 
   }
 
   currentCount++;

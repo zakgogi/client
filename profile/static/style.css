@@ -254,15 +254,6 @@ input {
   height: 38px;
 }
 
-/* added in */
-#habitname::selection{
-  outline-style: solid !important;
-}
-
-#frequency::selection {
-  outline-style: solid;
-}
-
 #close-button {
   background-color: var(--button-disabled-bg);
   color: var(--button-disabled-text);
