@@ -160,11 +160,14 @@ async function getGraphData() {
 
   let totalDone = 0;
   let totalToDo = 0;
+
   userData.forEach((habit) => {
     totalDone += habit.times_completed;
     totalToDo += habit.frequency_day;
   });
+  
   let stillToDo = totalToDo - totalDone;
+
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }

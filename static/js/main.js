@@ -18,14 +18,7 @@ form.addEventListener("submit", async (e) => {
     email: e.target.email.value,
   };
 
-  // if any of the values are falsy, i.e empty, don't process.
-  //   for (const key in data) {
-  //     if (!data[key]) {
-  //       // this one is already live so no need to do anything.
-  //       errorMessages.textContent = "username or password missing.";
-  //       return;
-  //     }
-  //   }
+  
 
   helpers.clearAllInputFields();
 
@@ -52,20 +45,26 @@ form.addEventListener("submit", async (e) => {
     options
   );
 
-  console.log("here");
 
   const tokenData = await response.json();
-  console.log(tokenData);
-  const userData = jwt_decode(tokenData.token);
-  localStorage.setItem("userId", userData.id);
-  localStorage.setItem("username", userData.user);
+
+console.log(tokenData);
+
+  if (requestType === "#login") {
+    const userData = jwt_decode(tokenData.token);
+    localStorage.setItem("userId", userData.id);
+    localStorage.setItem("username", userData.user);
+  } else {
+    localStorage.setItem("userId", tokenData.id);
+    localStorage.setItem("username", tokenData.user);
+  }
+
+
+
+ 
 
   
 
-  // let currentURL = window.location.href;
-
-  // console.log(currentURL);
-  // currentURL = currentURL.split("#")[0];
   window.location.assign(`https://the-stride.netlify.app/profile/`);
 
   //* Get the hash from the page to pick which fetch we do.
