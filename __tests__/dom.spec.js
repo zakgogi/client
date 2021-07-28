@@ -66,10 +66,10 @@ describe('head testing login page', () => {
   });
 
   test('script link is a bundle.js', () => {
-      let javascriptLink = document.querySelector('script');
-      let src = javascriptLink.getAttribute("src");
-      src = src.split("/").slice(-1)[0] 
-      expect(src).toBe("bundle.js");
+    let javascriptLink = document.querySelector('script');
+    let src = javascriptLink.getAttribute("src");
+    src = src.split(".").slice(-1)[0] 
+    expect(src).toBe("js");
   });
 })
 describe('head testing profile page', () => {
@@ -128,11 +128,11 @@ describe('head testing profile page', () => {
       expect(src).toBeTruthy();
   });
 
-  test('script link is a bundle.js', () => {
+  test('script link is a .js file', () => {1
       let javascriptLink = document.querySelector('script');
       let src = javascriptLink.getAttribute("src");
-      src = src.split("/").slice(-1)[0] 
-      expect(src).toBe("bundle.js");
+      src = src.split(".").slice(-1)[0] 
+      expect(src).toBe("js");
   });
 })
 
@@ -184,7 +184,205 @@ describe("login page", () => {
     })
 
     describe("set active button", () => {
+        beforeEach(() => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">sign up.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+        })
 
+        test("heading changes to login", () => {
+            helpers.updateFormData()
+            expect(document.querySelector("#login-signin h1").textContent).toBe("log in.");
+        })
+
+        test("height is updated to auto", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">log in.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#login-signin").style.height).toBe("auto");
+        })
+
+        test("height is updated to 350px", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">sign up.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#login-signin").style.height).toBe("350px");
+        })
+
+
+        test("email form is shown", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">sign up.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#login-signin").style.height).toBe("350px");
+        })
+
+        test("button text changes to login", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">sign up.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#submit-button").value).toBe("log in");
+        })
+
+        test("button text changes to sign up", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">log in.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#submit-button").value).toBe("sign up");
+        })
+
+
+        test("heading changes to sign up", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><form>
+            <h1 id="form-heading">log in.</h1>
+            <div id="login-entry">
+              <div id="emailEntry" style="display: block;">
+                <label class="leftForm" for="email">email address</label>
+                <input class="rightForm" id="email" type="text" spellcheck="false">
+              </div>
+  
+              <div id="row2">
+                <label class="leftForm" for="username">username</label>
+                <input class="rightForm" id="username" type="text" spellcheck="false">
+                <br>
+              </div>
+  
+              <div id="row3">
+                <label class="leftForm" for="password">password</label>
+                <input class="rightForm" id="password" type="password" spellcheck="false">
+                <br>
+              </div>
+            </div>
+            <input id="submit-button" type="submit" value="sign up" spellcheck="false">
+          </form></section>`
+            helpers.updateFormData()
+            expect(document.querySelector("#login-signin h1").textContent).toBe("sign up.");
+        })
+
+        test("GDPR display gets set to none", () => {
+            document.documentElement.innerHTML = `<section id="login-signin"><article id="gdpr" style="display:static;" ><article></section>`
+            helpers.closeGDPR()
+            expect(document.querySelector("article").style.display).toBe("none");
+        })
     })
 })
 
@@ -208,20 +406,8 @@ describe('profile page', () => {
             target.append(profileHelpers.renderHabitContainer(data))
             expect(document.querySelector("article")).toBeTruthy();
         })
-        // test('article has the right class', () => {
-        //     const data = {
-        //         habitId: 1,
-        //         habitTitle: "test",
-        //         todayTotal: 3,
-        //         todayGoal: 10,
-        //         streak: 7
-            
-        //     };
-        //     const target = document.querySelector("#habits");
-        //     target.append(profileHelpers.renderHabitContainer(data))
-            
-        //     expect(document.querySelector("article").id).toBe("1");
-        // })
+        
+        
         test('text section has the right class', () => {
             const data = {
                 habitId: 1,
