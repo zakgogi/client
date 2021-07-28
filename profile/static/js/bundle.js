@@ -173,8 +173,8 @@ async function removeHabit(e) {
 
   await fetch(`${serverUrl}/habits`, options);
   getGraphData();
-
   e.target.closest("article").remove();
+  M.toast({html: 'Habit Deleted!'}) // added in alert
 }
 
 function bindEventListeners() {

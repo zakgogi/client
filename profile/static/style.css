@@ -43,6 +43,8 @@ button {
   border-style: none;
 
   cursor: pointer;
+  /* added in */
+  line-height: 1.55;
 }
 
 button:hover {
@@ -143,10 +145,14 @@ h3 {
   font-weight: 600;
   margin: 10px 0 0 0;
   font-size: 30px;
+  /* added in */
+  line-height: 44.8px;
 }
 .habit-details h2 {
   font-size: 25px;
   margin: 10px 0;
+  /* added in */
+  line-height: 37.6px;
 }
 .habit-details p {
   font-weight: 400;
@@ -172,6 +178,7 @@ h3 {
   position: absolute;
   bottom: 0;
   border-radius: 0;
+  line-height: 1.55;
 }
 
 #add-new-habit {
@@ -213,7 +220,15 @@ input {
 
   margin: 15px auto 10px auto;
   text-align: center;
+  /* added in  */
+  width:fit-content;
+  height: 30px;
+  padding: 1px 2px;
+  background-color: white;
+  border-radius: 2px;
+  border: none;
 }
+
 #add-new-habit input[type="submit"] {
   width: 100%;
 
@@ -234,6 +249,9 @@ input {
 
   position: absolute;
   bottom: 27px;
+  /* added in */
+  line-height: 1.55; 
+  height: 38px;
 }
 
 #close-button {
@@ -257,6 +275,15 @@ input {
   padding: 7.5px;
   font-size: 15px;
 }
+
+/* added in */
+#profileName {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 100%;
+  margin: 18.675px 0;
+}
+
 .fa-user-circle {
   margin: 20px 20px;
 }
