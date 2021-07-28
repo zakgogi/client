@@ -61,11 +61,11 @@ console.log(tokenData);
 
 
 
-  window.location.assign(`http://[::]:8000/profile/`); // TODO Change
+ 
 
   
 
-  // window.location.assign(`https://the-stride.netlify.app/profile/`);
+  window.location.assign(`https://the-stride.netlify.app/profile/`);
 
   //* Get the hash from the page to pick which fetch we do.
 });
