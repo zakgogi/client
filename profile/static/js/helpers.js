@@ -79,9 +79,7 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
   if (timesComplete == targetTimes) {
     console.log("we might need to do something else here too.");
-
     const target = targetArticle.querySelectorAll("p")[1];
-
     target.textContent = parseInt(target.textContent) + 1;
 
     // update the dom streak total.
@@ -98,9 +96,39 @@ function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     parseInt(timesComplete) / parseInt(targetTimes);
 }
 
+// TODO TEST ME
+function uniqueBadges(data) {
+  const output = [];
+  for (let i = 0; i < data.length; i++) {
+    if (!output.includes(data[i].badge_name)) {
+      output.push(data[i].badge_name);
+    }
+  }
+  return output;
+}
+
+// TODO TEST ME
+function createBadgeSection(badges) {
+  const badgesContainer = document.createElement("section");
+  badgesContainer.id = "badge-display";
+
+  badges.forEach((badge) => {
+    let imgSrc = `../../../static/assets/badges/${badge}.svg`;
+    const newImg = document.createElement("img");
+    newImg.src = imgSrc;
+    newImg.alt = `${badge} badge`;
+    newImg.classList.add("badge");
+    badgesContainer.append(newImg);
+  });
+
+  return badgesContainer;
+}
+
 module.exports = {
   renderHabitContainer,
   removeAllHabitContainers,
   updateTimesCompleted,
   updateBackgroundOpacity,
+  uniqueBadges,
+  createBadgeSection
 };

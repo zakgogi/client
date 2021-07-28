@@ -87,6 +87,25 @@ header button {
   margin: 15px auto;
 }
 
+#badge-collection {
+  width: 200px;
+  height: 30px;
+  background: var(--green-highlight);
+}
+
+/* ==== badges ==== */
+
+#badge-display {
+  width: 300px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.badge {
+  height: 30px;
+  margin: 7px;
+}
+
 /* ==== Habit containers ==== */
 
 #habits {

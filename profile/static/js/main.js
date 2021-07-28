@@ -22,6 +22,7 @@ async function buttonEvents(e) {
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
 
+
   // Update the server
   const eventData = {
     id: targetArticle.id,
@@ -38,7 +39,10 @@ async function buttonEvents(e) {
   };
 
   await fetch(`${serverUrl}/habits`, options);
+
+  
   getGraphData();
+  updateBadgesToProfile();
 }
 
 async function removeHabit(e) {
@@ -74,8 +78,16 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 }
+
 async function getUserData() {
   const userId = localStorage.getItem("userId");
+
+  const knownUser = (localStorage.getItem("userId")) ? true : false;
+  localStorage.setItem("knownUser", knownUser);
+
+  if (!knownUser) {
+    localStorage.setItem("username", "Stranger");
+  }
 
   //* Create custom title
   const username = localStorage.getItem("username");
@@ -89,6 +101,10 @@ async function getUserData() {
 
   const response = await fetch(`${serverUrl}/habits/${userId}`);
   const userData = await response.json();
+
+ 
+
+  console.log(userData);
 
   if (userData.length === 0) {
     hideChart();
@@ -105,6 +121,7 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
+  updateBadgesToProfile()
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
 }
@@ -154,13 +171,47 @@ async function getGraphData() {
 
   let totalDone = 0;
   let totalToDo = 0;
+
   userData.forEach((habit) => {
     totalDone += habit.times_completed;
     totalToDo += habit.frequency_day;
   });
+  
   let stillToDo = totalToDo - totalDone;
+
   renderGraph([totalDone, stillToDo]);
   bindEventListeners();
+}
+
+async function updateBadgesToProfile() {
+  const data = await getBadgeData();
+
+  // get all unique badges.
+  const badgeNames = helpers.uniqueBadges(data);
+
+  
+  const badgeSection = helpers.createBadgeSection(badgeNames);
+
+  if (document.querySelector("#profileInfo section")) {
+    document.querySelector("#profileInfo section").remove();
+  }
+
+  document.querySelector("#profileInfo").append(badgeSection);
+  
+  // TODO create a div full of images.
+
+
+
+}
+
+async function getBadgeData() {
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/badges/${userId}`);
+  const data = await response.json();
+
+  console.log(data);
+  return data;
 }
 
 const newHabitForm = document.getElementById("new-habit-form");
@@ -180,6 +231,9 @@ newHabitButton.addEventListener("click", toggleModal);
 const signOutButton = document.querySelector("header button");
 signOutButton.addEventListener("click", () => {
   localStorage.removeItem("userId");
+  localStorage.removeItem("username");
+  localStorage.removeItem("knownUser");
+  // TODO remove everything.
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
@@ -217,6 +271,7 @@ function renderGraph(dataInput) {
   });
 }
 
+
 // This function hides chart when there is no habits available.
 function hideChart() {
   let chart = document.getElementById("myChart");
@@ -228,3 +283,4 @@ function hideChart() {
   console.log("trig");
 }
 getUserData();
+
