@@ -164,6 +164,8 @@ form a {
   font-weight: 400;
   font-size: 12px;
 
+
+#emailEntry, #row4 {
   color: var(--button-disabled-text);
 }
 #emailEntry {
@@ -177,7 +179,8 @@ form a {
 
 #row2,
 #row3,
-#emailEntry {
+#emailEntry,
+#row4 {
   text-align: left;
 }
 

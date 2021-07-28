@@ -37,18 +37,21 @@ function updateFormData() {
   const submitButton = document.getElementById("submit-button");
   const email = document.getElementById("emailEntry");
   const card = document.getElementById("login-signin");
+  const confirmPasswordDiv = document.getElementById("row4");
 
   if (formHeading.textContent === "log in.") {
     location.hash = "signup";
     formHeading.textContent = "sign up.";
     submitButton.value = "sign up";
     email.style.display = "block";
+    confirmPasswordDiv.style.display = "block";
     card.style.height = "auto";
   } else {
     location.hash = "login";
     formHeading.textContent = "log in.";
     submitButton.value = "log in";
     email.style.display = "none";
+    confirmPasswordDiv.style.display = "none";
     card.style.height = "350px";
   }
 }
@@ -79,61 +82,76 @@ const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = {
-    username: e.target.username.value,
-    password: e.target.password.value,
-    email: e.target.email.value,
-  };
-
-  
-
-  helpers.clearAllInputFields();
-
-  // TODO send the requests to the server.
-  const requestType = location.hash;
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let endpoint = "";
-
-  if (requestType == "#signup") {
-    endpoint = "/auth/register";
-  } else {
-    endpoint = "/auth/login";
+  if (location.hash ==  "#signup") {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    if (password !== confirmPassword) {
+      alert("The passswords did not match");
+      return
+    }
   }
 
-  const response = await fetch(
-    `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
-    options
-  );
-
-
-  const tokenData = await response.json();
-
-console.log(tokenData);
-
-  if (requestType === "#login") {
-    const userData = jwt_decode(tokenData.token);
-    localStorage.setItem("userId", userData.id);
-    localStorage.setItem("username", userData.user);
-  } else {
-    localStorage.setItem("userId", tokenData.id);
-    localStorage.setItem("username", tokenData.user);
-  }
-
-
-
- 
-
+  // if (password !== confirmPassword) {
+  //   alert("The passswords did not match");
   
-
-  window.location.assign(`https://the-stride.netlify.app/profile/`);
-
+  // } else {
+    const data = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+      email: e.target.email.value,
+    };
+  
+    // if any of the values are falsy, i.e empty, don't process.
+    //   for (const key in data) {
+    //     if (!data[key]) {
+    //       // this one is already live so no need to do anything.
+    //       errorMessages.textContent = "username or password missing.";
+    //       return;
+    //     }
+    //   }
+  
+    helpers.clearAllInputFields();
+  
+    // TODO send the requests to the server.
+    const requestType = location.hash;
+  
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    let endpoint = "";
+  
+    if (requestType == "#signup") {
+      endpoint = "/auth/register";
+    } else {
+      endpoint = "/auth/login";
+    }
+  
+    const response = await fetch(
+      `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
+      options
+    );
+  
+    const tokenData = await response.json();
+    
+    if (requestType === "#login") {
+      const userData = jwt_decode(tokenData.token);
+      localStorage.setItem("userId", userData.id);
+      localStorage.setItem("username", userData.user);
+    } else {
+      localStorage.setItem("userId", tokenData.id);
+      localStorage.setItem("username", tokenData.user);
+    }
+  
+    // let currentURL = window.location.href;
+  
+    // console.log(currentURL);
+    // currentURL = currentURL.split("#")[0];
+    window.location.assign(`https://the-stride.netlify.app/profile/`);
+  
   //* Get the hash from the page to pick which fetch we do.
 });
 

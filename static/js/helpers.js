@@ -36,18 +36,21 @@ function updateFormData() {
   const submitButton = document.getElementById("submit-button");
   const email = document.getElementById("emailEntry");
   const card = document.getElementById("login-signin");
+  const confirmPasswordDiv = document.getElementById("row4");
 
   if (formHeading.textContent === "log in.") {
     location.hash = "signup";
     formHeading.textContent = "sign up.";
     submitButton.value = "sign up";
     email.style.display = "block";
+    confirmPasswordDiv.style.display = "block";
     card.style.height = "auto";
   } else {
     location.hash = "login";
     formHeading.textContent = "log in.";
     submitButton.value = "log in";
     email.style.display = "none";
+    confirmPasswordDiv.style.display = "none";
     card.style.height = "350px";
   }
 }
