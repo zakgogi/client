@@ -25,6 +25,32 @@ body {
   --border-radius: 25px;
 }
 
+.red {
+  color: rgb(150, 33, 33);
+}
+
+.blue {
+  color: rgb(15, 38, 126);
+}
+
+.purple {
+  color: rgb(129, 54, 172);
+}
+
+.green {
+  color: rgb(20, 131, 33);
+}
+
+.gold {
+  color: rgb(255, 223, 0);
+}
+
+i {
+  margin: 20px 20px 20px 20px;
+  border: solid 2px gold;
+  border-radius: 100%;
+}
+
 /* ======= Default Styles ======= */
 
 button {
