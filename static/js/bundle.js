@@ -115,15 +115,17 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
-console.log(tokenData);
+
 
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
     localStorage.setItem("userId", userData.id);
     localStorage.setItem("username", userData.user);
+    console.log(userData);
   } else {
     localStorage.setItem("userId", tokenData.id);
     localStorage.setItem("username", tokenData.user);
+    console.log(tokenData);
   }
 
 
