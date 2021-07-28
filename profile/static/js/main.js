@@ -1,5 +1,6 @@
 const helpers = require("./helpers");
 const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
+const avatarOptions = require("./avatars");
 
 let myChart;
 let executed;
@@ -108,6 +109,11 @@ async function getUserData() {
   document.title = `${username}'s Habits`;
   console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
+  let avatarLetter = username[0];
+  let avatartag = avatarOptions[avatarLetter]
+  let avatar = document.querySelector("i");
+  avatar.className = `${avatartag} fa-5x`
+
 
   if (!userId) {
     return;

@@ -1,4 +1,35 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const avatarOptions = { 
+    "a"  : "fas fa-dragon red",
+    "b"  : "fas fa-dragon blue",
+    "c"  : "fas fa-dragon purple",
+    "d"  : "fas fa-dragon red",
+    "e"  : "fas fa-dragon blue",
+    "f"  : "fas fa-dragon purple",
+    "g"  : "fas fa-cat green",
+    "h"  : "fas fa-cat green",
+    "i"  : "fas fa-cat red",
+    "j"  : "fas fa-cat blue",
+    "k"  : "fas fa-cat purple",
+    "l"  : "fas fa-cat green",
+    "m"  : "fas fa-spider gold",
+    "n"  : "fas fa-spider red",
+    "o"  : "fas fa-spider blue",
+    "p"  : "fas fa-spider purple",
+    "q"  : "fas fa-spider gold",
+    "r"  : "fas fa-spider gold",
+    "s"  : "fas fa-horse-head red",
+    "t"  : "fas fa-horse-head blue",
+    "u"  : "fas fa-horse-head purple",
+    "v"  : "fas fa-horse-head gold",
+    "w"  : "fas fa-horse-head gold",
+    "x"  : "fas fa-dove red",
+    "y"  : "fas fa-dove blue",
+    "z"  : "fas fa-dove purple",
+}
+
+module.exports = avatarOptions;
+},{}],2:[function(require,module,exports){
 // TESTED
 function renderHabitData(data) {
   const newSection = document.createElement("section");
@@ -47,7 +78,7 @@ function renderHabitContainer(data) {
   newArticle.append(bgImage);
 
   const removeButton = document.createElement("button");
- // removeButton.textContent = "delete";
+  // removeButton.textContent = "delete";
   removeButton.classList.add("remove");
   newArticle.append(removeButton);
 
@@ -80,9 +111,7 @@ function updateTimesCompleted(timesComplete, targetTimes, id) {
 
   if (timesComplete == targetTimes) {
     console.log("we might need to do something else here too.");
-
     const target = targetArticle.querySelectorAll("p")[1];
-
     target.textContent = parseInt(target.textContent) + 1;
 
     // update the dom streak total.
@@ -136,9 +165,10 @@ module.exports = {
   createBadgeSection
 };
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 const helpers = require("./helpers");
 const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
+const avatarOptions = require("./avatars");
 
 let myChart;
 let executed;
@@ -248,6 +278,11 @@ async function getUserData() {
   document.title = `${username}'s Habits`;
   console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
+  let avatarLetter = username[0];
+  let avatartag = avatarOptions[avatarLetter]
+  let avatar = document.querySelector("i");
+  avatar.className = `${avatartag} fa-5x`
+
 
   if (!userId) {
     return;
@@ -425,6 +460,7 @@ function renderGraph(dataInput) {
   });
 }
 
+
 // This function hides chart when there is no habits available.
 function hideChart() {
   let chart = document.getElementById("myChart");
@@ -436,4 +472,6 @@ function hideChart() {
   console.log("trig");
 }
 getUserData();
-},{"./helpers":1}]},{},[2]);
+
+
+},{"./avatars":1,"./helpers":2}]},{},[3]);

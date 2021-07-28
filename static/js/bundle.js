@@ -64,7 +64,6 @@ const gdpr = document.querySelector("#gdpr");
 dismiss.addEventListener("click", closeGDPR);
 cancel.addEventListener("click", closeGDPR);
 
-
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
   gdpr.style.display = "none";
@@ -165,10 +164,10 @@ form.addEventListener("submit", async (e) => {
 
   
 
+
   //* Get the hash from the page to pick which fetch we do.
 
 });
-
 
 
 location.hash = "login";
