@@ -21,13 +21,12 @@ async function buttonEvents(e) {
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-  
 
   // Update the server
   const eventData = {
     id: targetArticle.id,
     times_completed: currentCount,
-    frequency_day: dailyTarget
+    frequency_day: dailyTarget,
   };
 
   const options = {
@@ -57,6 +56,7 @@ async function removeHabit(e) {
   getGraphData();
 
   e.target.closest("article").remove();
+  hideChart();
 }
 
 function bindEventListeners() {
@@ -91,6 +91,7 @@ async function getUserData() {
   const userData = await response.json();
 
   if (userData.length === 0) {
+    hideChart();
     console.log("no data found");
     return;
   }
@@ -182,6 +183,12 @@ signOutButton.addEventListener("click", () => {
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
+const signOutButton2 = document.querySelector("#hidden button");
+signOutButton2.addEventListener("click", () => {
+  localStorage.removeItem("userId");
+  window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
+});
+
 function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
   var barColors = ["#58c770", "#c4c4c4"];
@@ -210,4 +217,14 @@ function renderGraph(dataInput) {
   });
 }
 
+// This function hides chart when there is no habits available.
+function hideChart() {
+  let chart = document.getElementById("myChart");
+  let profile = document.getElementById("user-info");
+  if (!document.querySelector("article")) {
+    chart.style.display = "none";
+    profile.style.height = "150px";
+  }
+  console.log("trig");
+}
 getUserData();

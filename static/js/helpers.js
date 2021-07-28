@@ -47,14 +47,12 @@ function setActiveButton(e) {
   }
 }
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
+const dismiss = document.getElementById("dismiss");
 const cancel = document.querySelector(".fa-times");
 const gdpr = document.querySelector("#gdpr");
 
+dismiss.addEventListener("click", closeGDPR);
 cancel.addEventListener("click", closeGDPR);
-reject.addEventListener("click", closeGDPR);
-accept.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   gdpr.style.display = "none";

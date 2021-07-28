@@ -16,11 +16,9 @@ function renderHabitData(data) {
   const habitBoilerStreak = document.createElement("h3");
   habitBoilerStreak.textContent = "Streak";
 
-
-    const streak = document.createElement("p");
-    streak.id = "streak-output";
-    streak.textContent = data.streak;
-
+  const streak = document.createElement("p");
+  streak.id = "streak-output";
+  streak.textContent = data.streak;
 
   newSection.append(habitTitle);
   newSection.append(habitBoilerToday);
@@ -32,37 +30,35 @@ function renderHabitData(data) {
 }
 // TESTED
 function renderHabitContainer(data) {
+  const newArticle = document.createElement("article");
+  newArticle.id = data.id;
+  newArticle.classList.add("habit-container");
 
-    const newArticle = document.createElement("article");
-    newArticle.id = data.id;
-    newArticle.classList.add("habit-container");
+  const habitData = renderHabitData(data);
+  newArticle.append(habitData);
 
-    const habitData = renderHabitData(data);
-    newArticle.append(habitData);
+  const bgImage = document.createElement("img");
+  bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
+  bgImage.classList.add("habit-gradient");
+  bgImage.alt = "background gradient";
+  //* the opacity is based on the percentage of the goal complete.
+  bgImage.style.opacity =
+    parseInt(data.times_completed) / parseInt(data.frequency_day);
+  newArticle.append(bgImage);
 
-    const bgImage = document.createElement("img");
-    bgImage.src = "../static/assets/ER0AQagU8AAUjHM.jpg";
-    bgImage.classList.add("habit-gradient");
-    bgImage.alt = "background gradient";
-    //* the opacity is based on the percentage of the goal complete.
-    bgImage.style.opacity = (parseInt(data.times_completed) / parseInt(data.frequency_day));
-    newArticle.append(bgImage);
+  const removeButton = document.createElement("button");
+  // removeButton.textContent = "delete";
+  removeButton.classList.add("remove");
+  newArticle.append(removeButton);
 
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "delete";
-    removeButton.classList.add("remove");
-    newArticle.append(removeButton);   
-    
-    const addToCountButton = document.createElement("button");
-    addToCountButton.id = "add-to-total";
-    addToCountButton.type = "button";
-    addToCountButton.textContent = "+";
+  const addToCountButton = document.createElement("button");
+  addToCountButton.id = "add-to-total";
+  addToCountButton.type = "button";
+  addToCountButton.textContent = "+";
 
-    newArticle.append(addToCountButton);
-    
-    return newArticle;
+  newArticle.append(addToCountButton);
 
-
+  return newArticle;
 }
 
 // TESTED
@@ -79,23 +75,18 @@ function removeAllHabitContainers() {
 function updateTimesCompleted(timesComplete, targetTimes, id) {
   const targetArticle = document.getElementById(`${id}`);
 
+  const paragraph = targetArticle.querySelector("p");
+  paragraph.textContent = `${timesComplete} of ${targetTimes}`;
 
-    
-    const paragraph = targetArticle.querySelector("p");
-    paragraph.textContent = `${timesComplete} of ${targetTimes}`;
+  if (timesComplete == targetTimes) {
+    console.log("we might need to do something else here too.");
 
-    if (timesComplete == targetTimes) {
-        console.log("we might need to do something else here too.");
+    const target = targetArticle.querySelectorAll("p")[1];
 
-        const target = targetArticle.querySelectorAll("p")[1];
+    target.textContent = parseInt(target.textContent) + 1;
 
-        
-        target.textContent = parseInt(target.textContent) + 1;
-        
-        // update the dom streak total.
-
-    }
-
+    // update the dom streak total.
+  }
 }
 
 // TESTED
@@ -139,13 +130,12 @@ async function buttonEvents(e) {
 
   helpers.updateTimesCompleted(currentCount, dailyTarget, targetArticle.id);
   helpers.updateBackgroundOpacity(currentCount, dailyTarget, targetArticle.id);
-  
 
   // Update the server
   const eventData = {
     id: targetArticle.id,
     times_completed: currentCount,
-    frequency_day: dailyTarget
+    frequency_day: dailyTarget,
   };
 
   const options = {
@@ -175,6 +165,7 @@ async function removeHabit(e) {
   getGraphData();
 
   e.target.closest("article").remove();
+  hideChart();
 }
 
 function bindEventListeners() {
@@ -209,6 +200,7 @@ async function getUserData() {
   const userData = await response.json();
 
   if (userData.length === 0) {
+    hideChart();
     console.log("no data found");
     return;
   }
@@ -300,6 +292,12 @@ signOutButton.addEventListener("click", () => {
   window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
 });
 
+const signOutButton2 = document.querySelector("#hidden button");
+signOutButton2.addEventListener("click", () => {
+  localStorage.removeItem("userId");
+  window.location.assign("https://the-stride.netlify.app/"); // TODO update this to our live version.
+});
+
 function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
   var barColors = ["#58c770", "#c4c4c4"];
@@ -328,6 +326,16 @@ function renderGraph(dataInput) {
   });
 }
 
+// This function hides chart when there is no habits available.
+function hideChart() {
+  let chart = document.getElementById("myChart");
+  let profile = document.getElementById("user-info");
+  if (!document.querySelector("article")) {
+    chart.style.display = "none";
+    profile.style.height = "150px";
+  }
+  console.log("trig");
+}
 getUserData();
 
 },{"./helpers":1}]},{},[2]);

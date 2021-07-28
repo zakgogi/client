@@ -48,14 +48,12 @@ function setActiveButton(e) {
   }
 }
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
+const dismiss = document.getElementById("dismiss");
 const cancel = document.querySelector(".fa-times");
 const gdpr = document.querySelector("#gdpr");
 
+dismiss.addEventListener("click", closeGDPR);
 cancel.addEventListener("click", closeGDPR);
-reject.addEventListener("click", closeGDPR);
-accept.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   gdpr.style.display = "none";
@@ -130,7 +128,7 @@ form.addEventListener("submit", async (e) => {
 
   // console.log(currentURL);
   // currentURL = currentURL.split("#")[0];
-  window.location.assign(`https://the-stride.netlify.app/profile/`);
+  window.location.assign(`http://192.168.0.37:8080/profile/`);
 
   //* Get the hash from the page to pick which fetch we do.
 });
