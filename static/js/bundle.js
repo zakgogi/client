@@ -157,7 +157,6 @@ form.addEventListener("submit", async (e) => {
 });
 
 
-
 const accept = document.getElementById("accept");
 const reject = document.querySelector("#reject");
 const cancel = document.querySelector(".fa-times");
@@ -165,6 +164,7 @@ const cancel = document.querySelector(".fa-times");
 const dismiss = document.getElementById("dismiss");
 
 dismiss.addEventListener("click", helpers.closeGDPR);
+
 
 
 
