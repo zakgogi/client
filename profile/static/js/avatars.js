@@ -25,6 +25,6 @@ const avatarOptions = {
     "x"  : "fas fa-dove red",
     "y"  : "fas fa-dove blue",
     "z"  : "fas fa-dove purple",
-}
+};
 
 module.exports = avatarOptions;

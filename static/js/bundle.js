@@ -29,7 +29,6 @@ function setActiveButton(e) {
   signInButton.classList.toggle("active");
 
   updateFormData();
-  
 }
 
 function updateFormData() {
@@ -56,7 +55,6 @@ function updateFormData() {
   }
 }
 
-
 const dismiss = document.getElementById("dismiss");
 const cancel = document.querySelector(".fa-times");
 const gdpr = document.querySelector("#gdpr");
@@ -71,7 +69,12 @@ function closeGDPR() {
 
 // location.hash = "login";
 
-module.exports = { setActiveButton, clearAllInputFields, closeGDPR, updateFormData };
+module.exports = {
+  setActiveButton,
+  clearAllInputFields,
+  closeGDPR,
+  updateFormData,
+};
 
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
@@ -114,7 +117,6 @@ form.addEventListener("submit", async (e) => {
 
   helpers.clearAllInputFields();
 
-  // TODO send the requests to the server.
   const requestType = location.hash;
 
   const options = {
@@ -139,6 +141,7 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
+  //* Get the hash from the page to pick which fetch we do.
 
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
@@ -154,23 +157,11 @@ form.addEventListener("submit", async (e) => {
   // console.log(currentURL);
   // currentURL = currentURL.split("#")[0];
   window.location.assign(`https://the-stride.netlify.app/profile/`);
-
-
   //* Get the hash from the page to pick which fetch we do.
   // }
 
   //* Get the hash from the page to pick which fetch we do.
 });
-
-
-
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
-
-cancel.addEventListener("click", helpers.closeGDPR);
-reject.addEventListener("click", helpers.closeGDPR);
-accept.addEventListener("click", helpers.closeGDPR);
 
 location.hash = "login";
 
