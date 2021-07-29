@@ -57,12 +57,7 @@ function updateFormData() {
 }
 
 
-const dismiss = document.getElementById("dismiss");
-const cancel = document.querySelector(".fa-times");
-const gdpr = document.querySelector("#gdpr");
 
-dismiss.addEventListener("click", closeGDPR);
-cancel.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
@@ -114,7 +109,7 @@ form.addEventListener("submit", async (e) => {
 
   helpers.clearAllInputFields();
 
-  // TODO send the requests to the server.
+ 
   const requestType = location.hash;
 
   const options = {
@@ -151,11 +146,10 @@ form.addEventListener("submit", async (e) => {
 
   // let currentURL = window.location.href;
 
+
   // console.log(currentURL);
   // currentURL = currentURL.split("#")[0];
   window.location.assign(`https://the-stride.netlify.app/profile/`);
-
-
   //* Get the hash from the page to pick which fetch we do.
   // }
 
@@ -163,14 +157,12 @@ form.addEventListener("submit", async (e) => {
 });
 
 
+const dismiss = document.getElementById("dismiss");
 
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
 
-cancel.addEventListener("click", helpers.closeGDPR);
-reject.addEventListener("click", helpers.closeGDPR);
-accept.addEventListener("click", helpers.closeGDPR);
+dismiss.addEventListener("click", helpers.closeGDPR);
+
+
 
 location.hash = "login";
 

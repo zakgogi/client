@@ -26,7 +26,7 @@ const avatarOptions = {
     "x"  : "fas fa-dove red",
     "y"  : "fas fa-dove blue",
     "z"  : "fas fa-dove purple",
-}
+};
 
 module.exports = avatarOptions;
 },{}],2:[function(require,module,exports){
@@ -139,7 +139,7 @@ function uniqueBadges(data) {
   return output;
 }
 
-// TODO TEST ME
+// TESTED
 function createBadgeSection(badges) {
   const badgesContainer = document.createElement("section");
   badgesContainer.id = "badge-display";
@@ -244,7 +244,6 @@ async function removeHabit(e) {
   e.target.closest("article").remove();
   M.toast({html: 'Habit Deleted!'}) // added in alert
   hideChart();
-
 }
 
 function bindEventListeners() {
@@ -276,12 +275,11 @@ async function getUserData() {
   //* Create custom title
   const username = localStorage.getItem("username");
   document.title = `${username}'s Habits`;
-  console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
   let avatarLetter = username[0];
-  let avatartag = avatarOptions[avatarLetter]
+  let avatartag = avatarOptions[avatarLetter];
   let avatar = document.querySelector("i");
-  avatar.className = `${avatartag} fa-5x`
+  avatar.className = `${avatartag} fa-5x`;
 
 
   if (!userId) {
@@ -293,11 +291,8 @@ async function getUserData() {
 
  
 
-  console.log(userData);
-
   if (userData.length === 0) {
     hideChart();
-    console.log("no data found");
     return;
   }
 
@@ -323,7 +318,6 @@ function toggleModal() {
 
 async function addHabit(e) {
   e.preventDefault();
-  console.log(e.target);
   toggleModal();
 
   const data = {
@@ -375,10 +369,32 @@ async function getGraphData() {
 async function updateBadgesToProfile() {
   const data = await getBadgeData();
 
-  // get all unique badges.
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/habits/${userId}`);
+  const userData = await response.json();
+
+  let totalDone = 0;
+  let totalToDo = 0;
+
+  userData.forEach((habit) => {
+    totalDone += habit.times_completed;
+    totalToDo += habit.frequency_day;
+  });
+  
+  let stillToDo = totalToDo - totalDone;
+
+
   const badgeNames = helpers.uniqueBadges(data);
 
   
+
+  if (stillToDo === 0) {
+    badgeNames.push("daily");
+
+    //! Add toast 
+  }
+
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
@@ -387,11 +403,9 @@ async function updateBadgesToProfile() {
 
   document.querySelector("#profileInfo").append(badgeSection);
   
-  // TODO create a div full of images.
-
-
-
 }
+
+
 
 async function getBadgeData() {
   const userId = localStorage.getItem("userId");
@@ -399,7 +413,6 @@ async function getBadgeData() {
   const response = await fetch(`${serverUrl}/badges/${userId}`);
   const data = await response.json();
 
-  console.log(data);
   return data;
 }
 
@@ -469,7 +482,6 @@ function hideChart() {
     chart.style.display = "none";
     profile.style.height = "150px";
   }
-  console.log("trig");
 }
 getUserData();
 

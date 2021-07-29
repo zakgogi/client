@@ -107,7 +107,7 @@ function uniqueBadges(data) {
   return output;
 }
 
-// TODO TEST ME
+// TESTED
 function createBadgeSection(badges) {
   const badgesContainer = document.createElement("section");
   badgesContainer.id = "badge-display";
