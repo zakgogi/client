@@ -13,10 +13,12 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (location.hash == "#signup") {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let errorMessages = document.getElementById("error-messages");
     if (password !== confirmPassword) {
-      alert("The passwords did not match");
+      errorMessages.style.color = "red";
+      errorMessages.textContent = "The passwords do not match!";
       return;
     }
   }
@@ -24,17 +26,20 @@ form.addEventListener("submit", async (e) => {
   const data = {
     username: e.target.username.value,
     password: e.target.password.value,
-    email: e.target.email.value,
   };
 
+  if (location.hash == "#signup") {
+    data.email = e.target.email.value;
+  }
+
   // if any of the values are falsy, i.e empty, don't process.
-  //   for (const key in data) {
-  //     if (!data[key]) {
-  //       // this one is already live so no need to do anything.
-  //       errorMessages.textContent = "username or password missing.";
-  //       return;
-  //     }
-  //   }
+    for (const key in data) {
+      if (!data[key]) {
+        // this one is already live so no need to do anything.
+        document.getElementById("error-messages").textContent = "username or password missing.";
+        return;
+      }
+    }
 
   helpers.clearAllInputFields();
 
@@ -62,6 +67,11 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
+  if (tokenData.err) {
+    document.getElementById("error-messages").textContent = "username or Email already in use.";
+    return;
+  }
+
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
     localStorage.setItem("userId", userData.id);
@@ -71,15 +81,14 @@ form.addEventListener("submit", async (e) => {
     localStorage.setItem("username", tokenData.user);
   }
 
-  // let currentURL = window.location.href;
-
-  // console.log(currentURL);
-  // currentURL = currentURL.split("#")[0];
   window.location.assign(`https://the-stride.netlify.app/profile/`);
-  //* Get the hash from the page to pick which fetch we do.
-  // }
-
-  //* Get the hash from the page to pick which fetch we do.
+  
 });
+
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+
+dismiss.addEventListener("click", helpers.closeGDPR);
+cancel.addEventListener("click", helpers.closeGDPR);
 
 location.hash = "login";

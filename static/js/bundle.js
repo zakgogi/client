@@ -34,189 +34,168 @@
       o(t[i]);
     return o;
   }
-  return r;
-})()(
-  {
-    1: [
-      function (require, module, exports) {
-        const loginButton = document.querySelector("#login-button");
-        const signInButton = document.querySelector("#sign-up-button");
 
-        function clearAllInputFields() {
-          const inputs = document.querySelectorAll("input");
+}
 
-          for (let i = 0; i < inputs.length; i++) {
-            if (inputs[i].type === "submit") {
-              continue;
-            } else {
-              inputs[i].value = "";
-            }
-          }
-        }
+function setActiveButton(e) {
+  // See is the button which called the event already active.
+  // if it is do nothing.
 
-        function setActiveButton(e) {
-          // See is the button which called the event already active.
-          // if it is do nothing.
+  if (e.target.classList.contains("active")) {
+    // this one is already live so no need to do anything.
+    return;
+  }
 
-          if (e.target.classList.contains("active")) {
-            // this one is already live so no need to do anything.
-            return;
-          }
+  clearAllInputFields();
 
-          clearAllInputFields();
+  loginButton.classList.toggle("active");
+  signInButton.classList.toggle("active");
 
-          loginButton.classList.toggle("active");
-          signInButton.classList.toggle("active");
+  updateFormData();
+}
 
-          updateFormData();
-        }
+function updateFormData() {
+  const formHeading = document.getElementById("form-heading");
+  const submitButton = document.getElementById("submit-button");
+  const email = document.getElementById("emailEntry");
+  const card = document.getElementById("login-signin");
+  const confirmPasswordDiv = document.getElementById("row4");
 
-        function updateFormData() {
-          const formHeading = document.getElementById("form-heading");
-          const submitButton = document.getElementById("submit-button");
-          const email = document.getElementById("emailEntry");
-          const card = document.getElementById("login-signin");
-          const confirmPasswordDiv = document.getElementById("row4");
-
-          let width = window.innerWidth;
-
-          if (formHeading.textContent === "log in.") {
-            location.hash = "signup";
-            formHeading.textContent = "sign up.";
-            submitButton.value = "sign up";
-            if (width < "460") {
+  if (formHeading.textContent === "log in.") {
+    location.hash = "signup";
+    formHeading.textContent = "sign up.";
+    submitButton.value = "sign up";
+      if (width < "460") {
               email.style.display = "inline";
               confirmPasswordDiv.style.display = "inline";
             } else {
               email.style.display = "block";
               confirmPasswordDiv.style.display = "block";
             }
-            card.style.height = "auto";
-          } else {
-            location.hash = "login";
-            formHeading.textContent = "log in.";
-            submitButton.value = "log in";
-            email.style.display = "none";
-            confirmPasswordDiv.style.display = "none";
-            card.style.height = "auto";
-          }
-        }
+    card.style.height = "auto";
+  } else {
+    location.hash = "login";
+    formHeading.textContent = "log in.";
+    submitButton.value = "log in";
+    email.style.display = "none";
+    confirmPasswordDiv.style.display = "none";
+    card.style.height = "auto";
+    document.getElementById("error-messages").textContent = "";
+  }
+}
 
-        const dismiss = document.getElementById("dismiss");
-        const cancel = document.querySelector(".fa-times");
-        const gdpr = document.querySelector("#gdpr");
 
-        dismiss.addEventListener("click", closeGDPR);
-        cancel.addEventListener("click", closeGDPR);
 
-        function closeGDPR() {
-          const gdpr = document.querySelector("#gdpr");
-          gdpr.style.display = "none";
-        }
+function closeGDPR() {
+  const gdpr = document.querySelector("#gdpr");
+  gdpr.style.display = "none";
+}
 
-        // location.hash = "login";
+// location.hash = "login";
 
-        module.exports = {
-          setActiveButton,
-          clearAllInputFields,
-          closeGDPR,
-          updateFormData,
-        };
-      },
-      {},
-    ],
-    2: [
-      function (require, module, exports) {
-        const helpers = require("./helpers");
+module.exports = {
+  setActiveButton,
+  clearAllInputFields,
+  closeGDPR,
+  updateFormData,
+};
 
-        const loginButton = document.querySelector("#login-button");
-        const signInButton = document.querySelector("#sign-up-button");
-        // const errorMessages = document.getElementById("error-messages");
+},{}],2:[function(require,module,exports){
+const helpers = require("./helpers");
 
-        loginButton.addEventListener("click", helpers.setActiveButton);
-        signInButton.addEventListener("click", helpers.setActiveButton);
+const loginButton = document.querySelector("#login-button");
+const signInButton = document.querySelector("#sign-up-button");
+// const errorMessages = document.getElementById("error-messages");
 
-        const form = document.querySelector("form");
+loginButton.addEventListener("click", helpers.setActiveButton);
+signInButton.addEventListener("click", helpers.setActiveButton);
 
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
+const form = document.querySelector("form");
 
-          if (location.hash == "#signup") {
-            const password = document.getElementById("password").value;
-            const confirmPassword =
-              document.getElementById("confirmPassword").value;
-            if (password !== confirmPassword) {
-              alert("The passwords did not match");
-              return;
-            }
-          }
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-          const data = {
-            username: e.target.username.value,
-            password: e.target.password.value,
-            email: e.target.email.value,
-          };
+  if (location.hash == "#signup") {
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let errorMessages = document.getElementById("error-messages");
+    if (password !== confirmPassword) {
+      errorMessages.style.color = "red";
+      errorMessages.textContent = "The passwords do not match!";
+      return;
+    }
+  }
 
-          // if any of the values are falsy, i.e empty, don't process.
-          //   for (const key in data) {
-          //     if (!data[key]) {
-          //       // this one is already live so no need to do anything.
-          //       errorMessages.textContent = "username or password missing.";
-          //       return;
-          //     }
-          //   }
+  const data = {
+    username: e.target.username.value,
+    password: e.target.password.value,
+  };
 
-          helpers.clearAllInputFields();
+  if (location.hash == "#signup") {
+    data.email = e.target.email.value;
+  }
 
-          const requestType = location.hash;
+  // if any of the values are falsy, i.e empty, don't process.
+    for (const key in data) {
+      if (!data[key]) {
+        // this one is already live so no need to do anything.
+        document.getElementById("error-messages").textContent = "username or password missing.";
+        return;
+      }
+    }
 
-          const options = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          };
-          let endpoint = "";
+  helpers.clearAllInputFields();
 
-          if (requestType == "#signup") {
-            endpoint = "/auth/register";
-          } else {
-            endpoint = "/auth/login";
-          }
+  const requestType = location.hash;
 
-          const response = await fetch(
-            `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
-            options
-          );
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  let endpoint = "";
 
-          const tokenData = await response.json();
+  if (requestType == "#signup") {
+    endpoint = "/auth/register";
+  } else {
+    endpoint = "/auth/login";
+  }
 
-          if (requestType === "#login") {
-            const userData = jwt_decode(tokenData.token);
-            localStorage.setItem("userId", userData.id);
-            localStorage.setItem("username", userData.user);
-          } else {
-            localStorage.setItem("userId", tokenData.id);
-            localStorage.setItem("username", tokenData.user);
-          }
+  const response = await fetch(
+    `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
+    options
+  );
 
-          // let currentURL = window.location.href;
+  const tokenData = await response.json();
 
-          // console.log(currentURL);
-          // currentURL = currentURL.split("#")[0];
-          window.location.assign(`https://the-stride.netlify.app/profile/`);
-          //* Get the hash from the page to pick which fetch we do.
-          // }
 
-          //* Get the hash from the page to pick which fetch we do.
-        });
+  if (tokenData.err) {
+    document.getElementById("error-messages").textContent = "username or Email already in use.";
+    return;
+  }
 
-        location.hash = "login";
-      },
-      { "./helpers": 1 },
-    ],
-  },
-  {},
-  [2]
-);
+
+  if (requestType === "#login") {
+    const userData = jwt_decode(tokenData.token);
+    localStorage.setItem("userId", userData.id);
+    localStorage.setItem("username", userData.user);
+  } else {
+    localStorage.setItem("userId", tokenData.id);
+    localStorage.setItem("username", tokenData.user);
+  }
+
+  window.location.assign(`https://the-stride.netlify.app/profile/`);
+  
+});
+
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+
+dismiss.addEventListener("click", helpers.closeGDPR);
+cancel.addEventListener("click", helpers.closeGDPR);
+
+location.hash = "login";
+
+},{"./helpers":1}]},{},[2]);

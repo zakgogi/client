@@ -74,7 +74,7 @@ async function removeHabit(e) {
   await fetch(`${serverUrl}/habits`, options);
   getGraphData();
   e.target.closest("article").remove();
-  M.toast({html: 'Habit Deleted!'}) // added in alert
+  M.toast({html: 'Habit Deleted!'})
   hideChart();
 }
 
@@ -118,6 +118,15 @@ function toggleReminderModal() {
   modal.classList.toggle("closed");
 }
 
+function toggleModal(){
+  const modal = document.getElementById("add-new-habit");
+  const knownUser = (localStorage.getItem("username"));
+  if (knownUser === 'Stranger' || knownUser === 'strange') {
+    M.toast({html: 'Hi Stranger, Why not register to save your habits!'});
+  }
+  modal.classList.toggle("closed");
+}
+
 async function sendEmailPostRequest(e){
   e.preventDefault();
   toggleReminderModal();
@@ -144,7 +153,7 @@ async function sendEmailPostRequest(e){
   }
 
   const response = await fetch(`${serverUrl}/habits/email`, options);
-  console.log("Sent email request");
+  M.toast({html: 'E-mail reminder set!'})
 }
 
 async function getUserData() {
@@ -198,13 +207,6 @@ async function getUserData() {
   bindEventListeners();
 }
 
-function toggleModal() {
-  const modal = document.getElementById("add-new-habit");
-  modal.classList.toggle("closed");
-
-  
-}
-
 async function addHabit(e) {
   e.preventDefault();
   toggleModal();
@@ -227,8 +229,6 @@ async function addHabit(e) {
     const newHabit = helpers.renderHabitContainer(data);
 
     if (document.querySelectorAll("article").length === 1) {
-      //
-      // TODO toast
       M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
       return;
     }
@@ -298,9 +298,7 @@ async function updateBadgesToProfile() {
 
   if (stillToDo === 0) {
     badgeNames.push("daily");
-
-    //! Add toast 
-
+    M.toast({html: 'Well done! You\'ve completed all habits for the day!'})
   }
 
   //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
@@ -310,7 +308,6 @@ async function updateBadgesToProfile() {
   if (document.querySelector("#profileInfo section")) {
     document.querySelector("#profileInfo section").remove();
   }
-
 
   const badges = badgeSection.querySelectorAll("img");
   badges.forEach(badge => {
@@ -352,13 +349,6 @@ const newHabitButton = document.getElementById("new-habit");
 
 closeHabitButton.addEventListener("click", toggleModal);
 newHabitButton.addEventListener("click", toggleModal);
-
-function toggleModal() {
-  const modal = document.getElementById("add-new-habit");
-  modal.classList.toggle("closed");
-}
-
-
 
 // Sign out button
 const signOutButton = document.querySelector("header button");

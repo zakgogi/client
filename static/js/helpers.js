@@ -58,15 +58,11 @@ function updateFormData() {
     email.style.display = "none";
     confirmPasswordDiv.style.display = "none";
     card.style.height = "auto";
+    document.getElementById("error-messages").textContent = "";
   }
 }
 
-const dismiss = document.getElementById("dismiss");
-const cancel = document.querySelector(".fa-times");
-const gdpr = document.querySelector("#gdpr");
 
-dismiss.addEventListener("click", closeGDPR);
-cancel.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
