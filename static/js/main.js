@@ -83,4 +83,10 @@ form.addEventListener("submit", async (e) => {
   
 });
 
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+
+dismiss.addEventListener("click", helpers.closeGDPR);
+cancel.addEventListener("click", helpers.closeGDPR);
+
 location.hash = "login";

@@ -56,12 +56,7 @@ function updateFormData() {
   }
 }
 
-const dismiss = document.getElementById("dismiss");
-const cancel = document.querySelector(".fa-times");
-const gdpr = document.querySelector("#gdpr");
 
-dismiss.addEventListener("click", closeGDPR);
-cancel.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
@@ -162,6 +157,12 @@ form.addEventListener("submit", async (e) => {
   window.location.assign(`https://the-stride.netlify.app/profile/`);
   
 });
+
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+
+dismiss.addEventListener("click", helpers.closeGDPR);
+cancel.addEventListener("click", helpers.closeGDPR);
 
 location.hash = "login";
 
