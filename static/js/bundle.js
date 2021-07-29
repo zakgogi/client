@@ -92,10 +92,12 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (location.hash == "#signup") {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let errorMessages = document.getElementById("error-messages");
     if (password !== confirmPassword) {
-      alert("The passwords did not match");
+      errorMessages.style.color = "red";
+      errorMessages.textContent = "The passwords do not match!";
       return;
     }
   }
@@ -140,8 +142,6 @@ form.addEventListener("submit", async (e) => {
   );
 
   const tokenData = await response.json();
-
-  //* Get the hash from the page to pick which fetch we do.
 
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
