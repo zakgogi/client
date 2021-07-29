@@ -57,6 +57,16 @@ function renderHabitContainer(data) {
 
   newArticle.append(addToCountButton);
 
+  const emailReminderButton = document.createElement("button");
+  emailReminderButton.id = "email-reminder";
+  let reminderImage = document.createElement("i");
+  reminderImage.className = "far fa-envelope fa-lg";
+  reminderImage.id = "reminder-image";
+  // console.log(reminderImage);
+  emailReminderButton.append(reminderImage);
+
+  newArticle.append(emailReminderButton);
+
   return newArticle;
 }
 
