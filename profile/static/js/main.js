@@ -29,7 +29,20 @@ async function buttonEvents(e) {
   };
 
   if(currentCount + 1 === dailyTarget){
-    M.toast({html: 'Well done! You\'ve hit your daily target!'}) 
+    M.toast({html: 'Well done! You\'ve hit your daily target!'})
+    let completedSection = document.getElementById('completedHabits');
+    let completedHabits = document.querySelectorAll("#completedHabits article");
+    if (completedHabits.length === 0){
+      document.getElementById("completedHabitsHiddenTitle").style.display = "block";
+    }
+    targetArticle.parentNode.removeChild(targetArticle);
+    completedSection.append(targetArticle);
+    // if no habits remain remove title
+    let activeHabits = document.querySelectorAll("#habits article");
+    console.log(activeHabits);
+    if (activeHabits.length === 0){
+      document.getElementById("activeHabitsHiddenTitle").style.display = "none";
+    }
   }
 
   currentCount++;
@@ -76,6 +89,16 @@ async function removeHabit(e) {
   e.target.closest("article").remove();
   M.toast({html: 'Habit Deleted!'}) // added in alert
   hideChart();
+
+  let completedHabits = document.querySelectorAll("#completedHabits article");
+  if (completedHabits.length === 0){
+    document.getElementById("completedHabitsHiddenTitle").style.display = "none";
+  }
+  let activeHabits = document.querySelectorAll("#habits article");
+  if (activeHabits.length === 0){
+    document.getElementById("activeHabitsHiddenTitle").style.display = "none";
+  }
+
 }
 
 function bindEventListeners() {
@@ -153,7 +176,6 @@ async function getUserData() {
   const knownUser = (localStorage.getItem("userId")) ? true : false;
   localStorage.setItem("knownUser", knownUser);
 
-
   if (!knownUser) {
     localStorage.setItem("username", "Stranger");
   }
@@ -164,6 +186,9 @@ async function getUserData() {
   document.getElementById("profileName").textContent = username;
   let avatarLetter = username[0];
   let avatartag = avatarOptions[avatarLetter];
+  if (!avatartag){
+    avatartag = "fas fa-dragon red";
+  }
   let avatar = document.querySelector("i");
   avatar.className = `${avatartag} fa-5x`;
 
@@ -175,7 +200,7 @@ async function getUserData() {
   const response = await fetch(`${serverUrl}/habits/${userId}`);
   const userData = await response.json();
 
- 
+  console.log(userData);
 
   if (userData.length === 0) {
     hideChart();
@@ -185,11 +210,31 @@ async function getUserData() {
   let totalDone = 0;
   let totalToDo = 0;
   userData.forEach((habit) => {
-    const newHabit = helpers.renderHabitContainer(habit);
-    document.querySelector("#habits").append(newHabit);
-    totalDone += habit.times_completed;
-    totalToDo += habit.frequency_day;
+    if (habit.times_completed !== habit.frequency_day){
+      const newHabit = helpers.renderHabitContainer(habit);
+      document.querySelector("#habits").append(newHabit);
+      totalDone += habit.times_completed;
+      totalToDo += habit.frequency_day;
+    } else {
+      const newHabit = helpers.renderHabitContainer(habit);
+      document.getElementById('completedHabits').append(newHabit);
+      totalDone += habit.times_completed;
+      totalToDo += habit.frequency_day;
+    }
   });
+
+  let activeHabits = document.querySelectorAll("#habits article").length;
+  if (activeHabits !== 0){
+    let activeTitle = document.getElementById('activeHabitsHiddenTitle');
+    activeTitle.style.display = "block";
+  }
+  let compeltedHabits = document.querySelectorAll("#completedHabits article").length;
+  if (compeltedHabits !== 0){
+    let completedTitle = document.getElementById('completedHabitsHiddenTitle');
+    completedTitle.style.display = "block";
+  }
+
+
   let stillToDo = totalToDo - totalDone;
 
   updateBadgesToProfile();
@@ -201,8 +246,6 @@ async function getUserData() {
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
   modal.classList.toggle("closed");
-
-  
 }
 
 async function addHabit(e) {
@@ -217,25 +260,7 @@ async function addHabit(e) {
     username_id: localStorage.getItem("userId"),
   };
 
-
-
   if (!data.frequency_day || !data.habitname) {
-    return;
-  }
-
-  if (!data.username_id) {
-    const newHabit = helpers.renderHabitContainer(data);
-
-    if (document.querySelectorAll("article").length === 1) {
-      //
-      // TODO toast
-      M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
-      return;
-    }
-
-    document.querySelector("#habits").append(newHabit);
-    bindEventListeners();
-
     return;
   }
 
@@ -304,33 +329,15 @@ async function updateBadgesToProfile() {
   }
 
   //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
-
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
     document.querySelector("#profileInfo section").remove();
   }
 
-
-  const badges = badgeSection.querySelectorAll("img");
-  badges.forEach(badge => {
-    badge.addEventListener("mouseenter", (e) => {
-      const newParagraph = document.createElement("p");
-      newParagraph.textContent = e.target.alt;
-      newParagraph.id = "badge-name";
-      document.getElementById("badge-display").append(newParagraph);
-    });
-    badge.addEventListener("mouseleave", () => {
-      document.getElementById("badge-name").remove();
-    });
-  });
-
-
   document.querySelector("#profileInfo").append(badgeSection);
 
   // TODO loop through the badges and add event listeners to them to display their names
-
-  
   
 }
 

@@ -137,10 +137,22 @@ header button {
 
 /* ==== Habit containers ==== */
 
-#habits {
+#habits,
+#completedHabits {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+#activeHabitsHiddenTitle,
+#completedHabitsHiddenTitle {
+  display: none;
+  text-align: center;
+}
+
+h4 {
+  font-family: poppins, sans-serif;
+  font-weight: 600;
 }
 
 .habit-container {
