@@ -92,6 +92,8 @@ function bindEventListeners() {
   removeButtonsArr.forEach((button) => {
     button.addEventListener("click", removeHabit);
   });
+
+ 
 }
 
 async function getUserData() {
@@ -137,8 +139,10 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
-  updateBadgesToProfile()
+
+  updateBadgesToProfile();
   renderGraph([totalDone, stillToDo]);
+  
   bindEventListeners();
 }
 
@@ -225,8 +229,10 @@ async function updateBadgesToProfile() {
     badgeNames.push("daily");
 
     //! Add toast 
+
   }
 
+  //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
@@ -234,6 +240,8 @@ async function updateBadgesToProfile() {
   }
 
   document.querySelector("#profileInfo").append(badgeSection);
+
+  // TODO loop through the badges and add event listeners to them to display their names
   
 }
 
@@ -315,5 +323,13 @@ function hideChart() {
     profile.style.height = "150px";
   }
 }
+
+
+function showBadgeName(e) {
+
+}
+
+
+
 getUserData();
 
