@@ -265,7 +265,21 @@ signOutButton2.addEventListener("click", () => {
 
 function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
-  var barColors = ["#58c770", "#c4c4c4"];
+  let totalDone = dataInput[0];
+  let stillToDo = dataInput[1];
+  let totalToDo = totalDone + stillToDo;
+  let mutatedColor = ["#D02020", "#FF9C07", "#F7FF00", "#58c770"]; 
+  let i;
+  if (totalDone/totalToDo < 0.25) {
+    i = 0;
+  } else if (totalDone/totalToDo < 0.5) {
+    i = 1;
+  } else if (totalDone/totalToDo < 0.75){
+    i = 2;
+  } else {
+    i = 3;
+  }
+  let barColors = [`${mutatedColor[i]}`, "#c4c4c4"];
   let chart = document.getElementById("myChart");
   if (!!myChart) {
     myChart.destroy();
