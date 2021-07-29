@@ -401,15 +401,33 @@ async function updateBadgesToProfile() {
   }
 
   //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
+
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
     document.querySelector("#profileInfo section").remove();
   }
 
+
+  const badges = badgeSection.querySelectorAll("img");
+  badges.forEach(badge => {
+    badge.addEventListener("mouseenter", (e) => {
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = e.target.alt;
+      newParagraph.id = "badge-name";
+      document.getElementById("badge-display").append(newParagraph);
+    });
+    badge.addEventListener("mouseleave", () => {
+      document.getElementById("badge-name").remove();
+    });
+  });
+
+
   document.querySelector("#profileInfo").append(badgeSection);
 
   // TODO loop through the badges and add event listeners to them to display their names
+
+  
   
 }
 

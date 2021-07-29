@@ -119,6 +119,10 @@ header button {
   background: var(--green-highlight);
 }
 
+#badge-name {
+  margin: 0;
+}
+
 /* ==== badges ==== */
 
 #badge-display {
@@ -264,7 +268,7 @@ input {
   margin: 15px auto 10px auto;
   text-align: center;
   /* added in  */
-  width:fit-content;
+  width: fit-content;
   height: 30px;
   padding: 1px 2px;
   background-color: white;
@@ -293,7 +297,7 @@ input {
   position: absolute;
   bottom: 27px;
   /* added in */
-  line-height: 1.55; 
+  line-height: 1.55;
   height: 38px;
 }
 
