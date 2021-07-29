@@ -1,7 +1,9 @@
 const helpers = require("./helpers");
 const serverUrl = "https://brogrammers-habit-track.herokuapp.com";
+const avatarOptions = require("./avatars");
 
 let myChart;
+let executed;
 
 async function buttonEvents(e) {
   const targetArticle = e.target.closest("article");
@@ -13,8 +15,21 @@ async function buttonEvents(e) {
   currentCount = parseInt(currentCount);
 
   if (currentCount + 1 > dailyTarget) {
+    M.toast({html: 'You\'ve already hit your daily target!'})
     // Already maxed out.
     return;
+  }
+
+  let halfdailyTarget = dailyTarget/2;
+  if (!executed) {
+  if(currentCount + 1 >= halfdailyTarget){
+        M.toast({html: 'Keep going, you\'re over half way there!'});
+        executed = true;
+      }
+  };
+
+  if(currentCount + 1 === dailyTarget){
+    M.toast({html: 'Well done! You\'ve hit your daily target!'}) 
   }
 
   currentCount++;
@@ -58,8 +73,8 @@ async function removeHabit(e) {
 
   await fetch(`${serverUrl}/habits`, options);
   getGraphData();
-
   e.target.closest("article").remove();
+  M.toast({html: 'Habit Deleted!'}) // added in alert
   hideChart();
 }
 
@@ -145,8 +160,12 @@ async function getUserData() {
   //* Create custom title
   const username = localStorage.getItem("username");
   document.title = `${username}'s Habits`;
-  console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
+  let avatarLetter = username[0];
+  let avatartag = avatarOptions[avatarLetter];
+  let avatar = document.querySelector("i");
+  avatar.className = `${avatartag} fa-5x`;
+
 
   if (!userId) {
     return;
@@ -157,11 +176,8 @@ async function getUserData() {
 
  
 
-  console.log(userData);
-
   if (userData.length === 0) {
     hideChart();
-    console.log("no data found");
     return;
   }
 
@@ -174,8 +190,10 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
-  updateBadgesToProfile()
+
+  updateBadgesToProfile();
   renderGraph([totalDone, stillToDo]);
+  
   bindEventListeners();
 }
 
@@ -186,7 +204,6 @@ function toggleModal() {
 
 async function addHabit(e) {
   e.preventDefault();
-  console.log(e.target);
   toggleModal();
 
   const data = {
@@ -238,10 +255,34 @@ async function getGraphData() {
 async function updateBadgesToProfile() {
   const data = await getBadgeData();
 
-  // get all unique badges.
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/habits/${userId}`);
+  const userData = await response.json();
+
+  let totalDone = 0;
+  let totalToDo = 0;
+
+  userData.forEach((habit) => {
+    totalDone += habit.times_completed;
+    totalToDo += habit.frequency_day;
+  });
+  
+  let stillToDo = totalToDo - totalDone;
+
+
   const badgeNames = helpers.uniqueBadges(data);
 
   
+
+  if (stillToDo === 0) {
+    badgeNames.push("daily");
+
+    //! Add toast 
+
+  }
+
+  //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
@@ -249,12 +290,12 @@ async function updateBadgesToProfile() {
   }
 
   document.querySelector("#profileInfo").append(badgeSection);
+
+  // TODO loop through the badges and add event listeners to them to display their names
   
-  // TODO create a div full of images.
-
-
-
 }
+
+
 
 async function getBadgeData() {
   const userId = localStorage.getItem("userId");
@@ -262,7 +303,6 @@ async function getBadgeData() {
   const response = await fetch(`${serverUrl}/badges/${userId}`);
   const data = await response.json();
 
-  console.log(data);
   return data;
 }
 
@@ -299,7 +339,21 @@ signOutButton2.addEventListener("click", () => {
 
 function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
-  var barColors = ["#58c770", "#c4c4c4"];
+  let totalDone = dataInput[0];
+  let stillToDo = dataInput[1];
+  let totalToDo = totalDone + stillToDo;
+  let mutatedColor = ["#D02020", "#FF9C07", "#F7FF00", "#58c770"]; 
+  let i;
+  if (totalDone/totalToDo < 0.25) {
+    i = 0;
+  } else if (totalDone/totalToDo < 0.5) {
+    i = 1;
+  } else if (totalDone/totalToDo < 0.75){
+    i = 2;
+  } else {
+    i = 3;
+  }
+  let barColors = [`${mutatedColor[i]}`, "#c4c4c4"];
   let chart = document.getElementById("myChart");
   if (!!myChart) {
     myChart.destroy();
@@ -334,7 +388,14 @@ function hideChart() {
     chart.style.display = "none";
     profile.style.height = "150px";
   }
-  console.log("trig");
 }
+
+
+function showBadgeName(e) {
+
+}
+
+
+
 getUserData();
 

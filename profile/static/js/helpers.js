@@ -106,7 +106,7 @@ function updateBackgroundOpacity(timesComplete, targetTimes, id) {
     parseInt(timesComplete) / parseInt(targetTimes);
 }
 
-// TODO TEST ME
+// TESTED
 function uniqueBadges(data) {
   const output = [];
   for (let i = 0; i < data.length; i++) {
@@ -117,7 +117,7 @@ function uniqueBadges(data) {
   return output;
 }
 
-// TODO TEST ME
+// TESTED
 function createBadgeSection(badges) {
   const badgesContainer = document.createElement("section");
   badgesContainer.id = "badge-display";

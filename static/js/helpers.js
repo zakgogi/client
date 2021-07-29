@@ -28,7 +28,6 @@ function setActiveButton(e) {
   signInButton.classList.toggle("active");
 
   updateFormData();
-  
 }
 
 function updateFormData() {
@@ -55,7 +54,6 @@ function updateFormData() {
   }
 }
 
-
 const dismiss = document.getElementById("dismiss");
 const cancel = document.querySelector(".fa-times");
 const gdpr = document.querySelector("#gdpr");
@@ -70,4 +68,9 @@ function closeGDPR() {
 
 // location.hash = "login";
 
-module.exports = { setActiveButton, clearAllInputFields, closeGDPR, updateFormData };
+module.exports = {
+  setActiveButton,
+  clearAllInputFields,
+  closeGDPR,
+  updateFormData,
+};

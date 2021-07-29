@@ -25,6 +25,30 @@ body {
   --border-radius: 25px;
 }
 
+.red {
+  color: rgb(150, 33, 33);
+}
+
+.blue {
+  color: rgb(15, 38, 126);
+}
+
+.purple {
+  color: rgb(129, 54, 172);
+}
+
+.green {
+  color: rgb(20, 131, 33);
+}
+
+.gold {
+  color: rgb(255, 223, 0);
+}
+
+i {
+  margin: 20px 20px 20px 20px;
+}
+
 /* ======= Default Styles ======= */
 
 button {
@@ -43,6 +67,8 @@ button {
   border-style: none;
 
   cursor: pointer;
+  /* added in */
+  line-height: 1.55;
 }
 
 button:hover {
@@ -128,7 +154,14 @@ header button {
   border-radius: var(--border-radius);
 
   box-shadow: 0 5px var(--box-shadow);
+
+  transition-duration: 0.5s;
 }
+
+.habit-container:hover {
+  transform: scale(1.05);
+}
+
 .habit-gradient {
   /* opacity: 0.1; */
   position: absolute;
@@ -162,10 +195,14 @@ h3 {
   font-weight: 600;
   margin: 10px 0 0 0;
   font-size: 30px;
+  /* added in */
+  line-height: 44.8px;
 }
 .habit-details h2 {
   font-size: 25px;
   margin: 10px 0;
+  /* added in */
+  line-height: 37.6px;
 }
 .habit-details p {
   font-weight: 400;
@@ -191,6 +228,7 @@ h3 {
   position: absolute;
   bottom: 0;
   border-radius: 0;
+  line-height: 1.55;
 }
 
 #add-new-habit,
@@ -235,9 +273,18 @@ input,
 
   margin: 15px auto 10px auto;
   text-align: center;
+  /* added in  */
+  width:fit-content;
+  height: 30px;
+  padding: 1px 2px;
+  background-color: white;
+  border-radius: 2px;
+  border: none;
 }
+
 #add-new-habit input[type="submit"],
 #add-new-reminder input[type="submit"] {
+
   width: 100%;
 
   border-radius: 35px;
@@ -257,6 +304,9 @@ input,
 
   position: absolute;
   bottom: 27px;
+  /* added in */
+  line-height: 1.55; 
+  height: 38px;
 }
 
 #close-button,
@@ -281,6 +331,15 @@ input,
   padding: 7.5px;
   font-size: 15px;
 }
+
+/* added in */
+#profileName {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 100%;
+  margin: 18.675px 0;
+}
+
 .fa-user-circle {
   margin: 20px 20px;
 }
