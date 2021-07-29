@@ -119,16 +119,19 @@ header button {
   background: var(--green-highlight);
 }
 
+#badge-name {
+  margin: 0;
+}
+
 /* ==== badges ==== */
 
 #badge-display {
-  width: 300px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 .badge {
-  height: 30px;
+  height: 20px;
   margin: 7px;
 }
 
@@ -561,6 +564,9 @@ button.remove::after {
 
   #hidden button {
     display: block;
+  }
+  #badge-display {
+    display: none;
   }
 }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1627549415241" clover="3.2.0">
-  <project timestamp="1627549415241" name="All files">
-    <metrics statements="103" coveredstatements="97" conditionals="10" coveredconditionals="8" methods="13" coveredmethods="12" elements="126" coveredelements="117" complexity="0" loc="103" ncloc="103" packages="2" files="2" classes="2"/>
+<coverage generated="1627554279024" clover="3.2.0">
+  <project timestamp="1627554279024" name="All files">
+    <metrics statements="107" coveredstatements="101" conditionals="10" coveredconditionals="8" methods="13" coveredmethods="12" elements="130" coveredelements="121" complexity="0" loc="107" ncloc="107" packages="2" files="2" classes="2"/>
     <package name="profile.static.js">
-      <metrics statements="69" coveredstatements="69" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="9"/>
+      <metrics statements="73" coveredstatements="73" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="9"/>
       <file name="helpers.js" path="/Users/dan/Google Drive/brogrammers/client/profile/static/js/helpers.js">
-        <metrics statements="69" coveredstatements="69" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="9"/>
+        <metrics statements="73" coveredstatements="73" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="9"/>
         <line num="3" count="5" type="stmt"/>
         <line num="4" count="5" type="stmt"/>
         <line num="6" count="5" type="stmt"/>
@@ -70,11 +70,15 @@
         <line num="116" count="10" type="stmt"/>
         <line num="117" count="10" type="stmt"/>
         <line num="118" count="10" type="stmt"/>
-        <line num="119" count="10" type="stmt"/>
         <line num="120" count="10" type="stmt"/>
         <line num="121" count="10" type="stmt"/>
-        <line num="124" count="4" type="stmt"/>
-        <line num="127" count="1" type="stmt"/>
+        <line num="122" count="10" type="stmt"/>
+        <line num="124" count="10" type="stmt"/>
+        <line num="126" count="10" type="stmt"/>
+        <line num="127" count="10" type="stmt"/>
+        <line num="128" count="10" type="stmt"/>
+        <line num="131" count="4" type="stmt"/>
+        <line num="134" count="1" type="stmt"/>
       </file>
     </package>
     <package name="static.js">
