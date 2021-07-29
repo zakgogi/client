@@ -190,7 +190,7 @@ async function buttonEvents(e) {
 
   let halfdailyTarget = dailyTarget/2;
   if (!executed) {
-  if(currentCount + 1 > halfdailyTarget){
+  if(currentCount + 1 >= halfdailyTarget){
         M.toast({html: 'Keep going, you\'re over half way there!'});
         executed = true;
       }
