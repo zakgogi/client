@@ -287,7 +287,6 @@ input,
 
 #add-new-habit input[type="submit"],
 #add-new-reminder input[type="submit"] {
-
   width: 100%;
 
   border-radius: 35px;
@@ -569,4 +568,8 @@ button.remove::after {
   #badge-display {
     display: none;
   }
+}
+
+#reminderImage {
+  margin: 0 !important;
 }

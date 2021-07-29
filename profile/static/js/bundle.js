@@ -93,7 +93,7 @@ function renderHabitContainer(data) {
   emailReminderButton.id = "email-reminder";
   let reminderImage = document.createElement("i");
   reminderImage.className = "far fa-envelope fa-lg";
-  reminderImage.id = "reminder-image";
+  reminderImage.id = "reminderImage";
   // console.log(reminderImage);
   emailReminderButton.append(reminderImage);
 
@@ -356,7 +356,6 @@ async function getUserData() {
   const knownUser = (localStorage.getItem("userId")) ? true : false;
   localStorage.setItem("knownUser", knownUser);
 
-
   if (!knownUser) {
     localStorage.setItem("username", "Stranger");
   }
@@ -404,8 +403,6 @@ async function getUserData() {
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
   modal.classList.toggle("closed");
-
-  
 }
 
 async function addHabit(e) {
@@ -420,25 +417,7 @@ async function addHabit(e) {
     username_id: localStorage.getItem("userId"),
   };
 
-
-
   if (!data.frequency_day || !data.habitname) {
-    return;
-  }
-
-  if (!data.username_id) {
-    const newHabit = helpers.renderHabitContainer(data);
-
-    if (document.querySelectorAll("article").length === 1) {
-      //
-      // TODO toast
-      M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
-      return;
-    }
-
-    document.querySelector("#habits").append(newHabit);
-    bindEventListeners();
-
     return;
   }
 
@@ -507,33 +486,15 @@ async function updateBadgesToProfile() {
   }
 
   //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
-
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
     document.querySelector("#profileInfo section").remove();
   }
 
-
-  const badges = badgeSection.querySelectorAll("img");
-  badges.forEach(badge => {
-    badge.addEventListener("mouseenter", (e) => {
-      const newParagraph = document.createElement("p");
-      newParagraph.textContent = e.target.alt;
-      newParagraph.id = "badge-name";
-      document.getElementById("badge-display").append(newParagraph);
-    });
-    badge.addEventListener("mouseleave", () => {
-      document.getElementById("badge-name").remove();
-    });
-  });
-
-
   document.querySelector("#profileInfo").append(badgeSection);
 
   // TODO loop through the badges and add event listeners to them to display their names
-
-  
   
 }
 
