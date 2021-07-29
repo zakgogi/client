@@ -51,6 +51,7 @@ function updateFormData() {
     email.style.display = "none";
     confirmPasswordDiv.style.display = "none";
     card.style.height = "350px";
+    document.getElementById("error-messages").textContent = "";
   }
 }
 
