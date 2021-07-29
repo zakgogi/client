@@ -38,7 +38,7 @@ form.addEventListener("submit", async (e) => {
 
   helpers.clearAllInputFields();
 
-  // TODO send the requests to the server.
+ 
   const requestType = location.hash;
 
   const options = {
