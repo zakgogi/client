@@ -29,7 +29,6 @@ function setActiveButton(e) {
   signInButton.classList.toggle("active");
 
   updateFormData();
-  
 }
 
 function updateFormData() {
@@ -56,8 +55,12 @@ function updateFormData() {
   }
 }
 
+const dismiss = document.getElementById("dismiss");
+const cancel = document.querySelector(".fa-times");
+const gdpr = document.querySelector("#gdpr");
 
-
+dismiss.addEventListener("click", closeGDPR);
+cancel.addEventListener("click", closeGDPR);
 
 function closeGDPR() {
   const gdpr = document.querySelector("#gdpr");
@@ -66,7 +69,12 @@ function closeGDPR() {
 
 // location.hash = "login";
 
-module.exports = { setActiveButton, clearAllInputFields, closeGDPR, updateFormData };
+module.exports = {
+  setActiveButton,
+  clearAllInputFields,
+  closeGDPR,
+  updateFormData,
+};
 
 },{}],2:[function(require,module,exports){
 const helpers = require("./helpers");
@@ -109,7 +117,6 @@ form.addEventListener("submit", async (e) => {
 
   helpers.clearAllInputFields();
 
- 
   const requestType = location.hash;
 
   const options = {
@@ -134,7 +141,6 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
-
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
     localStorage.setItem("userId", userData.id);
@@ -146,7 +152,6 @@ form.addEventListener("submit", async (e) => {
 
   // let currentURL = window.location.href;
 
-
   // console.log(currentURL);
   // currentURL = currentURL.split("#")[0];
   window.location.assign(`https://the-stride.netlify.app/profile/`);
@@ -155,19 +160,6 @@ form.addEventListener("submit", async (e) => {
 
   //* Get the hash from the page to pick which fetch we do.
 });
-
-
-const accept = document.getElementById("accept");
-const reject = document.querySelector("#reject");
-const cancel = document.querySelector(".fa-times");
-
-const dismiss = document.getElementById("dismiss");
-
-dismiss.addEventListener("click", helpers.closeGDPR);
-
-
-
-
 
 location.hash = "login";
 
