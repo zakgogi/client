@@ -57,6 +57,16 @@ function renderHabitContainer(data) {
 
   newArticle.append(addToCountButton);
 
+  const emailReminderButton = document.createElement("button");
+  emailReminderButton.id = "email-reminder";
+  let reminderImage = document.createElement("i");
+  reminderImage.className = "far fa-envelope fa-lg";
+  reminderImage.id = "reminder-image";
+  // console.log(reminderImage);
+  emailReminderButton.append(reminderImage);
+
+  newArticle.append(emailReminderButton);
+
   return newArticle;
 }
 
@@ -116,7 +126,32 @@ function createBadgeSection(badges) {
     let imgSrc = `../../../static/assets/badges/${badge}.svg`;
     const newImg = document.createElement("img");
     newImg.src = imgSrc;
-    newImg.alt = `${badge} badge`;
+
+    let number = badge.match(/\d/g);
+    let name = badge.match(/\w/g);
+
+   
+    let output = [];
+    for (let i = 0; i < name.length; i++) {
+      if (/\d/.test(name[i])) {
+         break;
+      } else {
+        output.push(name[i]);
+      }
+    }
+
+    name = output.join().replace(/,/g, "");
+    if (number) {
+      number = number.toString().replace(/,/g, "");
+    }
+    
+
+    if (badge === "daily") {
+      newImg.alt = `All goals for today!`;
+    } else {
+      newImg.alt = `${name} x ${number}`;
+    }
+    
     newImg.classList.add("badge");
     badgesContainer.append(newImg);
   });
