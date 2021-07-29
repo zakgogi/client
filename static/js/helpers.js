@@ -37,12 +37,19 @@ function updateFormData() {
   const card = document.getElementById("login-signin");
   const confirmPasswordDiv = document.getElementById("row4");
 
+  let width = window.innerWidth;
+
   if (formHeading.textContent === "log in.") {
     location.hash = "signup";
     formHeading.textContent = "sign up.";
     submitButton.value = "sign up";
-    email.style.display = "block";
-    confirmPasswordDiv.style.display = "block";
+    if (width < "460") {
+      email.style.display = "inline";
+      confirmPasswordDiv.style.display = "inline";
+    } else {
+      email.style.display = "block";
+      confirmPasswordDiv.style.display = "block";
+    }
     card.style.height = "auto";
   } else {
     location.hash = "login";
@@ -50,7 +57,7 @@ function updateFormData() {
     submitButton.value = "log in";
     email.style.display = "none";
     confirmPasswordDiv.style.display = "none";
-    card.style.height = "350px";
+    card.style.height = "auto";
     document.getElementById("error-messages").textContent = "";
   }
 }
