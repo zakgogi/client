@@ -274,7 +274,7 @@ input,
   margin: 15px auto 10px auto;
   text-align: center;
   /* added in  */
-  width:fit-content;
+  width: fit-content;
   height: 30px;
   padding: 1px 2px;
   background-color: white;
@@ -284,7 +284,6 @@ input,
 
 #add-new-habit input[type="submit"],
 #add-new-reminder input[type="submit"] {
-
   width: 100%;
 
   border-radius: 35px;
@@ -305,7 +304,7 @@ input,
   position: absolute;
   bottom: 27px;
   /* added in */
-  line-height: 1.55; 
+  line-height: 1.55;
   height: 38px;
 }
 
@@ -563,4 +562,8 @@ button.remove::after {
   #hidden button {
     display: block;
   }
+}
+
+#reminderImage {
+  margin: 0 !important;
 }

@@ -141,8 +141,6 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
-  //* Get the hash from the page to pick which fetch we do.
-
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
     localStorage.setItem("userId", userData.id);

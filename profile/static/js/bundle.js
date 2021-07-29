@@ -93,7 +93,7 @@ function renderHabitContainer(data) {
   emailReminderButton.id = "email-reminder";
   let reminderImage = document.createElement("i");
   reminderImage.className = "far fa-envelope fa-lg";
-  reminderImage.id = "reminder-image";
+  reminderImage.id = "reminderImage";
   // console.log(reminderImage);
   emailReminderButton.append(reminderImage);
 
@@ -578,8 +578,4 @@ function showBadgeName(e) {
 getUserData();
 
 
-
-// },{"./helpers":1}]},{},[2]);
-
 },{"./avatars":1,"./helpers":2}]},{},[3]);
-
