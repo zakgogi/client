@@ -150,7 +150,6 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
     localStorage.setItem("userId", userData.id);
