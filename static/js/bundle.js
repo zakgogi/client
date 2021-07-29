@@ -1,168 +1,222 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const loginButton = document.querySelector("#login-button");
-const signInButton = document.querySelector("#sign-up-button");
-
-function clearAllInputFields() {
-  const inputs = document.querySelectorAll("input");
-
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === "submit") {
-      continue;
-    } else {
-      inputs[i].value = "";
+(function () {
+  function r(e, n, t) {
+    function o(i, f) {
+      if (!n[i]) {
+        if (!e[i]) {
+          var c = "function" == typeof require && require;
+          if (!f && c) return c(i, !0);
+          if (u) return u(i, !0);
+          var a = new Error("Cannot find module '" + i + "'");
+          throw ((a.code = "MODULE_NOT_FOUND"), a);
+        }
+        var p = (n[i] = { exports: {} });
+        e[i][0].call(
+          p.exports,
+          function (r) {
+            var n = e[i][1][r];
+            return o(n || r);
+          },
+          p,
+          p.exports,
+          r,
+          e,
+          n,
+          t
+        );
+      }
+      return n[i].exports;
     }
+    for (
+      var u = "function" == typeof require && require, i = 0;
+      i < t.length;
+      i++
+    )
+      o(t[i]);
+    return o;
   }
-}
+  return r;
+})()(
+  {
+    1: [
+      function (require, module, exports) {
+        const loginButton = document.querySelector("#login-button");
+        const signInButton = document.querySelector("#sign-up-button");
 
-function setActiveButton(e) {
-  // See is the button which called the event already active.
-  // if it is do nothing.
+        function clearAllInputFields() {
+          const inputs = document.querySelectorAll("input");
 
-  if (e.target.classList.contains("active")) {
-    // this one is already live so no need to do anything.
-    return;
-  }
+          for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].type === "submit") {
+              continue;
+            } else {
+              inputs[i].value = "";
+            }
+          }
+        }
 
-  clearAllInputFields();
+        function setActiveButton(e) {
+          // See is the button which called the event already active.
+          // if it is do nothing.
 
-  loginButton.classList.toggle("active");
-  signInButton.classList.toggle("active");
+          if (e.target.classList.contains("active")) {
+            // this one is already live so no need to do anything.
+            return;
+          }
 
-  updateFormData();
-}
+          clearAllInputFields();
 
-function updateFormData() {
-  const formHeading = document.getElementById("form-heading");
-  const submitButton = document.getElementById("submit-button");
-  const email = document.getElementById("emailEntry");
-  const card = document.getElementById("login-signin");
-  const confirmPasswordDiv = document.getElementById("row4");
+          loginButton.classList.toggle("active");
+          signInButton.classList.toggle("active");
 
-  if (formHeading.textContent === "log in.") {
-    location.hash = "signup";
-    formHeading.textContent = "sign up.";
-    submitButton.value = "sign up";
-    email.style.display = "block";
-    confirmPasswordDiv.style.display = "block";
-    card.style.height = "auto";
-  } else {
-    location.hash = "login";
-    formHeading.textContent = "log in.";
-    submitButton.value = "log in";
-    email.style.display = "none";
-    confirmPasswordDiv.style.display = "none";
-    card.style.height = "350px";
-  }
-}
+          updateFormData();
+        }
 
-const dismiss = document.getElementById("dismiss");
-const cancel = document.querySelector(".fa-times");
-const gdpr = document.querySelector("#gdpr");
+        function updateFormData() {
+          const formHeading = document.getElementById("form-heading");
+          const submitButton = document.getElementById("submit-button");
+          const email = document.getElementById("emailEntry");
+          const card = document.getElementById("login-signin");
+          const confirmPasswordDiv = document.getElementById("row4");
 
-dismiss.addEventListener("click", closeGDPR);
-cancel.addEventListener("click", closeGDPR);
+          let width = window.innerWidth;
 
-function closeGDPR() {
-  const gdpr = document.querySelector("#gdpr");
-  gdpr.style.display = "none";
-}
+          if (formHeading.textContent === "log in.") {
+            location.hash = "signup";
+            formHeading.textContent = "sign up.";
+            submitButton.value = "sign up";
+            if (width < "460") {
+              email.style.display = "inline";
+              confirmPasswordDiv.style.display = "inline";
+            } else {
+              email.style.display = "block";
+              confirmPasswordDiv.style.display = "block";
+            }
+            card.style.height = "auto";
+          } else {
+            location.hash = "login";
+            formHeading.textContent = "log in.";
+            submitButton.value = "log in";
+            email.style.display = "none";
+            confirmPasswordDiv.style.display = "none";
+            card.style.height = "auto";
+          }
+        }
 
-// location.hash = "login";
+        const dismiss = document.getElementById("dismiss");
+        const cancel = document.querySelector(".fa-times");
+        const gdpr = document.querySelector("#gdpr");
 
-module.exports = {
-  setActiveButton,
-  clearAllInputFields,
-  closeGDPR,
-  updateFormData,
-};
+        dismiss.addEventListener("click", closeGDPR);
+        cancel.addEventListener("click", closeGDPR);
 
-},{}],2:[function(require,module,exports){
-const helpers = require("./helpers");
+        function closeGDPR() {
+          const gdpr = document.querySelector("#gdpr");
+          gdpr.style.display = "none";
+        }
 
-const loginButton = document.querySelector("#login-button");
-const signInButton = document.querySelector("#sign-up-button");
-// const errorMessages = document.getElementById("error-messages");
+        // location.hash = "login";
 
-loginButton.addEventListener("click", helpers.setActiveButton);
-signInButton.addEventListener("click", helpers.setActiveButton);
+        module.exports = {
+          setActiveButton,
+          clearAllInputFields,
+          closeGDPR,
+          updateFormData,
+        };
+      },
+      {},
+    ],
+    2: [
+      function (require, module, exports) {
+        const helpers = require("./helpers");
 
-const form = document.querySelector("form");
+        const loginButton = document.querySelector("#login-button");
+        const signInButton = document.querySelector("#sign-up-button");
+        // const errorMessages = document.getElementById("error-messages");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+        loginButton.addEventListener("click", helpers.setActiveButton);
+        signInButton.addEventListener("click", helpers.setActiveButton);
 
-  if (location.hash == "#signup") {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    if (password !== confirmPassword) {
-      alert("The passwords did not match");
-      return;
-    }
-  }
+        const form = document.querySelector("form");
 
-  const data = {
-    username: e.target.username.value,
-    password: e.target.password.value,
-    email: e.target.email.value,
-  };
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-  // if any of the values are falsy, i.e empty, don't process.
-  //   for (const key in data) {
-  //     if (!data[key]) {
-  //       // this one is already live so no need to do anything.
-  //       errorMessages.textContent = "username or password missing.";
-  //       return;
-  //     }
-  //   }
+          if (location.hash == "#signup") {
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+              document.getElementById("confirmPassword").value;
+            if (password !== confirmPassword) {
+              alert("The passwords did not match");
+              return;
+            }
+          }
 
-  helpers.clearAllInputFields();
+          const data = {
+            username: e.target.username.value,
+            password: e.target.password.value,
+            email: e.target.email.value,
+          };
 
-  const requestType = location.hash;
+          // if any of the values are falsy, i.e empty, don't process.
+          //   for (const key in data) {
+          //     if (!data[key]) {
+          //       // this one is already live so no need to do anything.
+          //       errorMessages.textContent = "username or password missing.";
+          //       return;
+          //     }
+          //   }
 
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let endpoint = "";
+          helpers.clearAllInputFields();
 
-  if (requestType == "#signup") {
-    endpoint = "/auth/register";
-  } else {
-    endpoint = "/auth/login";
-  }
+          const requestType = location.hash;
 
-  const response = await fetch(
-    `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
-    options
-  );
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          };
+          let endpoint = "";
 
-  const tokenData = await response.json();
+          if (requestType == "#signup") {
+            endpoint = "/auth/register";
+          } else {
+            endpoint = "/auth/login";
+          }
 
-  //* Get the hash from the page to pick which fetch we do.
+          const response = await fetch(
+            `https://brogrammers-habit-track.herokuapp.com${endpoint}`,
+            options
+          );
 
-  if (requestType === "#login") {
-    const userData = jwt_decode(tokenData.token);
-    localStorage.setItem("userId", userData.id);
-    localStorage.setItem("username", userData.user);
-  } else {
-    localStorage.setItem("userId", tokenData.id);
-    localStorage.setItem("username", tokenData.user);
-  }
+          const tokenData = await response.json();
 
-  // let currentURL = window.location.href;
+          if (requestType === "#login") {
+            const userData = jwt_decode(tokenData.token);
+            localStorage.setItem("userId", userData.id);
+            localStorage.setItem("username", userData.user);
+          } else {
+            localStorage.setItem("userId", tokenData.id);
+            localStorage.setItem("username", tokenData.user);
+          }
 
-  // console.log(currentURL);
-  // currentURL = currentURL.split("#")[0];
-  window.location.assign(`https://the-stride.netlify.app/profile/`);
-  //* Get the hash from the page to pick which fetch we do.
-  // }
+          // let currentURL = window.location.href;
 
-  //* Get the hash from the page to pick which fetch we do.
-});
+          // console.log(currentURL);
+          // currentURL = currentURL.split("#")[0];
+          window.location.assign(`https://the-stride.netlify.app/profile/`);
+          //* Get the hash from the page to pick which fetch we do.
+          // }
 
-location.hash = "login";
+          //* Get the hash from the page to pick which fetch we do.
+        });
 
-},{"./helpers":1}]},{},[2]);
+        location.hash = "login";
+      },
+      { "./helpers": 1 },
+    ],
+  },
+  {},
+  [2]
+);
