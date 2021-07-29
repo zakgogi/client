@@ -89,6 +89,16 @@ function renderHabitContainer(data) {
 
   newArticle.append(addToCountButton);
 
+  const emailReminderButton = document.createElement("button");
+  emailReminderButton.id = "email-reminder";
+  let reminderImage = document.createElement("i");
+  reminderImage.className = "far fa-envelope fa-lg";
+  reminderImage.id = "reminder-image";
+  // console.log(reminderImage);
+  emailReminderButton.append(reminderImage);
+
+  newArticle.append(emailReminderButton);
+
   return newArticle;
 }
 
@@ -215,7 +225,7 @@ async function buttonEvents(e) {
 
   let halfdailyTarget = dailyTarget/2;
   if (!executed) {
-  if(currentCount + 1 > halfdailyTarget){
+  if(currentCount + 1 >= halfdailyTarget){
         M.toast({html: 'Keep going, you\'re over half way there!'});
         executed = true;
       }
@@ -286,7 +296,58 @@ function bindEventListeners() {
     button.addEventListener("click", removeHabit);
   });
 
- 
+  //===== Email Reminder =====//
+  const reminderButtons = document.querySelectorAll("#email-reminder");
+  const reminderButtonsArr = Array.from(reminderButtons);
+  reminderButtonsArr.forEach((button) => {
+    button.addEventListener("click", toggleReminderModal);
+    button.addEventListener("click", storeArticleId);
+  })
+}
+
+const newReminderForm = document.getElementById("add-new-reminder");
+newReminderForm.addEventListener("submit", sendEmailPostRequest);
+const closeReminderButton = document.getElementById("close-button-reminder");
+
+closeReminderButton.addEventListener("click", toggleReminderModal);
+
+function storeArticleId(e){
+  const closeId = e.target.closest("article").id;
+  localStorage.setItem("targetArticleId", closeId);
+}
+
+function toggleReminderModal() {
+  const modal = document.getElementById("add-new-reminder");
+  modal.classList.toggle("closed");
+}
+
+async function sendEmailPostRequest(e){
+  e.preventDefault();
+  toggleReminderModal();
+  const habitId = localStorage.getItem("targetArticleId");
+  localStorage.removeItem("targetArticleId");
+  const targetArticle = document.getElementById(`${habitId}`);
+  let currentTitle = targetArticle.querySelector("h2").textContent;
+  let username = localStorage.getItem("username");
+  let toSend = { 
+    habitname: currentTitle,
+    //because currently BST, will need to remove -1 when GMT
+    timeHour: e.target.timeHour.value - 1,
+    timeMin: e.target.timeMinute.value,
+    username: username
+  }
+  if (!toSend.timeHour || !toSend.timeMin) {
+    return;
+  }
+
+  const options = {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toSend)
+  }
+
+  const response = await fetch(`${serverUrl}/habits/email`, options);
+  console.log("Sent email request");
 }
 
 async function getUserData() {
@@ -342,7 +403,6 @@ async function getUserData() {
 
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
-
   modal.classList.toggle("closed");
 
   
@@ -493,13 +553,15 @@ newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
+closeHabitButton.addEventListener("click", toggleModal);
+newHabitButton.addEventListener("click", toggleModal);
+
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
   modal.classList.toggle("closed");
 }
 
-closeHabitButton.addEventListener("click", toggleModal);
-newHabitButton.addEventListener("click", toggleModal);
+
 
 // Sign out button
 const signOutButton = document.querySelector("header button");
@@ -519,7 +581,21 @@ signOutButton2.addEventListener("click", () => {
 
 function renderGraph(dataInput) {
   var xValues = ["Goals Completed", "Still to do"];
-  var barColors = ["#58c770", "#c4c4c4"];
+  let totalDone = dataInput[0];
+  let stillToDo = dataInput[1];
+  let totalToDo = totalDone + stillToDo;
+  let mutatedColor = ["#D02020", "#FF9C07", "#F7FF00", "#58c770"]; 
+  let i;
+  if (totalDone/totalToDo < 0.25) {
+    i = 0;
+  } else if (totalDone/totalToDo < 0.5) {
+    i = 1;
+  } else if (totalDone/totalToDo < 0.75){
+    i = 2;
+  } else {
+    i = 3;
+  }
+  let barColors = [`${mutatedColor[i]}`, "#c4c4c4"];
   let chart = document.getElementById("myChart");
   if (!!myChart) {
     myChart.destroy();
@@ -566,4 +642,8 @@ function showBadgeName(e) {
 getUserData();
 
 
+
+// },{"./helpers":1}]},{},[2]);
+
 },{"./avatars":1,"./helpers":2}]},{},[3]);
+
