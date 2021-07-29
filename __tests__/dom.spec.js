@@ -187,6 +187,7 @@ describe("login page", () => {
         beforeEach(() => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">sign up.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -217,6 +218,7 @@ describe("login page", () => {
         test("height is updated to auto", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">log in.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -244,6 +246,7 @@ describe("login page", () => {
         test("height is updated to 350px", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">sign up.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -272,6 +275,7 @@ describe("login page", () => {
         test("email form is shown", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">sign up.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -299,6 +303,7 @@ describe("login page", () => {
         test("button text changes to login", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">sign up.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -326,6 +331,7 @@ describe("login page", () => {
         test("button text changes to sign up", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">log in.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -354,6 +360,7 @@ describe("login page", () => {
         test("heading changes to sign up", () => {
             document.documentElement.innerHTML = `<section id="login-signin"><form>
             <h1 id="form-heading">log in.</h1>
+            <div id="row4"></div>
             <div id="login-entry">
               <div id="emailEntry" style="display: block;">
                 <label class="leftForm" for="email">email address</label>
@@ -528,4 +535,90 @@ describe('profile page', () => {
         
     })
 
+    describe("unique badge title finder", () => {
+      test("we don't get back and empty array", () => {
+        const data = [
+          {"badge_name": "test"}
+        ]
+        const result = profileHelpers.uniqueBadges(data);
+        expect(result.length).toBe(1)
+      })
+
+      test("if two items are the same it only returns one", () => {
+        const data = [
+          {"badge_name": "test"},
+          {"badge_name": "test"}
+        ]
+        const result = profileHelpers.uniqueBadges(data);
+        expect(result.length).toBe(1)
+      })
+
+      test("two unique entries returns both items", () => {
+        const data = [
+          {"badge_name": "test"},
+          {"badge_name": "test1"}
+        ]
+        const result = profileHelpers.uniqueBadges(data);
+        expect(result.length).toBe(2)
+      })
+
+      test("no data returns an empty array", () => {
+        const data = []
+        const result = profileHelpers.uniqueBadges(data);
+        expect(result.length).toBe(0)
+      })
+
+    })
+
+    describe("badge creation", () => {
+      beforeEach(() => {
+        document.documentElement.innerHTML = `<main id="images"></main>`
+    })
+
+      test("returns one section", () => {
+        const data = ["1"]
+        const result = profileHelpers.createBadgeSection(data);
+        document.querySelector("#images").append(result);
+
+        const result2 = document.querySelectorAll("section");
+
+        expect(result2.length).toBe(1)
+        
+      })
+
+      test("returns one img", () => {
+        const data = ["1"]
+        const result = profileHelpers.createBadgeSection(data);
+        document.querySelector("#images").append(result);
+
+        const result2 = document.querySelectorAll("img");
+
+        expect(result2.length).toBe(1)
+        
+      })
+
+      test("returns multiple img", () => {
+        const data = ["1", "2", "3","4"]
+        const result = profileHelpers.createBadgeSection(data);
+        document.querySelector("#images").append(result);
+
+        const result2 = document.querySelectorAll("img");
+
+        expect(result2.length).toBe(data.length)
+        
+      })
+
+      test("image link is formatted correctly", () => {
+        const data = ["1", "2", "3","4"]
+        const result = profileHelpers.createBadgeSection(data);
+        document.querySelector("#images").append(result);
+
+        const result2 = document.querySelector("img").src;
+
+        expect(result2).toBe(`http://localhost/static/assets/badges/${data[0]}.svg`)
+        
+      })
+
+
+    })
 })
