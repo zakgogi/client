@@ -642,8 +642,4 @@ function showBadgeName(e) {
 getUserData();
 
 
-
-// },{"./helpers":1}]},{},[2]);
-
 },{"./avatars":1,"./helpers":2}]},{},[3]);
-
