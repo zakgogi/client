@@ -82,6 +82,16 @@
       </form>
       <button id="close-button" type="button">cancel</button>
     </div>
+    <div id="add-new-reminder" class="closed">
+      <form id="new-email-reminder">
+        <label for="timeHour">Enter the hour you want the reminder</label>
+        <input id="timeHour" type="number" min="0" max="23"/>
+        <label for="timeMinute">Enter the minute you want the reminder</label>
+        <input id="timeMinute" type="number" min="0" max="59"/>
+        <input type="submit" />
+      </form>
+      <button id="close-button-reminder" type="button">Cancel</button>
+    </div>
 
     <div id="hidden"><button>sign out</button></div>
   </body>
