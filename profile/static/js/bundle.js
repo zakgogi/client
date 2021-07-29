@@ -148,7 +148,32 @@ function createBadgeSection(badges) {
     let imgSrc = `../../../static/assets/badges/${badge}.svg`;
     const newImg = document.createElement("img");
     newImg.src = imgSrc;
-    newImg.alt = `${badge} badge`;
+
+    let number = badge.match(/\d/g);
+    let name = badge.match(/\w/g);
+
+   
+    let output = [];
+    for (let i = 0; i < name.length; i++) {
+      if (/\d/.test(name[i])) {
+         break;
+      } else {
+        output.push(name[i]);
+      }
+    }
+
+    name = output.join().replace(/,/g, "");
+    if (number) {
+      number = number.toString().replace(/,/g, "");
+    }
+    
+
+    if (badge === "daily") {
+      newImg.alt = `All goals for today!`;
+    } else {
+      newImg.alt = `${name} x ${number}`;
+    }
+    
     newImg.classList.add("badge");
     badgesContainer.append(newImg);
   });
@@ -270,6 +295,7 @@ async function getUserData() {
   const knownUser = (localStorage.getItem("userId")) ? true : false;
   localStorage.setItem("knownUser", knownUser);
 
+
   if (!knownUser) {
     localStorage.setItem("username", "Stranger");
   }
@@ -318,6 +344,8 @@ function toggleModal() {
   const modal = document.getElementById("add-new-habit");
 
   modal.classList.toggle("closed");
+
+  
 }
 
 async function addHabit(e) {
@@ -332,7 +360,25 @@ async function addHabit(e) {
     username_id: localStorage.getItem("userId"),
   };
 
+
+
   if (!data.frequency_day || !data.habitname) {
+    return;
+  }
+
+  if (!data.username_id) {
+    const newHabit = helpers.renderHabitContainer(data);
+
+    if (document.querySelectorAll("article").length === 1) {
+      //
+      // TODO toast
+      M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
+      return;
+    }
+
+    document.querySelector("#habits").append(newHabit);
+    bindEventListeners();
+
     return;
   }
 

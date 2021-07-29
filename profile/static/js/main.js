@@ -102,6 +102,7 @@ async function getUserData() {
   const knownUser = (localStorage.getItem("userId")) ? true : false;
   localStorage.setItem("knownUser", knownUser);
 
+
   if (!knownUser) {
     localStorage.setItem("username", "Stranger");
   }
@@ -150,6 +151,8 @@ function toggleModal() {
   const modal = document.getElementById("add-new-habit");
 
   modal.classList.toggle("closed");
+
+  
 }
 
 async function addHabit(e) {
@@ -164,7 +167,25 @@ async function addHabit(e) {
     username_id: localStorage.getItem("userId"),
   };
 
+
+
   if (!data.frequency_day || !data.habitname) {
+    return;
+  }
+
+  if (!data.username_id) {
+    const newHabit = helpers.renderHabitContainer(data);
+
+    if (document.querySelectorAll("article").length === 1) {
+      //
+      // TODO toast
+      M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
+      return;
+    }
+
+    document.querySelector("#habits").append(newHabit);
+    bindEventListeners();
+
     return;
   }
 
