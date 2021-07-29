@@ -154,7 +154,14 @@ header button {
   border-radius: var(--border-radius);
 
   box-shadow: 0 5px var(--box-shadow);
+
+  transition-duration: 0.5s;
 }
+
+.habit-container:hover {
+  transform: scale(1.05);
+}
+
 .habit-gradient {
   /* opacity: 0.1; */
   position: absolute;
