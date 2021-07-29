@@ -155,7 +155,7 @@ function createBadgeSection(badges) {
     newImg.classList.add("badge");
     badgesContainer.append(newImg);
   });
-
+  
   return badgesContainer;
 }
 
