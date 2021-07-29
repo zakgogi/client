@@ -93,10 +93,12 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (location.hash == "#signup") {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let errorMessages = document.getElementById("error-messages");
     if (password !== confirmPassword) {
-      alert("The passwords did not match");
+      errorMessages.style.color = "red";
+      errorMessages.textContent = "The passwords do not match!";
       return;
     }
   }
@@ -145,10 +147,12 @@ form.addEventListener("submit", async (e) => {
 
   const tokenData = await response.json();
 
+
   if (tokenData.err) {
     document.getElementById("error-messages").textContent = "username or Email already in use.";
     return;
   }
+
 
   if (requestType === "#login") {
     const userData = jwt_decode(tokenData.token);
