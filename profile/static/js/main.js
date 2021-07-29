@@ -22,7 +22,7 @@ async function buttonEvents(e) {
 
   let halfdailyTarget = dailyTarget/2;
   if (!executed) {
-  if(currentCount + 1 > halfdailyTarget){
+  if(currentCount + 1 >= halfdailyTarget){
         M.toast({html: 'Keep going, you\'re over half way there!'});
         executed = true;
       }
@@ -92,6 +92,59 @@ function bindEventListeners() {
   removeButtonsArr.forEach((button) => {
     button.addEventListener("click", removeHabit);
   });
+
+  //===== Email Reminder =====//
+  const reminderButtons = document.querySelectorAll("#email-reminder");
+  const reminderButtonsArr = Array.from(reminderButtons);
+  reminderButtonsArr.forEach((button) => {
+    button.addEventListener("click", toggleReminderModal);
+    button.addEventListener("click", storeArticleId);
+  })
+}
+
+const newReminderForm = document.getElementById("add-new-reminder");
+newReminderForm.addEventListener("submit", sendEmailPostRequest);
+const closeReminderButton = document.getElementById("close-button-reminder");
+
+closeReminderButton.addEventListener("click", toggleReminderModal);
+
+function storeArticleId(e){
+  const closeId = e.target.closest("article").id;
+  localStorage.setItem("targetArticleId", closeId);
+}
+
+function toggleReminderModal() {
+  const modal = document.getElementById("add-new-reminder");
+  modal.classList.toggle("closed");
+}
+
+async function sendEmailPostRequest(e){
+  e.preventDefault();
+  toggleReminderModal();
+  const habitId = localStorage.getItem("targetArticleId");
+  localStorage.removeItem("targetArticleId");
+  const targetArticle = document.getElementById(`${habitId}`);
+  let currentTitle = targetArticle.querySelector("h2").textContent;
+  let username = localStorage.getItem("username");
+  let toSend = { 
+    habitname: currentTitle,
+    //because currently BST, will need to remove -1 when GMT
+    timeHour: e.target.timeHour.value - 1,
+    timeMin: e.target.timeMinute.value,
+    username: username
+  }
+  if (!toSend.timeHour || !toSend.timeMin) {
+    return;
+  }
+
+  const options = {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toSend)
+  }
+
+  const response = await fetch(`${serverUrl}/habits/email`, options);
+  console.log("Sent email request");
 }
 
 async function getUserData() {
@@ -100,6 +153,7 @@ async function getUserData() {
   const knownUser = (localStorage.getItem("userId")) ? true : false;
   localStorage.setItem("knownUser", knownUser);
 
+
   if (!knownUser) {
     localStorage.setItem("username", "Stranger");
   }
@@ -107,12 +161,11 @@ async function getUserData() {
   //* Create custom title
   const username = localStorage.getItem("username");
   document.title = `${username}'s Habits`;
-  console.log(document.getElementById("profileName"));
   document.getElementById("profileName").textContent = username;
   let avatarLetter = username[0];
-  let avatartag = avatarOptions[avatarLetter]
+  let avatartag = avatarOptions[avatarLetter];
   let avatar = document.querySelector("i");
-  avatar.className = `${avatartag} fa-5x`
+  avatar.className = `${avatartag} fa-5x`;
 
 
   if (!userId) {
@@ -124,11 +177,8 @@ async function getUserData() {
 
  
 
-  console.log(userData);
-
   if (userData.length === 0) {
     hideChart();
-    console.log("no data found");
     return;
   }
 
@@ -141,20 +191,22 @@ async function getUserData() {
     totalToDo += habit.frequency_day;
   });
   let stillToDo = totalToDo - totalDone;
-  updateBadgesToProfile()
+
+  updateBadgesToProfile();
   renderGraph([totalDone, stillToDo]);
+  
   bindEventListeners();
 }
 
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
-
   modal.classList.toggle("closed");
+
+  
 }
 
 async function addHabit(e) {
   e.preventDefault();
-  console.log(e.target);
   toggleModal();
 
   const data = {
@@ -165,7 +217,25 @@ async function addHabit(e) {
     username_id: localStorage.getItem("userId"),
   };
 
+
+
   if (!data.frequency_day || !data.habitname) {
+    return;
+  }
+
+  if (!data.username_id) {
+    const newHabit = helpers.renderHabitContainer(data);
+
+    if (document.querySelectorAll("article").length === 1) {
+      //
+      // TODO toast
+      M.toast({html: 'Hi Stranger, Why not register to add more habits!'});
+      return;
+    }
+
+    document.querySelector("#habits").append(newHabit);
+    bindEventListeners();
+
     return;
   }
 
@@ -206,23 +276,65 @@ async function getGraphData() {
 async function updateBadgesToProfile() {
   const data = await getBadgeData();
 
-  // get all unique badges.
+  const userId = localStorage.getItem("userId");
+
+  const response = await fetch(`${serverUrl}/habits/${userId}`);
+  const userData = await response.json();
+
+  let totalDone = 0;
+  let totalToDo = 0;
+
+  userData.forEach((habit) => {
+    totalDone += habit.times_completed;
+    totalToDo += habit.frequency_day;
+  });
+  
+  let stillToDo = totalToDo - totalDone;
+
+
   const badgeNames = helpers.uniqueBadges(data);
 
   
+
+  if (stillToDo === 0) {
+    badgeNames.push("daily");
+
+    //! Add toast 
+
+  }
+
+  //! here we could check the lengths to see if a new badge is added. and check the alt text to see which one is new.
+
   const badgeSection = helpers.createBadgeSection(badgeNames);
 
   if (document.querySelector("#profileInfo section")) {
     document.querySelector("#profileInfo section").remove();
   }
 
+
+  const badges = badgeSection.querySelectorAll("img");
+  badges.forEach(badge => {
+    badge.addEventListener("mouseenter", (e) => {
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = e.target.alt;
+      newParagraph.id = "badge-name";
+      document.getElementById("badge-display").append(newParagraph);
+    });
+    badge.addEventListener("mouseleave", () => {
+      document.getElementById("badge-name").remove();
+    });
+  });
+
+
   document.querySelector("#profileInfo").append(badgeSection);
+
+  // TODO loop through the badges and add event listeners to them to display their names
+
   
-  // TODO create a div full of images.
-
-
-
+  
 }
+
+
 
 async function getBadgeData() {
   const userId = localStorage.getItem("userId");
@@ -230,7 +342,6 @@ async function getBadgeData() {
   const response = await fetch(`${serverUrl}/badges/${userId}`);
   const data = await response.json();
 
-  console.log(data);
   return data;
 }
 
@@ -239,13 +350,15 @@ newHabitForm.addEventListener("submit", addHabit);
 const closeHabitButton = document.getElementById("close-button");
 const newHabitButton = document.getElementById("new-habit");
 
+closeHabitButton.addEventListener("click", toggleModal);
+newHabitButton.addEventListener("click", toggleModal);
+
 function toggleModal() {
   const modal = document.getElementById("add-new-habit");
   modal.classList.toggle("closed");
 }
 
-closeHabitButton.addEventListener("click", toggleModal);
-newHabitButton.addEventListener("click", toggleModal);
+
 
 // Sign out button
 const signOutButton = document.querySelector("header button");
@@ -314,7 +427,14 @@ function hideChart() {
     chart.style.display = "none";
     profile.style.height = "150px";
   }
-  console.log("trig");
 }
+
+
+function showBadgeName(e) {
+
+}
+
+
+
 getUserData();
 
